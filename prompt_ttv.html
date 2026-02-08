@@ -1,267 +1,271 @@
-<!-- prompt_ttv.html - Kode Lengkap dengan Update LoadCharDetails -->
+<!-- prompt_ttv.html - Gabungan Bagian 1-16 -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Generate Prompt TTV</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Generate Prompt TTV - UGC Prompt Generator</title>
+  <link rel="stylesheet" href="style.css"> <!-- Pakai CSS yang sama -->
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <span class="pill">🎥 Generate Prompt TTV</span>
+      <span class="pill">🎬 Generate Prompt TTV</span>
       <h1>🚀 Generate Prompt TTV</h1>
-      <p class="sub">Isi pelan-pelan. Pilih ID Karakter untuk konsistensi. Klik Generate → Copy. ✨</p>
+      <p class="sub">Pilih karakter dari crud, isi detail TTV, generate prompt untuk AI.</p>
 
-      <div class="grid">
-        <!-- PRESET -->
+      <!-- Pilih Karakter dari crud -->
+      <div>
+        <label>🆔 Pilih Karakter dari crud</label>
+        <select id="char_select" onchange="loadCharacter()">
+          <option value="">Pilih Karakter...</option>
+          <!-- Akan diisi dari crud data -->
+        </select>
+        <div class="hint">
+          Pilih karakter yang sudah dibuat di crud.html.
+        </div>
+      </div>
+
+      <!-- Tombol Load Data dan Generate -->
+      <div>
+        <button class="btn" onclick="loadCharacters()">📥 Load Karakter dari crud</button>
+        <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt TTV</button>
+      </div>
+
+      <!-- Form Detail TTV -->
+      <div class="hr"></div>
+      <div>
         <div>
-          <label>👤 Preset Karakter</label>
-          <select id="preset" onchange="applyPreset()">
-            <option value="default">Default (Umum)</option>
-            <option value="muslimah">Muslimah (Bicara)</option>
-            <option value="muslimah_silent">Muslimah Silent (Tanpa Dialog)</option>
+          <label>🎨 Gaya Seni Inti</label>
+          <select id="gaya_seni_inti_select" onchange="toggleCustom('gaya_seni_inti')">
+            <option value="">Pilih Gaya Seni Inti...</option>
+            <option value="Fotorealistis">Fotorealistis</option>
+            <option value="Sinematik 8K">Sinematik 8K</option>
+            <option value="Gaya Anime (Ghibli)">Gaya Anime (Ghibli)</option>
+            <option value="Gaya Anime (Shinkai)">Gaya Anime (Shinkai)</option>
+            <option value="Gaya Anime (90s)">Gaya Anime (90s)</option>
+            <option value="Lukisan (Cat Minyak)">Lukisan (Cat Minyak)</option>
+            <option value="Lukisan (Cat Air)">Lukisan (Cat Air)</option>
+            <option value="Seni Piksel (8-bit)">Seni Piksel (8-bit)</option>
+            <option value="Seni Piksel (16-bit)">Seni Piksel (16-bit)</option>
+            <option value="Cel-Shading">Cel-Shading</option>
+            <option value="Sketsa Pensil">Sketsa Pensil</option>
+            <option value="Stop Motion Clay">Stop Motion Clay</option>
+            <option value="Model 3D Low-Poly">Model 3D Low-Poly</option>
             <option value="other">Lainnya</option>
           </select>
-          <input type="text" id="preset_other" class="hidden" placeholder="Deskripsikan karakter (dalam bahasa Inggris)" />
-          <div class="hint">
-            Pilih tipe karakter. Kalau ragu, pilih <b>Muslimah</b>. Untuk "Lainnya", isi deskripsi manual.
-          </div>
+          <input type="text" id="gaya_seni_inti_custom" class="hidden" placeholder="Isi gaya seni inti custom" />
         </div>
-
-        <!-- ID KARAKTER (dari data GAS) -->
         <div>
-          <label>🆔 Pilih ID Karakter (dari Data)</label>
-          <select id="char_select" onchange="loadCharDetails()">
-            <option value="">Pilih ID...</option>
-            <!-- Akan diisi otomatis dari loadCharData -->
-          </select>
-          <div class="hint">
-            Pilih ID karakter dari database untuk konsistensi. Detail akan otomatis isi ke prompt.
-          </div>
-        </div>
-
-        <!-- USIA -->
-        <div>
-          <label>🎂 Usia (rentang)</label>
-          <input id="age" placeholder="contoh: 22–30 tahun" />
-          <div class="hint">
-            Gunakan <b>rentang umur</b>, bukan satu angka.
-          </div>
-        </div>
-
-        <!-- LOKASI -->
-        <div>
-          <label>🏠 Lokasi Pengambilan Video</label>
-          <input id="location" placeholder="contoh: dekat jendela ruang tamu" />
-          <div class="hint">
-            Lokasi rumah asli. Bukan studio, bukan green screen.
-          </div>
-        </div>
-
-        <!-- FOKUS -->
-        <div>
-          <label>📷 Fokus Kamera</label>
-          <select id="focus" onchange="applyFocus()">
-            <option value="wajah">wajah</option>
-            <option value="wajah + produk">wajah + produk</option>
+          <label>🖼️ Aliran Artistik</label>
+          <select id="aliran_artistik_select" onchange="toggleCustom('aliran_artistik')">
+            <option value="">Pilih Aliran Artistik...</option>
+            <option value="Surealisme">Surealisme</option>
+            <option value="Impresionisme">Impresionisme</option>
+            <option value="Art Deco">Art Deco</option>
+            <option value="Art Nouveau">Art Nouveau</option>
+            <option value="Bauhaus">Bauhaus</option>
+            <option value="Pop Art">Pop Art</option>
+            <option value="Gotik">Gotik</option>
+            <option value="Steampunk">Steampunk</option>
+            <option value="Cyberpunk">Cyberpunk</option>
+            <option value="Solarpunk">Solarpunk</option>
+            <option value="Vaporwave">Vaporwave</option>
+            <option value="Grunge">Grunge</option>
             <option value="other">Lainnya</option>
           </select>
-          <input type="text" id="focus_other" class="hidden" placeholder="Deskripsikan fokus (dalam bahasa Inggris)" />
-          <div class="hint">
-            Testimoni → wajah. Jualan halus → wajah + produk. Untuk "Lainnya", isi deskripsi manual.
-          </div>
+          <input type="text" id="aliran_artistik_custom" class="hidden" placeholder="Isi aliran artistik custom" />
         </div>
-
-        <!-- DIALOG -->
-        <div class="grid-1">
-          <label>💬 Dialog (opsional)</label>
-          <textarea id="dialog" placeholder="Kosongkan jika memilih Silent"></textarea>
-          <div class="hint">
-            1 kalimat pendek, jujur, tidak hard selling. (Tetap dalam bahasa asli, tidak diterjemahkan di prompt).
-          </div>
+        <div>
+          <label>🎨 Palet Warna</label>
+          <select id="palet_warna_select" onchange="toggleCustom('palet_warna')">
+            <option value="">Pilih Palet Warna...</option>
+            <option value="Monokromatik">Monokromatik</option>
+            <option value="Analog">Analog</option>
+            <option value="Komplementer">Komplementer</option>
+            <option value="Triadic">Triadic</option>
+            <option value="Sepia">Sepia</option>
+            <option value="Technicolor">Technicolor</option>
+            <option value="Pastel">Pastel</option>
+            <option value="Neon">Neon</option>
+            <option value="Skema Warna Wes Anderson">Skema Warna Wes Anderson</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="palet_warna_custom" class="hidden" placeholder="Isi palet warna custom" />
+        </div>
+        <div>
+          <label>💡 Pencahayaan</label>
+          <select id="pencahayaan_select" onchange="toggleCustom('pencahayaan')">
+            <option value="">Pilih Pencahayaan...</option>
+            <option value="High-Key">High-Key</option>
+            <option value="Low-Key">Low-Key</option>
+            <option value="Golden Hour">Golden Hour</option>
+            <option value="Blue Hour">Blue Hour</option>
+            <option value="Backlight">Backlight</option>
+            <option value="Pencahayaan Volumetrik">Pencahayaan Volumetrik</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="pencahayaan_custom" class="hidden" placeholder="Isi pencahayaan custom" />
+        </div>
+        <div>
+          <label>👥 Arketipe Karakter</label>
+          <select id="arketipe_karakter_select" onchange="toggleCustom('arketipe_karakter')">
+            <option value="">Pilih Arketipe Karakter...</option>
+            <option value="The Hero">The Hero</option>
+            <option value="The Mentor">The Mentor</option>
+            <option value="The Trickster">The Trickster</option>
+            <option value="The Anti-Hero">The Anti-Hero</option>
+            <option value="The Femme Fatale">The Femme Fatale</option>
+            <option value="The Innocent">The Innocent</option>
+            <option value="The Explorer">The Explorer</option>
+            <option value="The Rebel">The Rebel</option>
+            <option value="The Ruler">The Ruler</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="arketipe_karakter_custom" class="hidden" placeholder="Isi arketipe karakter custom" />
+        </div>
+        <div>
+          <label>🦸 Spesies/Bentuk</label>
+          <select id="spesies_bentuk_select" onchange="toggleCustom('spesies_bentuk')">
+            <option value="">Pilih Spesies/Bentuk...</option>
+            <option value="Manusia">Manusia</option>
+            <option value="Elf">Elf</option>
+            <option value="Dwarf">Dwarf</option>
+            <option value="Orc">Orc</option>
+            <option value="Cyborg">Cyborg</option>
+            <option value="Android">Android</option>
+            <option value="Alien (Xenomorph)">Alien (Xenomorph)</option>
+            <option value="Alien (Grey)">Alien (Grey)</option>
+            <option value="Entitas Kosmik">Entitas Kosmik</option>
+            <option value="Hewan Antropomorfik">Hewan Antropomorfik</option>
+            <option value="Makhluk Mitologi (Naga)">Makhluk Mitologi (Naga)</option>
+            <option value="Makhluk Mitologi (Griffin)">Makhluk Mitologi (Griffin)</option>
+            <option value="Makhluk Mitologi (Kitsune)">Makhluk Mitologi (Kitsune)</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="spesies_bentuk_custom" class="hidden" placeholder="Isi spesies/bentuk custom" />
+        </div>
+        <div>
+          <label>✨ Atribut Unik</label>
+          <select id="atribut_unik_select" onchange="toggleCustom('atribut_unik')">
+            <option value="">Pilih Atribut Unik...</option>
+            <option value="Mata Bionik">Mata Bionik</option>
+            <option value="Lengan Mekanis">Lengan Mekanis</option>
+            <option value="Tato yang Menyala">Tato yang Menyala</option>
+            <option value="Bekas Luka">Bekas Luka</option>
+            <option value="Rambut Terbuat dari Api">Rambut Terbuat dari Api</option>
+            <option value="Kulit Kristal">Kulit Kristal</option>
+            <option value="Sayap (Mekanis)">Sayap (Mekanis)</option>
+            <option value="Sayap (Organik)">Sayap (Organik)</option>
+            <option value="Tanduk">Tanduk</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="atribut_unik_custom" class="hidden" placeholder="Isi atribut unik custom" />
+        </div>
+        <div>
+          <label>🎵 Genre Musik</label>
+          <select id="genre_musik_select" onchange="toggleCustom('genre_musik')">
+            <option value="">Pilih Genre Musik...</option>
+            <option value="Orkestra Epik">Orkestra Epik</option>
+            <option value="Lo-Fi Hip Hop">Lo-Fi Hip Hop</option>
+            <option value="Synthwave/Retrowave">Synthwave/Retrowave</option>
+            <option value="Ambient">Ambient</option>
+            <option value="Musik Klasik (Barok)">Musik Klasik (Barok)</option>
+            <option value="Musik Klasik (Romantis)">Musik Klasik (Romantis)</option>
+            <option value="Heavy Metal">Heavy Metal</option>
+            <option value="Folk">Folk</option>
+            <option value="Jazz Noir">Jazz Noir</option>
+            <option value="Chiptune">Chiptune</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="genre_musik_custom" class="hidden" placeholder="Isi genre musik custom" />
+        </div>
+        <div>
+          <label>🔊 Desain Suara</label>
+          <select id="desain_suara_select" onchange="toggleCustom('desain_suara')">
+            <option value="">Pilih Desain Suara...</option>
+            <option value="Diegetic">Diegetic</option>
+            <option value="Non-Diegetic">Non-Diegetic</option>
+            <option value="Foley">Foley</option>
+            <option value="ASMR Triggers">ASMR Triggers</option>
+            <option value="Hening yang Menegangkan">Hening yang Menegangkan</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="desain_suara_custom" class="hidden" placeholder="Isi desain suara custom" />
+        </div>
+        <div>
+          <label>😊 Mood Dominan</label>
+          <select id="mood_dominan_select" onchange="toggleCustom('mood_dominan')">
+            <option value="">Pilih Mood Dominan...</option>
+            <option value="Menegangkan">Menegangkan</option>
+            <option value="Melankolis">Melankolis</option>
+            <option value="Nostalgia">Nostalgia</option>
+            <option value="Penuh Harapan">Penuh Harapan</option>
+            <option value="Heroik">Heroik</option>
+            <option value="Misterius">Misterius</option>
+            <option value="Aneh (Weird)">Aneh (Weird)</option>
+            <option value="Menenangkan (Calm)">Menenangkan (Calm)</option>
+            <option value="Energik">Energik</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="mood_dominan_custom" class="hidden" placeholder="Isi mood dominan custom" />
+        </div>
+        <div>
+          <label>🖼️ Tekstur & Kualitas</label>
+          <select id="tekstur_kualitas_select" onchange="toggleCustom('tekstur_kualitas')">
+            <option value="">Pilih Tekstur & Kualitas...</option>
+            <option value="Jernih (Clean 4K/8K)">Jernih (Clean 4K/8K)</option>
+            <option value="Film Grain">Film Grain</option>
+            <option value="Efek VHS">Efek VHS</option>
+            <option value="Lensa Anamorphic">Lensa Anamorphic</option>
+            <option value="Fokus Halus">Fokus Halus</option>
+            <option value="Vignette">Vignette</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="tekstur_kualitas_custom" class="hidden" placeholder="Isi tekstur & kualitas custom" />
+        </div>
+        <div>
+          <label>📐 Komposisi Bidikan</label>
+          <select id="komposisi_bidikan_select" onchange="toggleCustom('komposisi_bidikan')">
+            <option value="">Pilih Komposisi Bidikan...</option>
+            <option value="Rule of Thirds">Rule of Thirds</option>
+            <option value="Leading Lines">Leading Lines</option>
+            <option value="Simetri">Simetri</option>
+            <option value="Framing">Framing</option>
+            <option value="Golden Ratio">Golden Ratio</option>
+            <option value="Close-up Ekstrem">Close-up Ekstrem</option>
+            <option value="Wide Shot">Wide Shot</option>
+            <option value="Medium Shot">Medium Shot</option>
+            <option value="Full Shot">Full Shot</option>
+            <option value="Cowboy Shot">Cowboy Shot</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="komposisi_bidikan_custom" class="hidden" placeholder="Isi komposisi bidikan custom" />
+        </div>
+        <div>
+          <label>📷 Sudut Kamera</label>
+          <select id="sudut_kamera_select" onchange="toggleCustom('sudut_kamera')">
+            <option value="">Pilih Sudut Kamera...</option>
+            <option value="Eye-Level">Eye-Level</option>
+            <option value="High-Angle">High-Angle</option>
+            <option value="Low-Angle">Low-Angle</option>
+            <option value="Bird's-Eye-View">Bird's-Eye-View</option>
+            <option value="Worm's-Eye-View">Worm's-Eye-View</option>
+            <option value="Dutch Angle">Dutch Angle</option>
+            <option value="Over-the-Shoulder Shot">Over-the-Shoulder Shot</option>
+            <option value="Point-of-View (POV)">Point-of-View (POV)</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="sudut_kamera_custom" class="hidden" placeholder="Isi sudut kamera custom" />
         </div>
       </div>
 
-      <div class="example">
-        <strong>💡 Contoh Dialog yang Bagus</strong>
-        - “Awalnya aku ragu, tapi ternyata kepake banget.”<br/>
-        - “Buat aku ini simpel, tapi ngebantu.”<br/>
-        - “Aku pakai beberapa hari, hasilnya kerasa.”
-      </div>
-
+      <!-- Link Kembali ke Halaman Utama -->
       <div class="hr"></div>
-
-      <div class="actions">
-        <button class="btn" onclick="generate()">✨ Generate Prompt</button>
-        <button class="btn alt" onclick="copy()">📋 Copy Prompt</button>
-        <button class="btn ghost" onclick="fillExample()">🔄 Isi Contoh Otomatis</button>
-        <button class="btn ghost" onclick="resetForm()">🗑️ Reset</button>
-        <button class="btn ghost" onclick="window.location.href='index.html'">🏠 Kembali ke Home</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <label>📝 Prompt Final (siap copy)</label>
-      <textarea id="result" placeholder="Hasil akan muncul di sini..."></textarea>
-      <p class="muted">No cinematic • no filter • natural UGC look 🌟</p>
+      <p class="muted">Selesai generate prompt? <a href="index.html">Kembali ke Generator Prompt</a></p>
     </div>
   </div>
 
-<script>
-// Tambah variabel dan fungsi untuk load data karakter
-let charData = [];
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
-
-function loadCharData(){
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', GAS_URL + '?action=getData', true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        try {
-          const response = JSON.parse(xhr.responseText);
-          if (response.error) {
-            console.log('Error from GAS: ' + response.error);
-            return;
-          }
-          charData = response;
-          updateCharSelect();
-        } catch (e) {
-          console.log('Error parsing char data: ' + e.message);
-        }
-      } else {
-        console.log('Error loading char data: ' + xhr.status);
-      }
-    }
-  };
-  xhr.send();
-}
-
-function updateCharSelect(){
-  const select = document.getElementById('char_select');
-  select.innerHTML = '<option value="">Pilih ID...</option>';
-  charData.forEach((item, index) => {
-    if(item.char_id){
-      select.innerHTML += `<option value="${index}">${item.char_id}</option>`;
-    }
-  });
-}
-
-function loadCharDetails(){
-  const selectedIndex = document.getElementById('char_select').value;
-  if(selectedIndex !== ''){
-    const item = charData[selectedIndex];
-    // Gabung detail ke preset_other untuk konsistensi
-    const details = (item.attr_fisik ? item.attr_fisik + '. ' : '') +
-                    (item.cloth_id ? item.cloth_id + '. ' : '') +
-                    (item.voice_id ? item.voice_id + '. ' : '') +
-                    (item.style_id ? item.style_id + '. ' : '');
-    document.getElementById('preset_other').value = details.trim();
-    document.getElementById('preset').value = 'other';
-    applyPreset();
-  }
-}
-
-// Auto load char data saat halaman buka
-window.onload = function() {
-  loadCharData();
-};
-
-function applyPreset(){
-  const p = document.getElementById('preset').value;
-  const d = document.getElementById('dialog');
-  const po = document.getElementById('preset_other');
-  if(p === 'muslimah'){
-    d.placeholder = 'contoh: Awalnya aku ragu, tapi ternyata kepake banget.';
-    po.classList.add('hidden');
-  } else if(p === 'muslimah_silent'){
-    d.value = '';
-    d.placeholder = 'Tidak digunakan (silent)';
-    po.classList.add('hidden');
-  } else if(p === 'other'){
-    po.classList.remove('hidden');
-  } else {
-    po.classList.add('hidden');
-  }
-}
-
-function applyFocus(){
-  const f = document.getElementById('focus').value;
-  const fo = document.getElementById('focus_other');
-  if(f === 'other'){
-    fo.classList.remove('hidden');
-  } else {
-    fo.classList.add('hidden');
-  }
-}
-
-function fillExample(){
-  document.getElementById('preset').value = 'muslimah';
-  document.getElementById('age').value = '22–30 tahun';
-  document.getElementById('location').value = 'dekat jendela ruang tamu rumah';
-  document.getElementById('focus').value = 'wajah';
-  document.getElementById('dialog').value = 'Awalnya aku ragu, tapi ternyata kepake banget.';
-  applyPreset();
-  applyFocus();
-}
-
-function generate(){
-  const preset = document.getElementById('preset').value;
-  const preset_other = document.getElementById('preset_other').value;
-  const age = document.getElementById('age').value || '[usia]';
-  const location = document.getElementById('location').value || '[lokasi rumah]';
-  const focus = document.getElementById('focus').value;
-  const focus_other = document.getElementById('focus_other').value;
-  const dialog = document.getElementById('dialog').value;
-
-  let txt = '';
-  txt += 'A realistic UGC portrait-style vertical video (9:16). ';
-  txt += 'A close-up talking-head shot of an Indonesian woman aged ' + age + ', ';
-  txt += 'recorded using a smartphone front camera. ';
-  txt += 'Focus on ' + (focus === 'other' ? focus_other : focus) + '. ';
-  txt += 'The scene takes place in a real home environment at ' + location + ', ';
-  txt += 'lit by natural daylight from a nearby window. ';
-
-  if(preset === 'muslimah'){
-    txt += 'She wears a modest gamis with hijab fully covering her hair. ';
-    txt += 'She speaks naturally to the camera with calm, honest expressions. ';
-  } else if(preset === 'muslimah_silent'){
-    txt += 'She wears a modest gamis with hijab fully covering her hair. ';
-    txt += 'She does not speak; no mouth movement. Calm, natural expressions only. ';
-  } else if(preset === 'other'){
-    txt += preset_other + '. '; // Include detail dari data GAS
-    txt += 'The person speaks naturally with honest facial expressions. ';
-  } else {
-    txt += 'The person speaks naturally with honest facial expressions. ';
-  }
-
-  if(dialog && preset !== 'muslimah_silent'){
-    txt += 'Dialogue spoken naturally: "' + dialog + '". ';
-  }
-
-  txt += 'No cinematic lighting, no beauty filters, no studio setup, ';
-  txt += 'no background music, no text overlay, no watermark. ';
-  txt += 'The video feels authentic, personal, and trustworthy.';
-
-  document.getElementById('result').value = txt;
-}
-
-function copy(){
-  const t = document.getElementById('result');
-  t.select(); document.execCommand('copy');
-  alert('Prompt berhasil dicopy! 🎉');
-}
-
-function resetForm(){
-  ['age','location','dialog','result','preset_other','focus_other'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('preset').value='default';
-  document.getElementById('focus').value='wajah';
-  document.getElementById('char_select').value = '';
-  applyPreset();
-  applyFocus();
-}
-</script>
+  <script src="prompt_ttv.js"></script>
 </body>
 </html>
