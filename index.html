@@ -1,325 +1,114 @@
-<!-- index.html -->
+<!-- index.html - Kode Lengkap dengan Update Label dan Copy -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UGC Portrait Prompt Generator</title>
+  <title>UGC Prompt Generator - Data KTP</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <span class="pill">🎥 UGC • Portrait • Aman</span>
-      <h1>🚀 Prompt Generator</h1>
-      <p class="sub">Isi pelan-pelan. Ikuti contoh. Klik Generate → Copy. ✨</p>
+      <span class="pill">🆔 Data KTP Karakter</span>
+      <h1>🚀 Data KTP Karakter</h1>
+      <p class="sub">Ini data KTP karakter yang akan digunakan untuk konsistensi video. Input data dulu di Manage Data sebelum generate prompt. Klik Copy untuk copy data KTP dalam bahasa Inggris (siap kirim ke TTV).</p>
 
-      <!-- Generator Prompt (update: tambah dropdown untuk pilih dari data tersimpan) -->
-      <div class="grid">
-        <!-- PRESET -->
-        <div>
-          <label>👤 Preset Karakter</label>
-          <select id="preset" onchange="applyPreset()">
-            <option value="default">Default (Umum)</option>
-            <option value="muslimah">Muslimah (Bicara)</option>
-            <option value="muslimah_silent">Muslimah Silent (Tanpa Dialog)</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="preset_other" class="hidden" placeholder="Deskripsikan karakter (dalam bahasa Inggris)" />
-          <div class="hint">
-            Pilih tipe karakter. Kalau ragu, pilih <b>Muslimah</b>. Untuk "Lainnya", isi deskripsi manual.
-          </div>
-        </div>
-
-        <!-- ID KARAKTER (baru, dari data tersimpan) -->
-        <div>
-          <label>🆔 ID Karakter (dari Data)</label>
-          <select id="char_select" onchange="loadCharDetails()">
-            <option value="">Pilih dari Data...</option>
-            <!-- Akan diisi otomatis dari loadData -->
-          </select>
-          <div class="hint">
-            Pilih ID karakter dari list tersimpan untuk konsistensi.
-          </div>
-        </div>
-
-        <!-- USIA -->
-        <div>
-          <label>🎂 Usia (rentang)</label>
-          <input id="age" placeholder="contoh: 22–30 tahun" />
-          <div class="hint">
-            Gunakan <b>rentang umur</b>, bukan satu angka.
-          </div>
-        </div>
-
-        <!-- LOKASI -->
-        <div>
-          <label>🏠 Lokasi Pengambilan Video</label>
-          <input id="location" placeholder="contoh: dekat jendela ruang tamu" />
-          <div class="hint">
-            Lokasi rumah asli. Bukan studio, bukan green screen.
-          </div>
-        </div>
-
-        <!-- FOKUS -->
-        <div>
-          <label>📷 Fokus Kamera</label>
-          <select id="focus" onchange="applyFocus()">
-            <option value="wajah">wajah</option>
-            <option value="wajah + produk">wajah + produk</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="focus_other" class="hidden" placeholder="Deskripsikan fokus (dalam bahasa Inggris)" />
-          <div class="hint">
-            Testimoni → wajah. Jualan halus → wajah + produk. Untuk "Lainnya", isi deskripsi manual.
-          </div>
-        </div>
-
-        <!-- DIALOG -->
-        <div class="grid-1">
-          <label>💬 Dialog (opsional)</label>
-          <textarea id="dialog" placeholder="Kosongkan jika memilih Silent"></textarea>
-          <div class="hint">
-            1 kalimat pendek, jujur, tidak hard selling. (Tetap dalam bahasa asli, tidak diterjemahkan di prompt).
-          </div>
-        </div>
+      <!-- Arahan untuk TTV -->
+      <div class="example">
+        <strong>💡 Arahan untuk TTV</strong>
+        Kirim data KTP ini ke TTV untuk konsistensi karakter di semua video. Pastikan karakter selalu menggunakan atribut fisik, pakaian, suara, dan gaya visual yang sama di setiap prompt.
       </div>
 
-      <div class="example">
-        <strong>💡 Contoh Dialog yang Bagus</strong>
-        - “Awalnya aku ragu, tapi ternyata kepake banget.”<br/>
-        - “Buat aku ini simpel, tapi ngebantu.”<br/>
-        - “Aku pakai beberapa hari, hasilnya kerasa.”
+      <!-- List Data KTP (dalam English) -->
+      <div class="hr"></div>
+      <label>📋 Data KTP dari Google Sheets (dalam Bahasa Inggris)</label>
+      <div id="ktp_list" class="example">
+        <!-- Data akan muncul di sini -->
       </div>
 
       <div class="hr"></div>
 
       <div class="actions">
-        <button class="btn" onclick="generate()">✨ Generate Prompt</button>
-        <button class="btn alt" onclick="copy()">📋 Copy Prompt</button>
-        <button class="btn ghost" onclick="fillExample()">🔄 Isi Contoh Otomatis</button>
-        <button class="btn ghost" onclick="resetForm()">🗑️ Reset</button>
+        <button class="btn" onclick="copyKTP()">📋 Copy Data KTP (English)</button>
+        <button class="btn ghost" onclick="window.location.href='crud.html'">🗂️ Manage Data</button>
+        <button class="btn alt" onclick="window.location.href='prompt_ttv.html'">✨ Generate Prompt</button>
       </div>
 
-      <div class="hr"></div>
-
-      <label>📝 Prompt Final (siap copy)</label>
-      <textarea id="result" placeholder="Hasil akan muncul di sini..."></textarea>
-      <p class="muted">No cinematic • no filter • natural UGC look 🌟</p>
-    </div>
-
-    <!-- Bagian Manage Data (CRUD dengan Sheets, update field) -->
-    <div class="card" style="margin-top: 20px;">
-      <h1>🗂️ Manage Data (CRUD dengan Google Sheets)</h1>
-      <p class="sub">Data disimpan online di Google Sheets. Klik Load Data untuk lihat/update.</p>
-
-      <!-- Form Add/Edit -->
-      <div class="grid">
-        <div>
-          <label>🆔 ID Karakter</label>
-          <input id="char_id" placeholder="contoh: CHAR-ID: ASTRA-01" />
-        </div>
-        <div>
-          <label>👤 Atribut Fisik</label>
-          <input id="attr_fisik" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
-        </div>
-        <div>
-          <label>👕 ID Pakaian</label>
-          <input id="cloth_id" placeholder="contoh: OUTFIT-ID: ASTRA-CASUAL-01" />
-        </div>
-        <div>
-          <label>🎤 ID Suara</label>
-          <input id="voice_id" placeholder="contoh: VOICE-ID: ALTO-MYSTERY-01" />
-        </div>
-        <div>
-          <label>🌍 ID Gaya Visual</label>
-          <input id="style_id" placeholder="contoh: STYLE-ID: NEO-JAKARTA-RAINY-01" />
-        </div>
-        <div>
-          <button class="btn" onclick="addData()">➕ Add Data</button>
-          <button class="btn alt" onclick="updateData()">✏️ Update Data</button>
-          <button class="btn ghost" onclick="loadData()">📥 Load Data</button>
-        </div>
-      </div>
-
-      <!-- List Data -->
-      <div class="hr"></div>
-      <label>📋 List Data dari Sheets</label>
-      <div id="data_list" class="example">
-        <!-- Data akan muncul di sini -->
-      </div>
+      <p class="muted">Flow: Input data di Manage Data → Copy KTP → Generate Prompt → Kirim ke TTV 🌟</p>
     </div>
   </div>
 
 <script>
-// Ganti ini dengan URL GAS kamu
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxLmTZgBsLM8lyqMuFOhX3A97mC9-oGqN5dVg91mFLwxAhTlSmSgZd1sEWgiNeemfeiWg/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
 
-// Fungsi Generator Prompt (update: tambah char details)
-function applyPreset(){
-  const p = document.getElementById('preset').value;
-  const d = document.getElementById('dialog');
-  const po = document.getElementById('preset_other');
-  if(p === 'muslimah'){
-    d.placeholder = 'contoh: Awalnya aku ragu, tapi ternyata kepake banget.';
-    po.classList.add('hidden');
-  } else if(p === 'muslimah_silent'){
-    d.value = '';
-    d.placeholder = 'Tidak digunakan (silent)';
-    po.classList.add('hidden');
-  } else if(p === 'other'){
-    po.classList.remove('hidden');
-  } else {
-    po.classList.add('hidden');
-  }
-}
+let ktpData = [];
 
-function applyFocus(){
-  const f = document.getElementById('focus').value;
-  const fo = document.getElementById('focus_other');
-  if(f === 'other'){
-    fo.classList.remove('hidden');
-  } else {
-    fo.classList.add('hidden');
-  }
-}
-
-function loadCharDetails(){
-  const selected = document.getElementById('char_select').value;
-  if(selected){
-    const item = data.find(d => d.char_id === selected);
-    if(item){
-      // Isi detail ke preset_other atau langsung ke prompt
-      document.getElementById('preset_other').value = item.attr_fisik + ' ' + item.cloth_id + ' ' + item.voice_id + ' ' + item.style_id;
-      document.getElementById('preset').value = 'other';
-      applyPreset();
+function loadKTPData(){
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', GAS_URL + '?action=getData', true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+          if (response.error) {
+            alert('Error from GAS: ' + response.error);
+            return;
+          }
+          ktpData = response;
+          renderKTPList();
+        } catch (e) {
+          alert('Error parsing data: ' + e.message);
+        }
+      } else {
+        alert('Error loading data: ' + xhr.status);
+      }
     }
-  }
+  };
+  xhr.send();
 }
 
-function fillExample(){
-  document.getElementById('preset').value = 'muslimah';
-  document.getElementById('age').value = '22–30 tahun';
-  document.getElementById('location').value = 'dekat jendela ruang tamu rumah';
-  document.getElementById('focus').value = 'wajah';
-  document.getElementById('dialog').value = 'Awalnya aku ragu, tapi ternyata kepake banget.';
-  applyPreset();
-  applyFocus();
-}
-
-function generate(){
-  const preset = document.getElementById('preset').value;
-  const preset_other = document.getElementById('preset_other').value;
-  const age = document.getElementById('age').value || '[usia]';
-  const location = document.getElementById('location').value || '[lokasi rumah]';
-  const focus = document.getElementById('focus').value;
-  const focus_other = document.getElementById('focus_other').value;
-  const dialog = document.getElementById('dialog').value;
-
-  let txt = '';
-  txt += 'A realistic UGC portrait-style vertical video (9:16). ';
-  txt += 'A close-up talking-head shot of an Indonesian woman aged ' + age + ', ';
-  txt += 'recorded using a smartphone front camera. ';
-  txt += 'Focus on ' + (focus === 'other' ? focus_other : focus) + '. ';
-  txt += 'The scene takes place in a real home environment at ' + location + ', ';
-  txt += 'lit by natural daylight from a nearby window. ';
-
-  if(preset === 'muslimah'){
-    txt += 'She wears a modest gamis with hijab fully covering her hair. ';
-    txt += 'She speaks naturally to the camera with calm, honest expressions. ';
-  } else if(preset === 'muslimah_silent'){
-    txt += 'She wears a modest gamis with hijab fully covering her hair. ';
-    txt += 'She does not speak; no mouth movement. Calm, natural expressions only. ';
-  } else if(preset === 'other'){
-    txt += preset_other + '. '; // Gabung detail dari data tersimpan
-    txt += 'The person speaks naturally with honest facial expressions. ';
-  } else {
-    txt += 'The person speaks naturally with honest facial expressions. ';
-  }
-
-  if(dialog && preset !== 'muslimah_silent'){
-    txt += 'Dialogue spoken naturally: "' + dialog + '". ';
-  }
-
-  txt += 'No cinematic lighting, no beauty filters, no studio setup, ';
-  txt += 'no background music, no text overlay, no watermark. ';
-  txt += 'The video feels authentic, personal, and trustworthy.';
-
-  document.getElementById('result').value = txt;
-}
-
-function copy(){
-  const t = document.getElementById('result');
-  t.select(); document.execCommand('copy');
-  alert('Prompt berhasil dicopy! 🎉');
-}
-
-function resetForm(){
-  ['age','location','dialog','result','preset_other','focus_other','char_id','attr_fisik','cloth_id','voice_id','style_id'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('preset').value='default';
-  document.getElementById('focus').value='wajah';
-  document.getElementById('char_select').innerHTML = '<option value="">Pilih dari Data...</option>';
-  applyPreset();
-  applyFocus();
-}
-
-// Fungsi CRUD dengan Sheets
-let data = [];
-let editIndex = -1;
-
-async function loadData(){
-  try {
-    const response = await fetch(GAS_URL + '?action=getData');
-    data = await response.json();
-    renderList();
-    updateCharSelect(); // Update dropdown karakter
-    alert('Data berhasil dimuat dari Sheets! 📥');
-  } catch (error) {
-    alert('Error loading data: ' + error.message);
-  }
-}
-
-function updateCharSelect(){
-  const select = document.getElementById('char_select');
-  select.innerHTML = '<option value="">Pilih dari Data...</option>';
-  data.forEach(item => {
-    if(item.char_id){
-      select.innerHTML += `<option value="${item.char_id}">${item.char_id}</option>`;
-    }
-  });
-}
-
-function renderList(){
-  const list = document.getElementById('data_list');
+function renderKTPList(){
+  const list = document.getElementById('ktp_list');
   list.innerHTML = '';
-  if(data.length === 0){
-    list.innerHTML = '<p>Tidak ada data.</p>';
+  if(ktpData.length === 0){
+    list.innerHTML = '<p>Tidak ada data KTP. Klik Manage Data untuk input dulu.</p>';
     return;
   }
-  data.forEach((item, index) => {
+  ktpData.forEach((item, index) => {
     list.innerHTML += `
       <div style="border-bottom: 1px solid #e5e7eb; padding: 8px 0;">
-        <strong>ID Karakter:</strong> ${item.char_id || 'Kosong'} | 
-        <strong>Atribut Fisik:</strong> ${item.attr_fisik || 'Kosong'} | 
-        <strong>ID Pakaian:</strong> ${item.cloth_id || 'Kosong'} | 
-        <strong>ID Suara:</strong> ${item.voice_id || 'Kosong'} | 
-        <strong>ID Gaya:</strong> ${item.style_id || 'Kosong'}
-        <button onclick="editData(${index})" style="margin-left: 10px; background: #22c55e; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Edit</button>
-        <button onclick="deleteData(${index})" style="margin-left: 5px; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Delete</button>
+        <strong>Character ID:</strong> ${item.char_id || 'Empty'}<br/>
+        <strong>Physical Attributes:</strong> ${item.attr_fisik || 'Empty'}<br/>
+        <strong>Clothing:</strong> ${item.cloth_id || 'Empty'}<br/>
+        <strong>Voice:</strong> ${item.voice_id || 'Empty'}<br/>
+        <strong>Visual Style:</strong> ${item.style_id || 'Empty'}
       </div>
     `;
   });
 }
 
-async function addData(){
-  const char_id = document.getElementById('char_id').value.trim();
-  const attr_fisik = document.getElementById('attr_fisik').value.trim();
-  const cloth_id = document.getElementById('cloth_id').value.trim();
-  const voice_id = document.getElementById('voice_id').value.trim();
-  const style_id = document.getElementById('style_id').value.trim();
-  if(!char_id && !attr_fisik && !cloth_id && !voice_id && !style_id){
-    alert('Isi setidaknya satu field!');
-    return;
-  }
-  try {
-    const response = await fetch(GAS_URL + '?action=addData&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id
+function copyKTP(){
+  let text = 'Character KTP Data (for TTV consistency):\n';
+  ktpData.forEach((item, index) => {
+    text += `\nCharacter ID: ${item.char_id || 'Empty'}\n`;
+    text += `Physical Attributes: ${item.attr_fisik || 'Empty'}\n`;
+    text += `Clothing: ${item.cloth_id || 'Empty'}\n`;
+    text += `Voice: ${item.voice_id || 'Empty'}\n`;
+    text += `Visual Style: ${item.style_id || 'Empty'}\n`;
+  });
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Data KTP berhasil dicopy dalam bahasa Inggris! 📋');
+  }).catch(err => {
+    alert('Gagal copy: ' + err);
+  });
+}
+
+// Auto load data saat halaman buka
+window.onload = function() {
+  loadKTPData();
+};
+</script>
+</body>
+</html>
