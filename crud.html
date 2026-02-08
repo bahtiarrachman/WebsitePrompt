@@ -46,19 +46,63 @@
         </div>
         <div>
           <label>👤 Atribut Fisik</label>
-          <input id="attr_fisik" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
+          <select id="attr_fisik_select" onchange="toggleCustom('attr_fisik')">
+            <option value="">Pilih Atribut Fisik...</option>
+            <option value="Oval">Oval</option>
+            <option value="Bulat">Bulat</option>
+            <option value="Persegi">Persegi</option>
+            <option value="Tirus">Tirus</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="attr_fisik_custom" class="hidden" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
         </div>
         <div>
           <label>👕 Pakaian</label>
-          <input id="cloth_id" placeholder="contoh: Casual outfit" />
+          <select id="cloth_id_select" onchange="toggleCustom('cloth_id')">
+            <option value="">Pilih Pakaian...</option>
+            <option value="Kasual - Kaos & Jeans">Kasual - Kaos & Jeans</option>
+            <option value="Kasual - Hoodie & Jogger">Kasual - Hoodie & Jogger</option>
+            <option value="Formal - Setelan Jas">Formal - Setelan Jas</option>
+            <option value="Formal - Gaun Malam">Formal - Gaun Malam</option>
+            <option value="Fantasi - Jubah Penyihir">Fantasi - Jubah Penyihir</option>
+            <option value="Fantasi - Baju Zirah Ksatria">Fantasi - Baju Zirah Ksatria</option>
+            <option value="Sci-Fi - Seragam Angkasa">Sci-Fi - Seragam Angkasa</option>
+            <option value="Sci-Fi - Jaket Cybernetic">Sci-Fi - Jaket Cybernetic</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="cloth_id_custom" class="hidden" placeholder="contoh: Casual outfit" />
         </div>
         <div>
           <label>🎤 Suara</label>
-          <input id="voice_id" placeholder="contoh: Alto voice" />
+          <select id="voice_id_select" onchange="toggleCustom('voice_id')">
+            <option value="">Pilih Suara...</option>
+            <option value="Alto (Rendah Wanita)">Alto (Rendah Wanita)</option>
+            <option value="Soprano (Tinggi Wanita)">Soprano (Tinggi Wanita)</option>
+            <option value="Bass (Rendah Pria)">Bass (Rendah Pria)</option>
+            <option value="Bariton (Sedang Pria)">Bariton (Sedang Pria)</option>
+            <option value="Tenor (Tinggi Pria)">Tenor (Tinggi Pria)</option>
+            <option value="Jernih">Jernih</option>
+            <option value="Serak">Serak</option>
+            <option value="Lembut">Lembut</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="voice_id_custom" class="hidden" placeholder="contoh: Alto voice" />
         </div>
         <div>
           <label>🌍 Gaya Visual</label>
-          <input id="style_id" placeholder="contoh: Modern style" />
+          <select id="style_id_select" onchange="toggleCustom('style_id')">
+            <option value="">Pilih Gaya Visual...</option>
+            <option value="Realistis - Gaya Sinematik">Realistis - Gaya Sinematik</option>
+            <option value="Realistis - Gaya Dokumenter">Realistis - Gaya Dokumenter</option>
+            <option value="Animasi - Gaya Anime">Animasi - Gaya Anime</option>
+            <option value="Animasi - Gaya Kartun">Animasi - Gaya Kartun</option>
+            <option value="Animasi - Gaya 3D">Animasi - Gaya 3D</option>
+            <option value="Stilisasi - Lukisan Hidup">Stilisasi - Lukisan Hidup</option>
+            <option value="Stilisasi - Cyberpunk">Stilisasi - Cyberpunk</option>
+            <option value="Stilisasi - Hitam Putih">Stilisasi - Hitam Putih</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="style_id_custom" class="hidden" placeholder="contoh: Modern style" />
         </div>
         <!-- Field Baru -->
         <div>
