@@ -1,4 +1,4 @@
-<!-- crud.html - Update dengan menu untuk input data baru dan pilih ID tersimpan -->
+<!-- crud.html - Kode Lengkap dengan Update Terakhir -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -83,8 +83,7 @@
   </div>
 
 <script>
-// Ganti ini dengan URL GAS kamu (yang sama seperti di index.html)
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxLmTZgBsLM8lyqMuFOhX3A97mC9-oGqN5dVg91mFLwxAhTlSmSgZd1sEWgiNeemfeiWg/exec'; // Contoh: https://script.google.com/macros/s/ABC123/exec
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxLmTZgBsLM8lyqMuFOhX3A97mC9-oGqN5dVg91mFLwxAhTlSmSgZd1sEWgiNeemfeiWg/exec';
 
 let data = [];
 let editIndex = -1;
@@ -130,16 +129,31 @@ function loadToForm(){
   }
 }
 
-async function loadData(){
-  try {
-    const response = await fetch(GAS_URL + '?action=getData');
-    data = await response.json();
-    renderList();
-    updateExistingSelect();
-    alert('Data berhasil dimuat dari Sheets! 📥');
-  } catch (error) {
-    alert('Error loading data: ' + error.message);
-  }
+function loadData(){
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', GAS_URL + '?action=getData', true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+          if (response.error) {
+            alert('Error from GAS: ' + response.error);
+            return;
+          }
+          data = response;
+          renderList();
+          updateExistingSelect();
+          alert('Data berhasil dimuat dari Sheets! 📥');
+        } catch (e) {
+          alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
+        }
+      } else {
+        alert('Error loading data: ' + xhr.status + ' - ' + xhr.responseText);
+      }
+    }
+  };
+  xhr.send();
 }
 
 function renderList(){
@@ -164,7 +178,7 @@ function renderList(){
   });
 }
 
-async function addData(){
+function addData(){
   const char_id = document.getElementById('char_id').value.trim();
   const attr_fisik = document.getElementById('attr_fisik').value.trim();
   const cloth_id = document.getElementById('cloth_id').value.trim();
@@ -174,18 +188,22 @@ async function addData(){
     alert('Isi setidaknya satu field!');
     return;
   }
-  try {
-    const response = await fetch(GAS_URL + '?action=addData&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id));
-    const result = await response.text();
-    alert(result);
-    loadData(); // Reload data
-    clearForm();
-  } catch (error) {
-    alert('Error adding data: ' + error.message);
-  }
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', GAS_URL + '?action=addData&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id), true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        alert(xhr.responseText);
+        loadData(); // Reload setelah add
+      } else {
+        alert('Error adding data: ' + xhr.status + ' - ' + xhr.responseText);
+      }
+    }
+  };
+  xhr.send();
 }
 
-async function updateData(){
+function updateData(){
   if(editIndex === -1){
     alert('Pilih data untuk edit dulu!');
     return;
@@ -195,28 +213,38 @@ async function updateData(){
   const cloth_id = document.getElementById('cloth_id').value.trim();
   const voice_id = document.getElementById('voice_id').value.trim();
   const style_id = document.getElementById('style_id').value.trim();
-  try {
-    const response = await fetch(GAS_URL + '?action=updateData&index=' + editIndex + '&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id));
-    const result = await response.text();
-    alert(result);
-    loadData();
-    clearForm();
-    editIndex = -1;
-  } catch (error) {
-    alert('Error updating data: ' + error.message);
-  }
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', GAS_URL + '?action=updateData&index=' + editIndex + '&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id), true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        alert(xhr.responseText);
+        loadData();
+        clearForm();
+        editIndex = -1;
+      } else {
+        alert('Error updating data: ' + xhr.status + ' - ' + xhr.responseText);
+      }
+    }
+  };
+  xhr.send();
 }
 
-async function deleteData(index){
+function deleteData(index){
   if(confirm('Yakin hapus data ini?')){
-    try {
-      const response = await fetch(GAS_URL + '?action=deleteData&index=' + index);
-      const result = await response.text();
-      alert(result);
-      loadData();
-    } catch (error) {
-      alert('Error deleting data: ' + error.message);
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', GAS_URL + '?action=deleteData&index=' + index, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          alert(xhr.responseText);
+          loadData();
+        } else {
+          alert('Error deleting data: ' + xhr.status + ' - ' + xhr.responseText);
+        }
+      }
+    };
+    xhr.send();
   }
 }
 
@@ -228,7 +256,6 @@ function editData(index){
   document.getElementById('voice_id').value = item.voice_id || '';
   document.getElementById('style_id').value = item.style_id || '';
   editIndex = index;
-  // Switch to edit mode
   document.getElementById('mode').value = 'edit';
   switchMode();
   document.getElementById('existing_select').value = index;
