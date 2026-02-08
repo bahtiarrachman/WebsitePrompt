@@ -1,0 +1,246 @@
+<!-- crud.html - Update dengan menu untuk input data baru dan pilih ID tersimpan -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manage Data - UGC Prompt Generator</title>
+  <link rel="stylesheet" href="style.css"> <!-- Pakai CSS yang sama -->
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="pill">🗂️ Manage Data • CRUD</span>
+      <h1>🚀 Manage Data (CRUD)</h1>
+      <p class="sub">Tambah, edit, atau hapus data ID Karakter, dll. Data disimpan di Google Sheets. Klik Load Data untuk mulai.</p>
+
+      <!-- Menu: Pilih Mode -->
+      <div class="grid">
+        <div>
+          <label>📋 Mode</label>
+          <select id="mode" onchange="switchMode()">
+            <option value="add">Input Data Baru</option>
+            <option value="edit">Pilih ID Tersimpan untuk Edit</option>
+          </select>
+          <div class="hint">
+            Pilih "Input Data Baru" untuk tambah data. Pilih "Pilih ID Tersimpan" untuk edit data existing.
+          </div>
+        </div>
+        <div id="select_existing" class="hidden">
+          <label>🆔 Pilih ID Karakter Tersimpan</label>
+          <select id="existing_select" onchange="loadToForm()">
+            <option value="">Pilih ID...</option>
+            <!-- Akan diisi otomatis dari loadData -->
+          </select>
+          <div class="hint">
+            Pilih ID dari list tersimpan, lalu edit di form bawah.
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Add/Edit -->
+      <div class="hr"></div>
+      <div class="grid">
+        <div>
+          <label>🆔 ID Karakter</label>
+          <input id="char_id" placeholder="contoh: CHAR-ID: ASTRA-01" />
+        </div>
+        <div>
+          <label>👤 Atribut Fisik</label>
+          <input id="attr_fisik" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
+        </div>
+        <div>
+          <label>👕 ID Pakaian</label>
+          <input id="cloth_id" placeholder="contoh: OUTFIT-ID: ASTRA-CASUAL-01" />
+        </div>
+        <div>
+          <label>🎤 ID Suara</label>
+          <input id="voice_id" placeholder="contoh: VOICE-ID: ALTO-MYSTERY-01" />
+        </div>
+        <div>
+          <label>🌍 ID Gaya Visual</label>
+          <input id="style_id" placeholder="contoh: STYLE-ID: NEO-JAKARTA-RAINY-01" />
+        </div>
+        <div>
+          <button class="btn" id="add_btn" onclick="addData()">➕ Add Data Baru</button>
+          <button class="btn alt" id="update_btn" onclick="updateData()" style="display:none;">✏️ Update Data</button>
+          <button class="btn ghost" onclick="loadData()">📥 Load Data</button>
+          <button class="btn ghost" onclick="clearForm()">🗑️ Clear Form</button>
+        </div>
+      </div>
+
+      <!-- List Data -->
+      <div class="hr"></div>
+      <label>📋 List Data dari Google Sheets</label>
+      <div id="data_list" class="example">
+        <!-- Data akan muncul di sini -->
+      </div>
+
+      <!-- Link Kembali ke Halaman Utama -->
+      <div class="hr"></div>
+      <p class="muted">Selesai manage data? <a href="index.html">Kembali ke Generator Prompt</a></p>
+    </div>
+  </div>
+
+<script>
+// Ganti ini dengan URL GAS kamu (yang sama seperti di index.html)
+const GAS_URL = 'YOUR_GAS_URL'; // Contoh: https://script.google.com/macros/s/ABC123/exec
+
+let data = [];
+let editIndex = -1;
+
+function switchMode(){
+  const mode = document.getElementById('mode').value;
+  const selectDiv = document.getElementById('select_existing');
+  const addBtn = document.getElementById('add_btn');
+  const updateBtn = document.getElementById('update_btn');
+  if(mode === 'edit'){
+    selectDiv.classList.remove('hidden');
+    addBtn.style.display = 'none';
+    updateBtn.style.display = 'inline-block';
+    updateExistingSelect();
+  } else {
+    selectDiv.classList.add('hidden');
+    addBtn.style.display = 'inline-block';
+    updateBtn.style.display = 'none';
+    clearForm();
+  }
+}
+
+function updateExistingSelect(){
+  const select = document.getElementById('existing_select');
+  select.innerHTML = '<option value="">Pilih ID...</option>';
+  data.forEach((item, index) => {
+    if(item.char_id){
+      select.innerHTML += `<option value="${index}">${item.char_id}</option>`;
+    }
+  });
+}
+
+function loadToForm(){
+  const selectedIndex = document.getElementById('existing_select').value;
+  if(selectedIndex !== ''){
+    const item = data[selectedIndex];
+    document.getElementById('char_id').value = item.char_id || '';
+    document.getElementById('attr_fisik').value = item.attr_fisik || '';
+    document.getElementById('cloth_id').value = item.cloth_id || '';
+    document.getElementById('voice_id').value = item.voice_id || '';
+    document.getElementById('style_id').value = item.style_id || '';
+    editIndex = selectedIndex;
+  }
+}
+
+async function loadData(){
+  try {
+    const response = await fetch(GAS_URL + '?action=getData');
+    data = await response.json();
+    renderList();
+    updateExistingSelect();
+    alert('Data berhasil dimuat dari Sheets! 📥');
+  } catch (error) {
+    alert('Error loading data: ' + error.message);
+  }
+}
+
+function renderList(){
+  const list = document.getElementById('data_list');
+  list.innerHTML = '';
+  if(data.length === 0){
+    list.innerHTML = '<p>Tidak ada data. Klik Load Data untuk muat dari Sheets.</p>';
+    return;
+  }
+  data.forEach((item, index) => {
+    list.innerHTML += `
+      <div style="border-bottom: 1px solid #e5e7eb; padding: 8px 0;">
+        <strong>ID Karakter:</strong> ${item.char_id || 'Kosong'} | 
+        <strong>Atribut Fisik:</strong> ${item.attr_fisik || 'Kosong'} | 
+        <strong>ID Pakaian:</strong> ${item.cloth_id || 'Kosong'} | 
+        <strong>ID Suara:</strong> ${item.voice_id || 'Kosong'} | 
+        <strong>ID Gaya:</strong> ${item.style_id || 'Kosong'}
+        <button onclick="editData(${index})" style="margin-left: 10px; background: #22c55e; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Edit</button>
+        <button onclick="deleteData(${index})" style="margin-left: 5px; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Delete</button>
+      </div>
+    `;
+  });
+}
+
+async function addData(){
+  const char_id = document.getElementById('char_id').value.trim();
+  const attr_fisik = document.getElementById('attr_fisik').value.trim();
+  const cloth_id = document.getElementById('cloth_id').value.trim();
+  const voice_id = document.getElementById('voice_id').value.trim();
+  const style_id = document.getElementById('style_id').value.trim();
+  if(!char_id && !attr_fisik && !cloth_id && !voice_id && !style_id){
+    alert('Isi setidaknya satu field!');
+    return;
+  }
+  try {
+    const response = await fetch(GAS_URL + '?action=addData&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id));
+    const result = await response.text();
+    alert(result);
+    loadData(); // Reload data
+    clearForm();
+  } catch (error) {
+    alert('Error adding data: ' + error.message);
+  }
+}
+
+async function updateData(){
+  if(editIndex === -1){
+    alert('Pilih data untuk edit dulu!');
+    return;
+  }
+  const char_id = document.getElementById('char_id').value.trim();
+  const attr_fisik = document.getElementById('attr_fisik').value.trim();
+  const cloth_id = document.getElementById('cloth_id').value.trim();
+  const voice_id = document.getElementById('voice_id').value.trim();
+  const style_id = document.getElementById('style_id').value.trim();
+  try {
+    const response = await fetch(GAS_URL + '?action=updateData&index=' + editIndex + '&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id));
+    const result = await response.text();
+    alert(result);
+    loadData();
+    clearForm();
+    editIndex = -1;
+  } catch (error) {
+    alert('Error updating data: ' + error.message);
+  }
+}
+
+async function deleteData(index){
+  if(confirm('Yakin hapus data ini?')){
+    try {
+      const response = await fetch(GAS_URL + '?action=deleteData&index=' + index);
+      const result = await response.text();
+      alert(result);
+      loadData();
+    } catch (error) {
+      alert('Error deleting data: ' + error.message);
+    }
+  }
+}
+
+function editData(index){
+  const item = data[index];
+  document.getElementById('char_id').value = item.char_id || '';
+  document.getElementById('attr_fisik').value = item.attr_fisik || '';
+  document.getElementById('cloth_id').value = item.cloth_id || '';
+  document.getElementById('voice_id').value = item.voice_id || '';
+  document.getElementById('style_id').value = item.style_id || '';
+  editIndex = index;
+  // Switch to edit mode
+  document.getElementById('mode').value = 'edit';
+  switchMode();
+  document.getElementById('existing_select').value = index;
+}
+
+function clearForm(){
+  ['char_id','attr_fisik','cloth_id','voice_id','style_id'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('existing_select').value = '';
+  editIndex = -1;
+  document.getElementById('mode').value = 'add';
+  switchMode();
+}
+</script>
+</body>
+</html>
