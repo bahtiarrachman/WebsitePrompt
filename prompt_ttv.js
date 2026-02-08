@@ -1,4 +1,4 @@
-// prompt_ttv.js - Lengkap untuk prompt_ttv.html
+// prompt_ttv.js - Update: Handle Optional, Dialog, English Prompt
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
 
 let characters = [];
@@ -43,7 +43,6 @@ function loadCharacter(){
   const selectedIndex = document.getElementById('char_select').value;
   if(selectedIndex !== ''){
     const item = characters[selectedIndex];
-    // Load karakter data ke form jika perlu, tapi di sini fokus generate prompt
     alert('Karakter ' + item.char_id + ' dipilih. Isi detail TTV lalu generate prompt.');
   }
 }
@@ -52,6 +51,17 @@ function toggleCustom(field){
   const select = document.getElementById(field + '_select');
   const custom = document.getElementById(field + '_custom');
   if(select.value === 'other'){
+    custom.classList.remove('hidden');
+  } else {
+    custom.classList.add('hidden');
+    custom.value = '';
+  }
+}
+
+function toggleDialog(){
+  const select = document.getElementById('dialog_select');
+  const custom = document.getElementById('dialog_custom');
+  if(select.value === 'custom'){
     custom.classList.remove('hidden');
   } else {
     custom.classList.add('hidden');
@@ -72,55 +82,54 @@ function generatePrompt(){
     return;
   }
   const char = characters[selectedIndex];
-  const gaya_seni_inti = getFieldValue('gaya_seni_inti');
-  const aliran_artistik = getFieldValue('aliran_artistik');
-  const palet_warna = getFieldValue('palet_warna');
-  const pencahayaan = getFieldValue('pencahayaan');
-  const arketipe_karakter = getFieldValue('arketipe_karakter');
-  const spesies_bentuk = getFieldValue('spesies_bentuk');
-  const atribut_unik = getFieldValue('atribut_unik');
-  const genre_musik = getFieldValue('genre_musik');
-  const desain_suara = getFieldValue('desain_suara');
-  const mood_dominan = getFieldValue('mood_dominan');
-  const tekstur_kualitas = getFieldValue('tekstur_kualitas');
-  const komposisi_bidikan = getFieldValue('komposisi_bidikan');
-  const sudut_kamera = getFieldValue('sudut_kamera');
-  const pergerakan_kamera = getFieldValue('pergerakan_kamera');
-  const lensa_fokus = getFieldValue('lensa_fokus');
-  const genre_lingkungan = getFieldValue('genre_lingkungan');
-  const lokasi_spesifik = getFieldValue('lokasi_spesifik');
-  const skala_arsitektur = getFieldValue('skala_arsitektur');
+  const dialogSelect = document.getElementById('dialog_select').value;
+  const dialog = dialogSelect === 'custom' ? document.getElementById('dialog_custom').value.trim() : '';
 
-  const prompt = `Generate a TTV (Text-to-Video) prompt for AI video generation.
+  // Collect optional fields
+  const fields = {
+    gaya_seni_inti: getFieldValue('gaya_seni_inti'),
+    aliran_artistik: getFieldValue('aliran_artistik'),
+    palet_warna: getFieldValue('palet_warna'),
+    pencahayaan: getFieldValue('pencahayaan'),
+    arketipe_karakter: getFieldValue('arketipe_karakter'),
+    spesies_bentuk: getFieldValue('spesies_bentuk'),
+    atribut_unik: getFieldValue('atribut_unik'),
+    genre_musik: getFieldValue('genre_musik'),
+    desain_suara: getFieldValue('desain_suara'),
+    mood_dominan: getFieldValue('mood_dominan'),
+    tekstur_kualitas: getFieldValue('tekstur_kualitas'),
+    komposisi_bidikan: getFieldValue('komposisi_bidikan'),
+    sudut_kamera: getFieldValue('sudut_kamera'),
+    pergerakan_kamera: getFieldValue('pergerakan_kamera'),
+    lensa_fokus: getFieldValue('lensa_fokus'),
+    genre_lingkungan: getFieldValue('genre_lingkungan'),
+    lokasi_spesifik: getFieldValue('lokasi_spesifik'),
+    skala_arsitektur: getFieldValue('skala_arsitektur')
+  };
+
+  // Build prompt in English, only include filled fields
+  let prompt = `Generate a TTV (Text-to-Video) prompt for AI video generation.
 
 Character Profile:
 - ID: ${char.char_id}
-- Atribut Fisik: ${char.attr_fisik}
-- Pakaian: ${char.cloth_id}
-- Suara: ${char.voice_id}
-- Gaya Visual: ${char.style_id}
+- Physical Attributes: ${char.attr_fisik}
+- Clothing: ${char.cloth_id}
+- Voice: ${char.voice_id}
+- Visual Style: ${char.style_id}`;
 
-TTV Details:
-- Gaya Seni Inti: ${gaya_seni_inti}
-- Aliran Artistik: ${aliran_artistik}
-- Palet Warna: ${palet_warna}
-- Pencahayaan: ${pencahayaan}
-- Arketipe Karakter: ${arketipe_karakter}
-- Spesies/Bentuk: ${spesies_bentuk}
-- Atribut Unik: ${atribut_unik}
-- Genre Musik: ${genre_musik}
-- Desain Suara: ${desain_suara}
-- Mood Dominan: ${mood_dominan}
-- Tekstur & Kualitas: ${tekstur_kualitas}
-- Komposisi Bidikan: ${komposisi_bidikan}
-- Sudut Kamera: ${sudut_kamera}
-- Pergerakan Kamera: ${pergerakan_kamera}
-- Lensa & Fokus: ${lensa_fokus}
-- Genre Lingkungan: ${genre_lingkungan}
-- Lokasi Spesifik: ${lokasi_spesifik}
-- Skala & Arsitektur: ${skala_arsitektur}
+  if(dialog){
+    prompt += `\n- Dialog: "${dialog}"`;
+  }
 
-Create a detailed, cinematic video prompt based on this.`;
+  prompt += '\n\nTTV Details:';
+  for(const [key, value] of Object.entries(fields)){
+    if(value){
+      const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      prompt += `\n- ${label}: ${value}`;
+    }
+  }
+
+  prompt += '\n\nCreate a detailed, cinematic video prompt based on this.';
 
   document.getElementById('prompt_output').value = prompt;
   alert('Prompt TTV berhasil di-generate! 🎬');
