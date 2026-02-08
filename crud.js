@@ -1,9 +1,9 @@
-// crud.js - Bagian 1/3: Fungsi Awal
+// crud.js - Lengkap dengan Glide untuk Carousel
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
 
 let data = [];
 let editIndex = -1;
-let swiper;
+let glide;
 
 function switchMode(){
   const mode = document.getElementById('mode').value;
@@ -86,15 +86,18 @@ function showPreview(field){
     preview.style.display = 'none';
   }
 }
-// crud.js - Bagian 2/3: loadData, renderCards, getPreviewText
+
 function loadData(){
+  console.log('Loading data...');
   const xhr = new XMLHttpRequest();
   xhr.open('GET', GAS_URL + '?action=getData', true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
+      console.log('XHR status:', xhr.status);
       if (xhr.status === 200) {
         try {
           const response = JSON.parse(xhr.responseText);
+          console.log('Response:', response);
           if (response.error) {
             alert('Error from GAS: ' + response.error);
             return;
@@ -104,9 +107,11 @@ function loadData(){
           updateExistingSelect();
           alert('Data berhasil dimuat dari Sheets! 📥');
         } catch (e) {
+          console.error('Parse error:', e);
           alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
         }
       } else {
+        console.error('Error loading data:', xhr.status, xhr.responseText);
         alert('Error loading data: ' + xhr.status + ' - ' + xhr.responseText);
       }
     }
@@ -115,10 +120,11 @@ function loadData(){
 }
 
 function renderCards(){
+  console.log('Rendering cards, data length:', data.length);
   const cardsContainer = document.getElementById('character_cards');
   cardsContainer.innerHTML = '';
   if(data.length === 0){
-    cardsContainer.innerHTML = '<div class="swiper-slide"><div class="character-card"><p>Tidak ada data. Klik Load Data untuk muat dari Sheets.</p></div></div>';
+    cardsContainer.innerHTML = '<li class="glide__slide"><div class="character-card"><p>Tidak ada data. Klik Load Data untuk muat dari Sheets.</p></div></li>';
     return;
   }
   data.forEach((item, index) => {
@@ -127,7 +133,7 @@ function renderCards(){
     const previewVoice = getPreviewText('voice_id', item.voice_id);
     const previewStyle = getPreviewText('style_id', item.style_id);
     cardsContainer.innerHTML += `
-      <div class="swiper-slide">
+      <li class="glide__slide">
         <div class="character-card">
           <h3>${item.char_id || 'Kosong'}</h3>
           <p><strong>Atribut Fisik:</strong> ${item.attr_fisik || 'Kosong'} ${previewAttr}</p>
@@ -137,31 +143,24 @@ function renderCards(){
           <button onclick="editData(${index})" class="btn">✏️ Edit</button>
           <button onclick="deleteData(${index})" class="btn alt">🗑️ Delete</button>
         </div>
-      </div>
+      </li>
     `;
   });
-  // Inisialisasi Swiper setelah render
-  if(swiper) swiper.destroy();
-  swiper = new Swiper('.mySwiper', {
-    slidesPerView: 1,
-    spaceBetween: 10,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
+  // Inisialisasi Glide setelah render
+  if(glide) glide.destroy();
+  glide = new Glide('#glide', {
+    type: 'carousel',
+    perView: 1,
     breakpoints: {
       640: {
-        slidesPerView: 2,
+        perView: 2,
       },
       1024: {
-        slidesPerView: 3,
+        perView: 3,
       },
     },
-  });
+  }).mount();
+  console.log('Glide initialized');
 }
 
 function getPreviewText(field, value){
@@ -174,7 +173,7 @@ function getPreviewText(field, value){
   }
   return '';
 }
-// crud.js - Bagian 3/3: addData sampai window.onload
+
 function getFieldValue(field){
   const select = document.getElementById(field + '_select');
   const custom = document.getElementById(field + '_custom');
