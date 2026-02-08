@@ -1,86 +1,194 @@
+<!-- Ini adalah file index.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Prompt Video</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        select, button, input { margin: 10px; padding: 5px; }
-        #result { margin-top: 20px; padding: 10px; background-color: #f0f0f0; border: 1px solid #ccc; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UGC Portrait Prompt Generator</title>
+  <link rel="stylesheet" href="style.css"> <!-- Link ke file CSS terpisah -->
 </head>
 <body>
-    <h1>Generator Prompt Text to Video</h1>
-    <p>Pilih opsi di bawah, lalu klik Generate untuk bikin prompt!</p>
-    
-    <!-- Dropdown menus untuk variabel (labels tetap Indonesia) -->
-    <label for="style">Gaya Video:</label>
-    <select id="style">
-        <option value="">Pilih...</option>
-        <option value="realistic">Realistic</option>
-        <option value="cartoon">Cartoon</option>
-        <option value="anime">Anime</option>
-    </select><br>
-    
-    <label for="subject">Subjek Utama:</label>
-    <select id="subject">
-        <option value="">Pilih...</option>
-        <option value="a cat">Kucing</option>
-        <option value="a dog">Anjing</option>
-        <option value="a robot">Robot</option>
-    </select><br>
-    
-    <label for="action">Aksi:</label>
-    <select id="action">
-        <option value="">Pilih...</option>
-        <option value="running">Berlari</option>
-        <option value="flying">Terbang</option>
-        <option value="dancing">Menari</option>
-    </select><br>
-    
-    <label for="setting">Setting:</label>
-    <select id="setting">
-        <option value="">Pilih...</option>
-        <option value="in a forest">Di hutan</option>
-        <option value="in space">Di luar angkasa</option>
-        <option value="in a city">Di kota</option>
-    </select><br>
-    
-    <!-- Input teks untuk dialog -->
-    <label for="dialog">Dialog (apa yang dikatakan):</label>
-    <input type="text" id="dialog" placeholder="Misal: Hello world"><br>
-    
-    <!-- Tombol Generate -->
-    <button onclick="generatePrompt()">Generate Prompt</button>
-    
-    <!-- Tempat hasil prompt -->
-    <div id="result"></div>
-    
-    <script>
-        function generatePrompt() {
-            // Ambil nilai dari dropdown dan input
-            let style = document.getElementById('style').value;
-            let subject = document.getElementById('subject').value;
-            let action = document.getElementById('action').value;
-            let setting = document.getElementById('setting').value;
-            let dialog = document.getElementById('dialog').value.trim(); // Trim untuk hapus spasi ekstra
-            
-            // Gabung jadi satu paragraf lengkap dalam bahasa Inggris
-            let prompt = "";
-            if (style) prompt += style + " ";
-            if (subject) prompt += subject + " ";
-            if (action) prompt += action + " ";
-            if (setting) prompt += setting;
-            
-            // Tambah dialog kalau ada
-            if (dialog) {
-                prompt += ", saying '" + dialog + "'";
-            }
-            
-            // Tampilkan hasil (full English)
-            document.getElementById('result').innerText = prompt.trim() || "Pilih setidaknya satu opsi!";
-        }
-    </script>
+  <div class="wrap">
+    <div class="card">
+      <span class="pill">🎥 UGC • Portrait • Aman</span>
+      <h1>🚀 Prompt Generator</h1>
+      <p class="sub">Isi pelan-pelan. Ikuti contoh. Klik Generate → Copy. ✨</p>
+
+      <div class="grid">
+        <!-- PRESET -->
+        <div>
+          <label>👤 Preset Karakter</label>
+          <select id="preset" onchange="applyPreset()">
+            <option value="default">Default (Umum)</option>
+            <option value="muslimah">Muslimah (Bicara)</option>
+            <option value="muslimah_silent">Muslimah Silent (Tanpa Dialog)</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="preset_other" class="hidden" placeholder="Deskripsikan karakter (dalam bahasa Inggris)" />
+          <div class="hint">
+            Pilih tipe karakter. Kalau ragu, pilih <b>Muslimah</b>. Untuk "Lainnya", isi deskripsi manual.
+          </div>
+        </div>
+
+        <!-- USIA -->
+        <div>
+          <label>🎂 Usia (rentang)</label>
+          <input id="age" placeholder="contoh: 22–30 tahun" />
+          <div class="hint">
+            Gunakan <b>rentang umur</b>, bukan satu angka.
+          </div>
+        </div>
+
+        <!-- LOKASI -->
+        <div>
+          <label>🏠 Lokasi Pengambilan Video</label>
+          <input id="location" placeholder="contoh: dekat jendela ruang tamu" />
+          <div class="hint">
+            Lokasi rumah asli. Bukan studio, bukan green screen.
+          </div>
+        </div>
+
+        <!-- FOKUS -->
+        <div>
+          <label>📷 Fokus Kamera</label>
+          <select id="focus" onchange="applyFocus()">
+            <option value="wajah">wajah</option>
+            <option value="wajah + produk">wajah + produk</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="focus_other" class="hidden" placeholder="Deskripsikan fokus (dalam bahasa Inggris)" />
+          <div class="hint">
+            Testimoni → wajah. Jualan halus → wajah + produk. Untuk "Lainnya", isi deskripsi manual.
+          </div>
+        </div>
+
+        <!-- DIALOG -->
+        <div class="grid-1">
+          <label>💬 Dialog (opsional)</label>
+          <textarea id="dialog" placeholder="Kosongkan jika memilih Silent"></textarea>
+          <div class="hint">
+            1 kalimat pendek, jujur, tidak hard selling. (Tetap dalam bahasa asli, tidak diterjemahkan di prompt).
+          </div>
+        </div>
+      </div>
+
+      <div class="example">
+        <strong>💡 Contoh Dialog yang Bagus</strong>
+        - “Awalnya aku ragu, tapi ternyata kepake banget.”<br/>
+        - “Buat aku ini simpel, tapi ngebantu.”<br/>
+        - “Aku pakai beberapa hari, hasilnya kerasa.”
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="actions">
+        <button class="btn" onclick="generate()">✨ Generate Prompt</button>
+        <button class="btn alt" onclick="copy()">📋 Copy Prompt</button>
+        <button class="btn ghost" onclick="fillExample()">🔄 Isi Contoh Otomatis</button>
+        <button class="btn ghost" onclick="resetForm()">🗑️ Reset</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <label>📝 Prompt Final (siap copy)</label>
+      <textarea id="result" placeholder="Hasil akan muncul di sini..."></textarea>
+      <p class="muted">No cinematic • no filter • natural UGC look 🌟</p>
+    </div>
+  </div>
+
+<script>
+function applyPreset(){
+  const p = document.getElementById('preset').value;
+  const d = document.getElementById('dialog');
+  const po = document.getElementById('preset_other');
+  if(p === 'muslimah'){
+    d.placeholder = 'contoh: Awalnya aku ragu, tapi ternyata kepake banget.';
+    po.classList.add('hidden');
+  } else if(p === 'muslimah_silent'){
+    d.value = '';
+    d.placeholder = 'Tidak digunakan (silent)';
+    po.classList.add('hidden');
+  } else if(p === 'other'){
+    po.classList.remove('hidden');
+  } else {
+    po.classList.add('hidden');
+  }
+}
+
+function applyFocus(){
+  const f = document.getElementById('focus').value;
+  const fo = document.getElementById('focus_other');
+  if(f === 'other'){
+    fo.classList.remove('hidden');
+  } else {
+    fo.classList.add('hidden');
+  }
+}
+
+function fillExample(){
+  document.getElementById('preset').value = 'muslimah';
+  document.getElementById('age').value = '22–30 tahun';
+  document.getElementById('location').value = 'dekat jendela ruang tamu rumah';
+  document.getElementById('focus').value = 'wajah';
+  document.getElementById('dialog').value = 'Awalnya aku ragu, tapi ternyata kepake banget.';
+  applyPreset();
+  applyFocus();
+}
+
+function generate(){
+  const preset = document.getElementById('preset').value;
+  const preset_other = document.getElementById('preset_other').value;
+  const age = document.getElementById('age').value || '[usia]';
+  const location = document.getElementById('location').value || '[lokasi rumah]';
+  const focus = document.getElementById('focus').value;
+  const focus_other = document.getElementById('focus_other').value;
+  const dialog = document.getElementById('dialog').value;
+
+  let txt = '';
+  txt += 'A realistic UGC portrait-style vertical video (9:16). ';
+  txt += 'A close-up talking-head shot of an Indonesian woman aged ' + age + ', ';
+  txt += 'recorded using a smartphone front camera. ';
+  txt += 'Focus on ' + (focus === 'other' ? focus_other : focus) + '. ';
+  txt += 'The scene takes place in a real home environment at ' + location + ', ';
+  txt += 'lit by natural daylight from a nearby window. ';
+
+  if(preset === 'muslimah'){
+    txt += 'She wears a modest gamis with hijab fully covering her hair. ';
+    txt += 'She speaks naturally to the camera with calm, honest expressions. ';
+  } else if(preset === 'muslimah_silent'){
+    txt += 'She wears a modest gamis with hijab fully covering her hair. ';
+    txt += 'She does not speak; no mouth movement. Calm, natural expressions only. ';
+  } else if(preset === 'other'){
+    txt += preset_other + '. ';
+    txt += 'The person speaks naturally with honest facial expressions. ';
+  } else {
+    txt += 'The person speaks naturally with honest facial expressions. ';
+  }
+
+  if(dialog && preset !== 'muslimah_silent'){
+    txt += 'Dialogue spoken naturally: "' + dialog + '". ';
+  }
+
+  txt += 'No cinematic lighting, no beauty filters, no studio setup, ';
+  txt += 'no background music, no text overlay, no watermark. ';
+  txt += 'The video feels authentic, personal, and trustworthy.';
+
+  document.getElementById('result').value = txt;
+}
+
+function copy(){
+  const t = document.getElementById('result');
+  t.select(); document.execCommand('copy');
+  alert('Prompt berhasil dicopy! 🎉');
+}
+
+function resetForm(){
+  ['age','location','dialog','result','preset_other','focus_other'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('preset').value='default';
+  document.getElementById('focus').value='wajah';
+  applyPreset();
+  applyFocus();
+}
+</script>
 </body>
 </html>
