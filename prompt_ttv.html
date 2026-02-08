@@ -258,6 +258,93 @@
           </select>
           <input type="text" id="sudut_kamera_custom" class="hidden" placeholder="Isi sudut kamera custom" />
         </div>
+                <div>
+          <label>🎥 Pergerakan Kamera</label>
+          <select id="pergerakan_kamera_select" onchange="toggleCustom('pergerakan_kamera')">
+            <option value="">Pilih Pergerakan Kamera...</option>
+            <option value="Statis">Statis</option>
+            <option value="Pan">Pan</option>
+            <option value="Tilt">Tilt</option>
+            <option value="Dolly">Dolly</option>
+            <option value="Tracking/Trucking">Tracking/Trucking</option>
+            <option value="Crane/Jib">Crane/Jib</option>
+            <option value="Handheld">Handheld</option>
+            <option value="Steadicam">Steadicam</option>
+            <option value="Dolly Zoom">Dolly Zoom</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="pergerakan_kamera_custom" class="hidden" placeholder="Isi pergerakan kamera custom" />
+        </div>
+                <div>
+          <label>📸 Lensa & Fokus</label>
+          <select id="lensa_fokus_select" onchange="toggleCustom('lensa_fokus')">
+            <option value="">Pilih Lensa & Fokus...</option>
+            <option value="Lensa Wide">Lensa Wide</option>
+            <option value="Lensa Telephoto">Lensa Telephoto</option>
+            <option value="Lensa Fisheye">Lensa Fisheye</option>
+            <option value="Rack Focus">Rack Focus</option>
+            <option value="Deep Focus">Deep Focus</option>
+            <option value="Shallow Focus">Shallow Focus</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="lensa_fokus_custom" class="hidden" placeholder="Isi lensa & fokus custom" />
+        </div>
+                <div>
+          <label>🌍 Genre Lingkungan</label>
+          <select id="genre_lingkungan_select" onchange="toggleCustom('genre_lingkungan')">
+            <option value="">Pilih Genre Lingkungan...</option>
+            <option value="High Fantasy">High Fantasy</option>
+            <option value="Urban Fantasy">Urban Fantasy</option>
+            <option value="Space Opera">Space Opera</option>
+            <option value="Dystopian">Dystopian</option>
+            <option value="Utopian">Utopian</option>
+            <option value="Historical">Historical</option>
+            <option value="Slice of Life">Slice of Life</option>
+            <option value="Magical Realism">Magical Realism</option>
+            <option value="Biopunk">Biopunk</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="genre_lingkungan_custom" class="hidden" placeholder="Isi genre lingkungan custom" />
+        </div>
+                <div>
+          <label>🏙️ Lokasi Spesifik</label>
+          <select id="lokasi_spesifik_select" onchange="toggleCustom('lokasi_spesifik')">
+            <option value="">Pilih Lokasi Spesifik...</option>
+            <option value="Kota Bawah Laut">Kota Bawah Laut</option>
+            <option value="Stasiun Luar Angkasa Terbengkalai">Stasiun Luar Angkasa Terbengkalai</option>
+            <option value="Pasar Malam di Planet Asing">Pasar Malam di Planet Asing</option>
+            <option value="Perpustakaan Tak Terhingga">Perpustakaan Tak Terhingga</option>
+            <option value="Hutan Kristal">Hutan Kristal</option>
+            <option value="Kerajaan di Atas Awan">Kerajaan di Atas Awan</option>
+            <option value="Ruang Tahta Gotik">Ruang Tahta Gotik</option>
+            <option value="Apartemen Minimalis">Apartemen Minimalis</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="lokasi_spesifik_custom" class="hidden" placeholder="Isi lokasi spesifik custom" />
+        </div>
+        <div>
+          <label>🏗️ Skala & Arsitektur</label>
+          <select id="skala_arsitektur_select" onchange="toggleCustom('skala_arsitektur')">
+            <option value="">Pilih Skala & Arsitektur...</option>
+            <option value="Megastruktur">Megastruktur</option>
+            <option value="Arsitektur Brutalis">Arsitektur Brutalis</option>
+            <option value="Arsitektur Organik">Arsitektur Organik</option>
+            <option value="Kota Terapung">Kota Terapung</option>
+            <option value="Desa Abad Pertengahan">Desa Abad Pertengahan</option>
+            <option value="Interior Kapal Selam">Interior Kapal Selam</option>
+            <option value="Arsitektur Barok">Arsitektur Barok</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="skala_arsitektur_custom" class="hidden" placeholder="Isi skala & arsitektur custom" />
+        </div>
+      </div>
+
+      <!-- Output Prompt -->
+      <div class="hr"></div>
+      <div>
+        <label>📝 Prompt TTV Generated</label>
+        <textarea id="prompt_output" readonly placeholder="Prompt akan muncul di sini..."></textarea>
+        <button class="btn" onclick="copyPrompt()">📋 Copy Prompt</button>
       </div>
 
       <!-- Link Kembali ke Halaman Utama -->
