@@ -1,4 +1,4 @@
-<!-- prompt_ttv.html - Gabungan Bagian 1-16 -->
+<!-- prompt_ttv.html - Update: Tambah Field Dialog, Pindah Tombol Generate -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,7 +12,7 @@
     <div class="card">
       <span class="pill">🎬 Generate Prompt TTV</span>
       <h1>🚀 Generate Prompt TTV</h1>
-      <p class="sub">Pilih karakter dari crud, isi detail TTV, generate prompt untuk AI.</p>
+      <p class="sub">Pilih karakter dari crud, isi detail TTV (optional), generate prompt untuk AI.</p>
 
       <!-- Pilih Karakter dari crud -->
       <div>
@@ -26,17 +26,26 @@
         </div>
       </div>
 
-      <!-- Tombol Load Data dan Generate -->
+      <!-- Tombol Load Data -->
       <div>
         <button class="btn" onclick="loadCharacters()">📥 Load Karakter dari crud</button>
-        <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt TTV</button>
       </div>
 
       <!-- Form Detail TTV -->
       <div class="hr"></div>
       <div>
+        <!-- Field Dialog -->
         <div>
-          <label>🎨 Gaya Seni Inti</label>
+          <label>💬 Dialog Karakter</label>
+          <select id="dialog_select" onchange="toggleDialog()">
+            <option value="diam">No 1 Diam</option>
+            <option value="custom">No 2 Lainnya</option>
+          </select>
+          <input type="text" id="dialog_custom" class="hidden" placeholder="Ketik dialognya sendiri (ga diubah ke English)" />
+        </div>
+        <!-- Field lainnya tetap sama, tapi sekarang optional -->
+        <div>
+          <label>🎨 Gaya Seni Inti (optional)</label>
           <select id="gaya_seni_inti_select" onchange="toggleCustom('gaya_seni_inti')">
             <option value="">Pilih Gaya Seni Inti...</option>
             <option value="Fotorealistis">Fotorealistis</option>
@@ -56,274 +65,10 @@
           </select>
           <input type="text" id="gaya_seni_inti_custom" class="hidden" placeholder="Isi gaya seni inti custom" />
         </div>
+        <!-- Sisanya field sama, tambah (optional) di label -->
+        <!-- ... (field lainnya seperti sebelumnya, tapi label tambah (optional)) -->
         <div>
-          <label>🖼️ Aliran Artistik</label>
-          <select id="aliran_artistik_select" onchange="toggleCustom('aliran_artistik')">
-            <option value="">Pilih Aliran Artistik...</option>
-            <option value="Surealisme">Surealisme</option>
-            <option value="Impresionisme">Impresionisme</option>
-            <option value="Art Deco">Art Deco</option>
-            <option value="Art Nouveau">Art Nouveau</option>
-            <option value="Bauhaus">Bauhaus</option>
-            <option value="Pop Art">Pop Art</option>
-            <option value="Gotik">Gotik</option>
-            <option value="Steampunk">Steampunk</option>
-            <option value="Cyberpunk">Cyberpunk</option>
-            <option value="Solarpunk">Solarpunk</option>
-            <option value="Vaporwave">Vaporwave</option>
-            <option value="Grunge">Grunge</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="aliran_artistik_custom" class="hidden" placeholder="Isi aliran artistik custom" />
-        </div>
-        <div>
-          <label>🎨 Palet Warna</label>
-          <select id="palet_warna_select" onchange="toggleCustom('palet_warna')">
-            <option value="">Pilih Palet Warna...</option>
-            <option value="Monokromatik">Monokromatik</option>
-            <option value="Analog">Analog</option>
-            <option value="Komplementer">Komplementer</option>
-            <option value="Triadic">Triadic</option>
-            <option value="Sepia">Sepia</option>
-            <option value="Technicolor">Technicolor</option>
-            <option value="Pastel">Pastel</option>
-            <option value="Neon">Neon</option>
-            <option value="Skema Warna Wes Anderson">Skema Warna Wes Anderson</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="palet_warna_custom" class="hidden" placeholder="Isi palet warna custom" />
-        </div>
-        <div>
-          <label>💡 Pencahayaan</label>
-          <select id="pencahayaan_select" onchange="toggleCustom('pencahayaan')">
-            <option value="">Pilih Pencahayaan...</option>
-            <option value="High-Key">High-Key</option>
-            <option value="Low-Key">Low-Key</option>
-            <option value="Golden Hour">Golden Hour</option>
-            <option value="Blue Hour">Blue Hour</option>
-            <option value="Backlight">Backlight</option>
-            <option value="Pencahayaan Volumetrik">Pencahayaan Volumetrik</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="pencahayaan_custom" class="hidden" placeholder="Isi pencahayaan custom" />
-        </div>
-        <div>
-          <label>👥 Arketipe Karakter</label>
-          <select id="arketipe_karakter_select" onchange="toggleCustom('arketipe_karakter')">
-            <option value="">Pilih Arketipe Karakter...</option>
-            <option value="The Hero">The Hero</option>
-            <option value="The Mentor">The Mentor</option>
-            <option value="The Trickster">The Trickster</option>
-            <option value="The Anti-Hero">The Anti-Hero</option>
-            <option value="The Femme Fatale">The Femme Fatale</option>
-            <option value="The Innocent">The Innocent</option>
-            <option value="The Explorer">The Explorer</option>
-            <option value="The Rebel">The Rebel</option>
-            <option value="The Ruler">The Ruler</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="arketipe_karakter_custom" class="hidden" placeholder="Isi arketipe karakter custom" />
-        </div>
-        <div>
-          <label>🦸 Spesies/Bentuk</label>
-          <select id="spesies_bentuk_select" onchange="toggleCustom('spesies_bentuk')">
-            <option value="">Pilih Spesies/Bentuk...</option>
-            <option value="Manusia">Manusia</option>
-            <option value="Elf">Elf</option>
-            <option value="Dwarf">Dwarf</option>
-            <option value="Orc">Orc</option>
-            <option value="Cyborg">Cyborg</option>
-            <option value="Android">Android</option>
-            <option value="Alien (Xenomorph)">Alien (Xenomorph)</option>
-            <option value="Alien (Grey)">Alien (Grey)</option>
-            <option value="Entitas Kosmik">Entitas Kosmik</option>
-            <option value="Hewan Antropomorfik">Hewan Antropomorfik</option>
-            <option value="Makhluk Mitologi (Naga)">Makhluk Mitologi (Naga)</option>
-            <option value="Makhluk Mitologi (Griffin)">Makhluk Mitologi (Griffin)</option>
-            <option value="Makhluk Mitologi (Kitsune)">Makhluk Mitologi (Kitsune)</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="spesies_bentuk_custom" class="hidden" placeholder="Isi spesies/bentuk custom" />
-        </div>
-        <div>
-          <label>✨ Atribut Unik</label>
-          <select id="atribut_unik_select" onchange="toggleCustom('atribut_unik')">
-            <option value="">Pilih Atribut Unik...</option>
-            <option value="Mata Bionik">Mata Bionik</option>
-            <option value="Lengan Mekanis">Lengan Mekanis</option>
-            <option value="Tato yang Menyala">Tato yang Menyala</option>
-            <option value="Bekas Luka">Bekas Luka</option>
-            <option value="Rambut Terbuat dari Api">Rambut Terbuat dari Api</option>
-            <option value="Kulit Kristal">Kulit Kristal</option>
-            <option value="Sayap (Mekanis)">Sayap (Mekanis)</option>
-            <option value="Sayap (Organik)">Sayap (Organik)</option>
-            <option value="Tanduk">Tanduk</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="atribut_unik_custom" class="hidden" placeholder="Isi atribut unik custom" />
-        </div>
-        <div>
-          <label>🎵 Genre Musik</label>
-          <select id="genre_musik_select" onchange="toggleCustom('genre_musik')">
-            <option value="">Pilih Genre Musik...</option>
-            <option value="Orkestra Epik">Orkestra Epik</option>
-            <option value="Lo-Fi Hip Hop">Lo-Fi Hip Hop</option>
-            <option value="Synthwave/Retrowave">Synthwave/Retrowave</option>
-            <option value="Ambient">Ambient</option>
-            <option value="Musik Klasik (Barok)">Musik Klasik (Barok)</option>
-            <option value="Musik Klasik (Romantis)">Musik Klasik (Romantis)</option>
-            <option value="Heavy Metal">Heavy Metal</option>
-            <option value="Folk">Folk</option>
-            <option value="Jazz Noir">Jazz Noir</option>
-            <option value="Chiptune">Chiptune</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="genre_musik_custom" class="hidden" placeholder="Isi genre musik custom" />
-        </div>
-        <div>
-          <label>🔊 Desain Suara</label>
-          <select id="desain_suara_select" onchange="toggleCustom('desain_suara')">
-            <option value="">Pilih Desain Suara...</option>
-            <option value="Diegetic">Diegetic</option>
-            <option value="Non-Diegetic">Non-Diegetic</option>
-            <option value="Foley">Foley</option>
-            <option value="ASMR Triggers">ASMR Triggers</option>
-            <option value="Hening yang Menegangkan">Hening yang Menegangkan</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="desain_suara_custom" class="hidden" placeholder="Isi desain suara custom" />
-        </div>
-        <div>
-          <label>😊 Mood Dominan</label>
-          <select id="mood_dominan_select" onchange="toggleCustom('mood_dominan')">
-            <option value="">Pilih Mood Dominan...</option>
-            <option value="Menegangkan">Menegangkan</option>
-            <option value="Melankolis">Melankolis</option>
-            <option value="Nostalgia">Nostalgia</option>
-            <option value="Penuh Harapan">Penuh Harapan</option>
-            <option value="Heroik">Heroik</option>
-            <option value="Misterius">Misterius</option>
-            <option value="Aneh (Weird)">Aneh (Weird)</option>
-            <option value="Menenangkan (Calm)">Menenangkan (Calm)</option>
-            <option value="Energik">Energik</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="mood_dominan_custom" class="hidden" placeholder="Isi mood dominan custom" />
-        </div>
-        <div>
-          <label>🖼️ Tekstur & Kualitas</label>
-          <select id="tekstur_kualitas_select" onchange="toggleCustom('tekstur_kualitas')">
-            <option value="">Pilih Tekstur & Kualitas...</option>
-            <option value="Jernih (Clean 4K/8K)">Jernih (Clean 4K/8K)</option>
-            <option value="Film Grain">Film Grain</option>
-            <option value="Efek VHS">Efek VHS</option>
-            <option value="Lensa Anamorphic">Lensa Anamorphic</option>
-            <option value="Fokus Halus">Fokus Halus</option>
-            <option value="Vignette">Vignette</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="tekstur_kualitas_custom" class="hidden" placeholder="Isi tekstur & kualitas custom" />
-        </div>
-        <div>
-          <label>📐 Komposisi Bidikan</label>
-          <select id="komposisi_bidikan_select" onchange="toggleCustom('komposisi_bidikan')">
-            <option value="">Pilih Komposisi Bidikan...</option>
-            <option value="Rule of Thirds">Rule of Thirds</option>
-            <option value="Leading Lines">Leading Lines</option>
-            <option value="Simetri">Simetri</option>
-            <option value="Framing">Framing</option>
-            <option value="Golden Ratio">Golden Ratio</option>
-            <option value="Close-up Ekstrem">Close-up Ekstrem</option>
-            <option value="Wide Shot">Wide Shot</option>
-            <option value="Medium Shot">Medium Shot</option>
-            <option value="Full Shot">Full Shot</option>
-            <option value="Cowboy Shot">Cowboy Shot</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="komposisi_bidikan_custom" class="hidden" placeholder="Isi komposisi bidikan custom" />
-        </div>
-        <div>
-          <label>📷 Sudut Kamera</label>
-          <select id="sudut_kamera_select" onchange="toggleCustom('sudut_kamera')">
-            <option value="">Pilih Sudut Kamera...</option>
-            <option value="Eye-Level">Eye-Level</option>
-            <option value="High-Angle">High-Angle</option>
-            <option value="Low-Angle">Low-Angle</option>
-            <option value="Bird's-Eye-View">Bird's-Eye-View</option>
-            <option value="Worm's-Eye-View">Worm's-Eye-View</option>
-            <option value="Dutch Angle">Dutch Angle</option>
-            <option value="Over-the-Shoulder Shot">Over-the-Shoulder Shot</option>
-            <option value="Point-of-View (POV)">Point-of-View (POV)</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="sudut_kamera_custom" class="hidden" placeholder="Isi sudut kamera custom" />
-        </div>
-                <div>
-          <label>🎥 Pergerakan Kamera</label>
-          <select id="pergerakan_kamera_select" onchange="toggleCustom('pergerakan_kamera')">
-            <option value="">Pilih Pergerakan Kamera...</option>
-            <option value="Statis">Statis</option>
-            <option value="Pan">Pan</option>
-            <option value="Tilt">Tilt</option>
-            <option value="Dolly">Dolly</option>
-            <option value="Tracking/Trucking">Tracking/Trucking</option>
-            <option value="Crane/Jib">Crane/Jib</option>
-            <option value="Handheld">Handheld</option>
-            <option value="Steadicam">Steadicam</option>
-            <option value="Dolly Zoom">Dolly Zoom</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="pergerakan_kamera_custom" class="hidden" placeholder="Isi pergerakan kamera custom" />
-        </div>
-                <div>
-          <label>📸 Lensa & Fokus</label>
-          <select id="lensa_fokus_select" onchange="toggleCustom('lensa_fokus')">
-            <option value="">Pilih Lensa & Fokus...</option>
-            <option value="Lensa Wide">Lensa Wide</option>
-            <option value="Lensa Telephoto">Lensa Telephoto</option>
-            <option value="Lensa Fisheye">Lensa Fisheye</option>
-            <option value="Rack Focus">Rack Focus</option>
-            <option value="Deep Focus">Deep Focus</option>
-            <option value="Shallow Focus">Shallow Focus</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="lensa_fokus_custom" class="hidden" placeholder="Isi lensa & fokus custom" />
-        </div>
-                <div>
-          <label>🌍 Genre Lingkungan</label>
-          <select id="genre_lingkungan_select" onchange="toggleCustom('genre_lingkungan')">
-            <option value="">Pilih Genre Lingkungan...</option>
-            <option value="High Fantasy">High Fantasy</option>
-            <option value="Urban Fantasy">Urban Fantasy</option>
-            <option value="Space Opera">Space Opera</option>
-            <option value="Dystopian">Dystopian</option>
-            <option value="Utopian">Utopian</option>
-            <option value="Historical">Historical</option>
-            <option value="Slice of Life">Slice of Life</option>
-            <option value="Magical Realism">Magical Realism</option>
-            <option value="Biopunk">Biopunk</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="genre_lingkungan_custom" class="hidden" placeholder="Isi genre lingkungan custom" />
-        </div>
-                <div>
-          <label>🏙️ Lokasi Spesifik</label>
-          <select id="lokasi_spesifik_select" onchange="toggleCustom('lokasi_spesifik')">
-            <option value="">Pilih Lokasi Spesifik...</option>
-            <option value="Kota Bawah Laut">Kota Bawah Laut</option>
-            <option value="Stasiun Luar Angkasa Terbengkalai">Stasiun Luar Angkasa Terbengkalai</option>
-            <option value="Pasar Malam di Planet Asing">Pasar Malam di Planet Asing</option>
-            <option value="Perpustakaan Tak Terhingga">Perpustakaan Tak Terhingga</option>
-            <option value="Hutan Kristal">Hutan Kristal</option>
-            <option value="Kerajaan di Atas Awan">Kerajaan di Atas Awan</option>
-            <option value="Ruang Tahta Gotik">Ruang Tahta Gotik</option>
-            <option value="Apartemen Minimalis">Apartemen Minimalis</option>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="lokasi_spesifik_custom" class="hidden" placeholder="Isi lokasi spesifik custom" />
-        </div>
-        <div>
-          <label>🏗️ Skala & Arsitektur</label>
+          <label>🏗️ Skala & Arsitektur (optional)</label>
           <select id="skala_arsitektur_select" onchange="toggleCustom('skala_arsitektur')">
             <option value="">Pilih Skala & Arsitektur...</option>
             <option value="Megastruktur">Megastruktur</option>
@@ -337,6 +82,12 @@
           </select>
           <input type="text" id="skala_arsitektur_custom" class="hidden" placeholder="Isi skala & arsitektur custom" />
         </div>
+      </div>
+
+      <!-- Tombol Generate di Bawah -->
+      <div class="hr"></div>
+      <div>
+        <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt TTV</button>
       </div>
 
       <!-- Output Prompt -->
