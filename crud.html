@@ -1,4 +1,4 @@
-<!-- crud.html - Kode Lengkap dengan Dropdown User-Friendly (Bagian 1/3) -->
+<!-- crud.html - Update dengan Field Baru (Bagian 1/5) -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -48,242 +48,322 @@
         </div>
         <div>
           <label>👤 Atribut Fisik</label>
-          <select id="attr_fisik_select" onchange="toggleCustom('attr_fisik')">
-            <option value="">Pilih Atribut Fisik...</option>
-            <optgroup label="Arketipe Karakter">
-              <option value="The Hero">The Hero</option>
-              <option value="The Mentor">The Mentor</option>
-              <option value="The Trickster">The Trickster</option>
-              <option value="The Anti-Hero">The Anti-Hero</option>
-              <option value="The Femme Fatale">The Femme Fatale</option>
-              <option value="The Innocent">The Innocent</option>
-              <option value="The Explorer">The Explorer</option>
-              <option value="The Rebel">The Rebel</option>
-              <option value="The Ruler">The Ruler</option>
-            </optgroup>
-            <optgroup label="Spesies/Bentuk">
-              <option value="Manusia">Manusia</option>
-              <option value="Elf">Elf</option>
-              <option value="Dwarf">Dwarf</option>
-              <option value="Orc">Orc</option>
-              <option value="Cyborg">Cyborg</option>
-              <option value="Android">Android</option>
-              <option value="Alien (Xenomorph)">Alien (Xenomorph)</option>
-              <option value="Alien (Grey)">Alien (Grey)</option>
-              <option value="Entitas Kosmik">Entitas Kosmik</option>
-              <option value="Hewan Antropomorfik">Hewan Antropomorfik</option>
-              <option value="Makhluk Mitologi (Naga)">Makhluk Mitologi (Naga)</option>
-              <option value="Makhluk Mitologi (Griffin)">Makhluk Mitologi (Griffin)</option>
-              <option value="Makhluk Mitologi (Kitsune)">Makhluk Mitologi (Kitsune)</option>
-            </optgroup>
-            <optgroup label="Atribut Unik">
-              <option value="Mata Bionik">Mata Bionik</option>
-              <option value="Lengan Mekanis">Lengan Mekanis</option>
-              <option value="Tato yang Menyala">Tato yang Menyala</option>
-              <option value="Bekas Luka">Bekas Luka</option>
-              <option value="Rambut Terbuat dari Api">Rambut Terbuat dari Api</option>
-              <option value="Kulit Kristal">Kulit Kristal</option>
-              <option value="Sayap (Mekanis)">Sayap (Mekanis)</option>
-              <option value="Sayap (Organik)">Sayap (Organik)</option>
-              <option value="Tanduk">Tanduk</option>
-            </optgroup>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="attr_fisik_custom" class="hidden" placeholder="Isi atribut fisik custom" />
+          <input id="attr_fisik" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
         </div>
-                <div>
+        <div>
           <label>👕 Pakaian</label>
-          <select id="cloth_id_select" onchange="toggleCustom('cloth_id')">
-            <option value="">Pilih Pakaian...</option>
-            <optgroup label="Gaya Busana">
-              <option value="Kontemporer">Kontemporer</option>
-              <option value="Sejarah (Victorian)">Sejarah (Victorian)</option>
-              <option value="Sejarah (Roaring 20s)">Sejarah (Roaring 20s)</option>
-              <option value="Fantasi (Armor)">Fantasi (Armor)</option>
-              <option value="Fantasi (Jubah)">Fantasi (Jubah)</option>
-              <option value="Sci-Fi (Pakaian Antariksa)">Sci-Fi (Pakaian Antariksa)</option>
-              <option value="Sci-Fi (Baju Cybernetic)">Sci-Fi (Baju Cybernetic)</option>
-              <option value="Post-Apocalyptic (Tambal Sulam)">Post-Apocalyptic (Tambal Sulam)</option>
-              <option value="Formal">Formal</option>
-              <option value="Kasual">Kasual</option>
-              <option value="Haute Couture">Haute Couture</option>
-            </optgroup>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="cloth_id_custom" class="hidden" placeholder="Isi pakaian custom" />
+          <input id="cloth_id" placeholder="contoh: Casual outfit" />
         </div>
         <div>
           <label>🎤 Suara</label>
-          <select id="voice_id_select" onchange="toggleCustom('voice_id')">
-            <option value="">Pilih Suara...</option>
-            <optgroup label="Genre Musik">
-              <option value="Orkestra Epik">Orkestra Epik</option>
-              <option value="Lo-Fi Hip Hop">Lo-Fi Hip Hop</option>
-              <option value="Synthwave/Retrowave">Synthwave/Retrowave</option>
-              <option value="Ambient">Ambient</option>
-              <option value="Musik Klasik (Barok)">Musik Klasik (Barok)</option>
-              <option value="Musik Klasik (Romantis)">Musik Klasik (Romantis)</option>
-              <option value="Heavy Metal">Heavy Metal</option>
-              <option value="Folk">Folk</option>
-              <option value="Jazz Noir">Jazz Noir</option>
-              <option value="Chiptune">Chiptune</option>
-            </optgroup>
-            <optgroup label="Desain Suara">
-              <option value="Diegetic">Diegetic</option>
-              <option value="Non-Diegetic">Non-Diegetic</option>
-              <option value="Foley">Foley</option>
-              <option value="ASMR Triggers">ASMR Triggers</option>
-              <option value="Hening yang Menegangkan">Hening yang Menegangkan</option>
-            </optgroup>
-            <optgroup label="Mood Dominan">
-              <option value="Menegangkan">Menegangkan</option>
-              <option value="Melankolis">Melankolis</option>
-              <option value="Nostalgia">Nostalgia</option>
-              <option value="Penuh Harapan">Penuh Harapan</option>
-              <option value="Heroik">Heroik</option>
-              <option value="Misterius">Misterius</option>
-              <option value="Aneh (Weird)">Aneh (Weird)</option>
-              <option value="Menenangkan (Calm)">Menenangkan (Calm)</option>
-              <option value="Energik">Energik</option>
-            </optgroup>
-            <option value="other">Lainnya</option>
-          </select>
-          <input type="text" id="voice_id_custom" class="hidden" placeholder="Isi suara custom" />
+          <input id="voice_id" placeholder="contoh: Alto voice" />
         </div>
         <div>
           <label>🌍 Gaya Visual</label>
-          <select id="style_id_select" onchange="toggleCustom('style_id')">
-            <option value="">Pilih Gaya Visual...</option>
-            <optgroup label="Gaya Seni Inti">
-              <option value="Fotorealistis">Fotorealistis</option>
-              <option value="Sinematik 8K">Sinematik 8K</option>
-              <option value="Gaya Anime (Ghibli)">Gaya Anime (Ghibli)</option>
-              <option value="Gaya Anime (Shinkai)">Gaya Anime (Shinkai)</option>
-              <option value="Gaya Anime (90s)">Gaya Anime (90s)</option>
-              <option value="Lukisan (Cat Minyak)">Lukisan (Cat Minyak)</option>
-              <option value="Lukisan (Cat Air)">Lukisan (Cat Air)</option>
-              <option value="Seni Piksel (8-bit)">Seni Piksel (8-bit)</option>
-              <option value="Seni Piksel (16-bit)">Seni Piksel (16-bit)</option>
-              <option value="Cel-Shading">Cel-Shading</option>
-              <option value="Sketsa Pensil">Sketsa Pensil</option>
-              <option value="Stop Motion Clay">Stop Motion Clay</option>
-              <option value="Model 3D Low-Poly">Model 3D Low-Poly</option>
-            </optgroup>
-            <optgroup label="Aliran Artistik">
-              <option value="Surealisme">Surealisme</option>
-              <option value="Impresionisme">Impresionisme</option>
-              <option value="Art Deco">Art Deco</option>
-              <option value="Art Nouveau">Art Nouveau</option>
-              <option value="Bauhaus">Bauhaus</option>
-              <option value="Pop Art">Pop Art</option>
-              <option value="Gotik">Gotik</option>
-              <option value="Steampunk">Steampunk</option>
-              <option value="Cyberpunk">Cyberpunk</option>
-              <option value="Solarpunk">Solarpunk</option>
-              <option value="Vaporwave">Vaporwave</option>
-              <option value="Grunge">Grunge</option>
-            </optgroup>
-            <optgroup label="Palet Warna">
-              <option value="Monokromatik">Monokromatik</option>
-              <option value="Analog">Analog</option>
-              <option value="Komplementer">Komplementer</option>
-              <option value="Triadic">Triadic</option>
-              <option value="Sepia">Sepia</option>
-              <option value="Technicolor">Technicolor</option>
-              <option value="Pastel">Pastel</option>
-              <option value="Neon">Neon</option>
-              <option value="Skema Warna Wes Anderson">Skema Warna Wes Anderson</option>
-            </optgroup>
-            <optgroup label="Pencahayaan">
-              <option value="High-Key">High-Key</option>
-              <option value="Low-Key">Low-Key</option>
-              <option value="Golden Hour">Golden Hour</option>
-              <option value="Blue Hour">Blue Hour</option>
-              <option value="Backlight">Backlight</option>
-              <option value="Pencahayaan Volumetrik">Pencahayaan Volumetrik</option>
-            </optgroup>
-            <optgroup label="Tekstur & Kualitas">
-              <option value="Jernih (Clean 4K/8K)">Jernih (Clean 4K/8K)</option>
-              <option value="Film Grain">Film Grain</option>
-              <option value="Efek VHS">Efek VHS</option>
-              <option value="Lensa Anamorphic">Lensa Anamorphic</option>
-              <option value="Fokus Halus">Fokus Halus</option>
-              <option value="Vignette">Vignette</option>
-            </optgroup>
-            <optgroup label="Komposisi Bidikan">
-              <option value="Rule of Thirds">Rule of Thirds</option>
-              <option value="Leading Lines">Leading Lines</option>
-              <option value="Simetri">Simetri</option>
-              <option value="Framing">Framing</option>
-              <option value="Golden Ratio">Golden Ratio</option>
-              <option value="Close-up Ekstrem">Close-up Ekstrem</option>
-              <option value="Wide Shot">Wide Shot</option>
-              <option value="Medium Shot">Medium Shot</option>
-              <option value="Full Shot">Full Shot</option>
-              <option value="Cowboy Shot">Cowboy Shot</option>
-            </optgroup>
-            <optgroup label="Sudut Kamera">
-              <option value="Eye-Level">Eye-Level</option>
-              <option value="High-Angle">High-Angle</option>
-              <option value="Low-Angle">Low-Angle</option>
-              <option value="Bird's-Eye-View">Bird's-Eye-View</option>
-              <option value="Worm's-Eye-View">Worm's-Eye-View</option>
-              <option value="Dutch Angle">Dutch Angle</option>
-              <option value="Over-the-Shoulder Shot">Over-the-Shoulder Shot</option>
-              <option value="Point-of-View (POV)">Point-of-View (POV)</option>
-            </optgroup>
-            <optgroup label="Pergerakan Kamera">
-              <option value="Statis">Statis</option>
-              <option value="Pan">Pan</option>
-              <option value="Tilt">Tilt</option>
-              <option value="Dolly">Dolly</option>
-              <option value="Tracking/Trucking">Tracking/Trucking</option>
-              <option value="Crane/Jib">Crane/Jib</option>
-              <option value="Handheld">Handheld</option>
-              <option value="Steadicam">Steadicam</option>
-              <option value="Dolly Zoom">Dolly Zoom</option>
-            </optgroup>
-            <optgroup label="Lensa & Fokus">
-              <option value="Lensa Wide">Lensa Wide</option>
-              <option value="Lensa Telephoto">Lensa Telephoto</option>
-              <option value="Lensa Fisheye">Lensa Fisheye</option>
-              <option value="Rack Focus">Rack Focus</option>
-              <option value="Deep Focus">Deep Focus</option>
-              <option value="Shallow Focus">Shallow Focus</option>
-            </optgroup>
-            <optgroup label="Genre Lingkungan">
-              <option value="High Fantasy">High Fantasy</option>
-              <option value="Urban Fantasy">Urban Fantasy</option>
-              <option value="Space Opera">Space Opera</option>
-              <option value="Dystopian">Dystopian</option>
-              <option value="Utopian">Utopian</option>
-              <option value="Historical">Historical</option>
-              <option value="Slice of Life">Slice of Life</option>
-              <option value="Magical Realism">Magical Realism</option>
-              <option value="Biopunk">Biopunk</option>
-            </optgroup>
-            <optgroup label="Lokasi Spesifik">
-              <option value="Kota Bawah Laut">Kota Bawah Laut</option>
-              <option value="Stasiun Luar Angkasa Terbengkalai">Stasiun Luar Angkasa Terbengkalai</option>
-              <option value="Pasar Malam di Planet Asing">Pasar Malam di Planet Asing</option>
-              <option value="Perpustakaan Tak Terhingga">Perpustakaan Tak Terhingga</option>
-              <option value="Hutan Kristal">Hutan Kristal</option>
-              <option value="Kerajaan di Atas Awan">Kerajaan di Atas Awan</option>
-              <option value="Ruang Tahta Gotik">Ruang Tahta Gotik</option>
-              <option value="Apartemen Minimalis">Apartemen Minimalis</option>
-            </optgroup>
-            <optgroup label="Skala & Arsitektur">
-              <option value="Megastruktur">Megastruktur</option>
-              <option value="Arsitektur Brutalis">Arsitektur Brutalis</option>
-              <option value="Arsitektur Organik">Arsitektur Organik</option>
-              <option value="Kota Terapung">Kota Terapung</option>
-              <option value="Desa Abad Pertengahan">Desa Abad Pertengahan</option>
-              <option value="Interior Kapal Selam">Interior Kapal Selam</option>
-              <option value="Arsitektur Barok">Arsitektur Barok</option>
-            </optgroup>
+          <input id="style_id" placeholder="contoh: Modern style" />
+        </div>
+                <!-- Field Baru -->
+        <div>
+          <label>🎨 Gaya Seni Inti</label>
+          <select id="gaya_seni_inti_select" onchange="toggleCustom('gaya_seni_inti')">
+            <option value="">Pilih Gaya Seni Inti...</option>
+            <option value="Fotorealistis">Fotorealistis</option>
+            <option value="Sinematik 8K">Sinematik 8K</option>
+            <option value="Gaya Anime (Ghibli)">Gaya Anime (Ghibli)</option>
+            <option value="Gaya Anime (Shinkai)">Gaya Anime (Shinkai)</option>
+            <option value="Gaya Anime (90s)">Gaya Anime (90s)</option>
+            <option value="Lukisan (Cat Minyak)">Lukisan (Cat Minyak)</option>
+            <option value="Lukisan (Cat Air)">Lukisan (Cat Air)</option>
+            <option value="Seni Piksel (8-bit)">Seni Piksel (8-bit)</option>
+            <option value="Seni Piksel (16-bit)">Seni Piksel (16-bit)</option>
+            <option value="Cel-Shading">Cel-Shading</option>
+            <option value="Sketsa Pensil">Sketsa Pensil</option>
+            <option value="Stop Motion Clay">Stop Motion Clay</option>
+            <option value="Model 3D Low-Poly">Model 3D Low-Poly</option>
             <option value="other">Lainnya</option>
           </select>
-          <input type="text" id="style_id_custom" class="hidden" placeholder="Isi gaya visual custom" />
+          <input type="text" id="gaya_seni_inti_custom" class="hidden" placeholder="Isi gaya seni inti custom" />
+        </div>
+        <div>
+          <label>🖼️ Aliran Artistik</label>
+          <select id="aliran_artistik_select" onchange="toggleCustom('aliran_artistik')">
+            <option value="">Pilih Aliran Artistik...</option>
+            <option value="Surealisme">Surealisme</option>
+            <option value="Impresionisme">Impresionisme</option>
+            <option value="Art Deco">Art Deco</option>
+            <option value="Art Nouveau">Art Nouveau</option>
+            <option value="Bauhaus">Bauhaus</option>
+            <option value="Pop Art">Pop Art</option>
+            <option value="Gotik">Gotik</option>
+            <option value="Steampunk">Steampunk</option>
+            <option value="Cyberpunk">Cyberpunk</option>
+            <option value="Solarpunk">Solarpunk</option>
+            <option value="Vaporwave">Vaporwave</option>
+            <option value="Grunge">Grunge</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="aliran_artistik_custom" class="hidden" placeholder="Isi aliran artistik custom" />
+        </div>
+        <div>
+          <label>🎨 Palet Warna</label>
+          <select id="palet_warna_select" onchange="toggleCustom('palet_warna')">
+            <option value="">Pilih Palet Warna...</option>
+            <option value="Monokromatik">Monokromatik</option>
+            <option value="Analog">Analog</option>
+            <option value="Komplementer">Komplementer</option>
+            <option value="Triadic">Triadic</option>
+            <option value="Sepia">Sepia</option>
+            <option value="Technicolor">Technicolor</option>
+            <option value="Pastel">Pastel</option>
+            <option value="Neon">Neon</option>
+            <option value="Skema Warna Wes Anderson">Skema Warna Wes Anderson</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="palet_warna_custom" class="hidden" placeholder="Isi palet warna custom" />
+        </div>
+        <div>
+          <label>💡 Pencahayaan</label>
+          <select id="pencahayaan_select" onchange="toggleCustom('pencahayaan')">
+            <option value="">Pilih Pencahayaan...</option>
+            <option value="High-Key">High-Key</option>
+            <option value="Low-Key">Low-Key</option>
+            <option value="Golden Hour">Golden Hour</option>
+            <option value="Blue Hour">Blue Hour</option>
+            <option value="Backlight">Backlight</option>
+            <option value="Pencahayaan Volumetrik">Pencahayaan Volumetrik</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="pencahayaan_custom" class="hidden" placeholder="Isi pencahayaan custom" />
+        </div>
+                <div>
+          <label>👥 Arketipe Karakter</label>
+          <select id="arketipe_karakter_select" onchange="toggleCustom('arketipe_karakter')">
+            <option value="">Pilih Arketipe Karakter...</option>
+            <option value="The Hero">The Hero</option>
+            <option value="The Mentor">The Mentor</option>
+            <option value="The Trickster">The Trickster</option>
+            <option value="The Anti-Hero">The Anti-Hero</option>
+            <option value="The Femme Fatale">The Femme Fatale</option>
+            <option value="The Innocent">The Innocent</option>
+            <option value="The Explorer">The Explorer</option>
+            <option value="The Rebel">The Rebel</option>
+            <option value="The Ruler">The Ruler</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="arketipe_karakter_custom" class="hidden" placeholder="Isi arketipe karakter custom" />
+        </div>
+        <div>
+          <label>🦸 Spesies/Bentuk</label>
+          <select id="spesies_bentuk_select" onchange="toggleCustom('spesies_bentuk')">
+            <option value="">Pilih Spesies/Bentuk...</option>
+            <option value="Manusia">Manusia</option>
+            <option value="Elf">Elf</option>
+            <option value="Dwarf">Dwarf</option>
+            <option value="Orc">Orc</option>
+            <option value="Cyborg">Cyborg</option>
+            <option value="Android">Android</option>
+            <option value="Alien (Xenomorph)">Alien (Xenomorph)</option>
+            <option value="Alien (Grey)">Alien (Grey)</option>
+            <option value="Entitas Kosmik">Entitas Kosmik</option>
+            <option value="Hewan Antropomorfik">Hewan Antropomorfik</option>
+            <option value="Makhluk Mitologi (Naga)">Makhluk Mitologi (Naga)</option>
+            <option value="Makhluk Mitologi (Griffin)">Makhluk Mitologi (Griffin)</option>
+            <option value="Makhluk Mitologi (Kitsune)">Makhluk Mitologi (Kitsune)</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="spesies_bentuk_custom" class="hidden" placeholder="Isi spesies/bentuk custom" />
+        </div>
+        <div>
+          <label>✨ Atribut Unik</label>
+          <select id="atribut_unik_select" onchange="toggleCustom('atribut_unik')">
+            <option value="">Pilih Atribut Unik...</option>
+            <option value="Mata Bionik">Mata Bionik</option>
+            <option value="Lengan Mekanis">Lengan Mekanis</option>
+            <option value="Tato yang Menyala">Tato yang Menyala</option>
+            <option value="Bekas Luka">Bekas Luka</option>
+            <option value="Rambut Terbuat dari Api">Rambut Terbuat dari Api</option>
+            <option value="Kulit Kristal">Kulit Kristal</option>
+            <option value="Sayap (Mekanis)">Sayap (Mekanis)</option>
+            <option value="Sayap (Organik)">Sayap (Organik)</option>
+            <option value="Tanduk">Tanduk</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="atribut_unik_custom" class="hidden" placeholder="Isi atribut unik custom" />
+        </div>
+        <div>
+          <label>🎵 Genre Musik</label>
+          <select id="genre_musik_select" onchange="toggleCustom('genre_musik')">
+            <option value="">Pilih Genre Musik...</option>
+            <option value="Orkestra Epik">Orkestra Epik</option>
+            <option value="Lo-Fi Hip Hop">Lo-Fi Hip Hop</option>
+            <option value="Synthwave/Retrowave">Synthwave/Retrowave</option>
+            <option value="Ambient">Ambient</option>
+            <option value="Musik Klasik (Barok)">Musik Klasik (Barok)</option>
+            <option value="Musik Klasik (Romantis)">Musik Klasik (Romantis)</option>
+            <option value="Heavy Metal">Heavy Metal</option>
+            <option value="Folk">Folk</option>
+            <option value="Jazz Noir">Jazz Noir</option>
+            <option value="Chiptune">Chiptune</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="genre_musik_custom" class="hidden" placeholder="Isi genre musik custom" />
+        </div>
+        <div>
+          <label>🔊 Desain Suara</label>
+          <select id="desain_suara_select" onchange="toggleCustom('desain_suara')">
+            <option value="">Pilih Desain Suara...</option>
+            <option value="Diegetic">Diegetic</option>
+            <option value="Non-Diegetic">Non-Diegetic</option>
+            <option value="Foley">Foley</option>
+            <option value="ASMR Triggers">ASMR Triggers</option>
+            <option value="Hening yang Menegangkan">Hening yang Menegangkan</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="desain_suara_custom" class="hidden" placeholder="Isi desain suara custom" />
+        </div>
+        <div>
+          <label>😊 Mood Dominan</label>
+          <select id="mood_dominan_select" onchange="toggleCustom('mood_dominan')">
+            <option value="">Pilih Mood Dominan...</option>
+            <option value="Menegangkan">Menegangkan</option>
+            <option value="Melankolis">Melankolis</option>
+            <option value="Nostalgia">Nostalgia</option>
+            <option value="Penuh Harapan">Penuh Harapan</option>
+            <option value="Heroik">Heroik</option>
+            <option value="Misterius">Misterius</option>
+            <option value="Aneh (Weird)">Aneh (Weird)</option>
+            <option value="Menenangkan (Calm)">Menenangkan (Calm)</option>
+            <option value="Energik">Energik</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="mood_dominan_custom" class="hidden" placeholder="Isi mood dominan custom" />
+        </div>
+                <div>
+          <label>🖼️ Tekstur & Kualitas</label>
+          <select id="tekstur_kualitas_select" onchange="toggleCustom('tekstur_kualitas')">
+            <option value="">Pilih Tekstur & Kualitas...</option>
+            <option value="Jernih (Clean 4K/8K)">Jernih (Clean 4K/8K)</option>
+            <option value="Film Grain">Film Grain</option>
+            <option value="Efek VHS">Efek VHS</option>
+            <option value="Lensa Anamorphic">Lensa Anamorphic</option>
+            <option value="Fokus Halus">Fokus Halus</option>
+            <option value="Vignette">Vignette</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="tekstur_kualitas_custom" class="hidden" placeholder="Isi tekstur & kualitas custom" />
+        </div>
+        <div>
+          <label>📐 Komposisi Bidikan</label>
+          <select id="komposisi_bidikan_select" onchange="toggleCustom('komposisi_bidikan')">
+            <option value="">Pilih Komposisi Bidikan...</option>
+            <option value="Rule of Thirds">Rule of Thirds</option>
+            <option value="Leading Lines">Leading Lines</option>
+            <option value="Simetri">Simetri</option>
+            <option value="Framing">Framing</option>
+            <option value="Golden Ratio">Golden Ratio</option>
+            <option value="Close-up Ekstrem">Close-up Ekstrem</option>
+            <option value="Wide Shot">Wide Shot</option>
+            <option value="Medium Shot">Medium Shot</option>
+            <option value="Full Shot">Full Shot</option>
+            <option value="Cowboy Shot">Cowboy Shot</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="komposisi_bidikan_custom" class="hidden" placeholder="Isi komposisi bidikan custom" />
+        </div>
+        <div>
+          <label>📷 Sudut Kamera</label>
+          <select id="sudut_kamera_select" onchange="toggleCustom('sudut_kamera')">
+            <option value="">Pilih Sudut Kamera...</option>
+            <option value="Eye-Level">Eye-Level</option>
+            <option value="High-Angle">High-Angle</option>
+            <option value="Low-Angle">Low-Angle</option>
+            <option value="Bird's-Eye-View">Bird's-Eye-View</option>
+            <option value="Worm's-Eye-View">Worm's-Eye-View</option>
+            <option value="Dutch Angle">Dutch Angle</option>
+            <option value="Over-the-Shoulder Shot">Over-the-Shoulder Shot</option>
+            <option value="Point-of-View (POV)">Point-of-View (POV)</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="sudut_kamera_custom" class="hidden" placeholder="Isi sudut kamera custom" />
+        </div>
+        <div>
+          <label>🎥 Pergerakan Kamera</label>
+          <select id="pergerakan_kamera_select" onchange="toggleCustom('pergerakan_kamera')">
+            <option value="">Pilih Pergerakan Kamera...</option>
+            <option value="Statis">Statis</option>
+            <option value="Pan">Pan</option>
+            <option value="Tilt">Tilt</option>
+            <option value="Dolly">Dolly</option>
+            <option value="Tracking/Trucking">Tracking/Trucking</option>
+            <option value="Crane/Jib">Crane/Jib</option>
+            <option value="Handheld">Handheld</option>
+            <option value="Steadicam">Steadicam</option>
+            <option value="Dolly Zoom">Dolly Zoom</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="pergerakan_kamera_custom" class="hidden" placeholder="Isi pergerakan kamera custom" />
+        </div>
+        <div>
+          <label>📸 Lensa & Fokus</label>
+          <select id="lensa_fokus_select" onchange="toggleCustom('lensa_fokus')">
+            <option value="">Pilih Lensa & Fokus...</option>
+            <option value="Lensa Wide">Lensa Wide</option>
+            <option value="Lensa Telephoto">Lensa Telephoto</option>
+            <option value="Lensa Fisheye">Lensa Fisheye</option>
+            <option value="Rack Focus">Rack Focus</option>
+            <option value="Deep Focus">Deep Focus</option>
+            <option value="Shallow Focus">Shallow Focus</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="lensa_fokus_custom" class="hidden" placeholder="Isi lensa & fokus custom" />
+        </div>
+        <div>
+          <label>🌍 Genre Lingkungan</label>
+          <select id="genre_lingkungan_select" onchange="toggleCustom('genre_lingkungan')">
+            <option value="">Pilih Genre Lingkungan...</option>
+            <option value="High Fantasy">High Fantasy</option>
+            <option value="Urban Fantasy">Urban Fantasy</option>
+            <option value="Space Opera">Space Opera</option>
+            <option value="Dystopian">Dystopian</option>
+            <option value="Utopian">Utopian</option>
+            <option value="Historical">Historical</option>
+            <option value="Slice of Life">Slice of Life</option>
+            <option value="Magical Realism">Magical Realism</option>
+            <option value="Biopunk">Biopunk</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="genre_lingkungan_custom" class="hidden" placeholder="Isi genre lingkungan custom" />
+        </div>
+        <div>
+          <label>🏙️ Lokasi Spesifik</label>
+          <select id="lokasi_spesifik_select" onchange="toggleCustom('lokasi_spesifik')">
+            <option value="">Pilih Lokasi Spesifik...</option>
+            <option value="Kota Bawah Laut">Kota Bawah Laut</option>
+            <option value="Stasiun Luar Angkasa Terbengkalai">Stasiun Luar Angkasa Terbengkalai</option>
+            <option value="Pasar Malam di Planet Asing">Pasar Malam di Planet Asing</option>
+            <option value="Perpustakaan Tak Terhingga">Perpustakaan Tak Terhingga</option>
+            <option value="Hutan Kristal">Hutan Kristal</option>
+            <option value="Kerajaan di Atas Awan">Kerajaan di Atas Awan</option>
+            <option value="Ruang Tahta Gotik">Ruang Tahta Gotik</option>
+            <option value="Apartemen Minimalis">Apartemen Minimalis</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="lokasi_spesifik_custom" class="hidden" placeholder="Isi lokasi spesifik custom" />
+        </div>
+        <div>
+          <label>🏗️ Skala & Arsitektur</label>
+          <select id="skala_arsitektur_select" onchange="toggleCustom('skala_arsitektur')">
+            <option value="">Pilih Skala & Arsitektur...</option>
+            <option value="Megastruktur">Megastruktur</option>
+            <option value="Arsitektur Brutalis">Arsitektur Brutalis</option>
+            <option value="Arsitektur Organik">Arsitektur Organik</option>
+            <option value="Kota Terapung">Kota Terapung</option>
+            <option value="Desa Abad Pertengahan">Desa Abad Pertengahan</option>
+            <option value="Interior Kapal Selam">Interior Kapal Selam</option>
+            <option value="Arsitektur Barok">Arsitektur Barok</option>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="skala_arsitektur_custom" class="hidden" placeholder="Isi skala & arsitektur custom" />
         </div>
         <div>
           <button class="btn" id="add_btn" onclick="addData()">➕ Add Data Baru</button>
@@ -292,7 +372,8 @@
           <button class="btn ghost" onclick="clearForm()">🗑️ Clear Form</button>
         </div>
       </div>
-            <!-- List Data -->
+
+      <!-- List Data -->
       <div class="hr"></div>
       <label>📋 List Data dari Google Sheets</label>
       <div id="data_list" class="example">
@@ -304,8 +385,7 @@
       <p class="muted">Selesai manage data? <a href="index.html">Kembali ke Generator Prompt</a></p>
     </div>
   </div>
-
-<script>
+  <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
 
 let data = [];
@@ -344,10 +424,28 @@ function loadToForm(){
   if(selectedIndex !== ''){
     const item = data[selectedIndex];
     document.getElementById('char_id').value = item.char_id || '';
-    setDropdown('attr_fisik', item.attr_fisik);
-    setDropdown('cloth_id', item.cloth_id);
-    setDropdown('voice_id', item.voice_id);
-    setDropdown('style_id', item.style_id);
+    document.getElementById('attr_fisik').value = item.attr_fisik || '';
+    document.getElementById('cloth_id').value = item.cloth_id || '';
+    document.getElementById('voice_id').value = item.voice_id || '';
+    document.getElementById('style_id').value = item.style_id || '';
+    setDropdown('gaya_seni_inti', item.gaya_seni_inti);
+    setDropdown('aliran_artistik', item.aliran_artistik);
+    setDropdown('palet_warna', item.palet_warna);
+    setDropdown('pencahayaan', item.pencahayaan);
+    setDropdown('arketipe_karakter', item.arketipe_karakter);
+    setDropdown('spesies_bentuk', item.spesies_bentuk);
+    setDropdown('atribut_unik', item.atribut_unik);
+    setDropdown('genre_musik', item.genre_musik);
+    setDropdown('desain_suara', item.desain_suara);
+    setDropdown('mood_dominan', item.mood_dominan);
+    setDropdown('tekstur_kualitas', item.tekstur_kualitas);
+    setDropdown('komposisi_bidikan', item.komposisi_bidikan);
+    setDropdown('sudut_kamera', item.sudut_kamera);
+    setDropdown('pergerakan_kamera', item.pergerakan_kamera);
+    setDropdown('lensa_fokus', item.lensa_fokus);
+    setDropdown('genre_lingkungan', item.genre_lingkungan);
+    setDropdown('lokasi_spesifik', item.lokasi_spesifik);
+    setDropdown('skala_arsitektur', item.skala_arsitektur);
     editIndex = selectedIndex;
   }
 }
@@ -376,8 +474,7 @@ function toggleCustom(field){
     custom.value = '';
   }
 }
-
-function loadData(){
+    function loadData(){
   const xhr = new XMLHttpRequest();
   xhr.open('GET', GAS_URL + '?action=getData', true);
   xhr.onreadystatechange = function() {
@@ -418,15 +515,32 @@ function renderList(){
         <strong>Atribut Fisik:</strong> ${item.attr_fisik || 'Kosong'} | 
         <strong>Pakaian:</strong> ${item.cloth_id || 'Kosong'} | 
         <strong>Suara:</strong> ${item.voice_id || 'Kosong'} | 
-        <strong>Gaya Visual:</strong> ${item.style_id || 'Kosong'}
+        <strong>Gaya Visual:</strong> ${item.style_id || 'Kosong'} | 
+        <strong>Gaya Seni Inti:</strong> ${item.gaya_seni_inti || 'Kosong'} | 
+        <strong>Aliran Artistik:</strong> ${item.aliran_artistik || 'Kosong'} | 
+        <strong>Palet Warna:</strong> ${item.palet_warna || 'Kosong'} | 
+        <strong>Pencahayaan:</strong> ${item.pencahayaan || 'Kosong'} | 
+        <strong>Arketipe Karakter:</strong> ${item.arketipe_karakter || 'Kosong'} | 
+        <strong>Spesies/Bentuk:</strong> ${item.spesies_bentuk || 'Kosong'} | 
+        <strong>Atribut Unik:</strong> ${item.atribut_unik || 'Kosong'} | 
+        <strong>Genre Musik:</strong> ${item.genre_musik || 'Kosong'} | 
+        <strong>Desain Suara:</strong> ${item.desain_suara || 'Kosong'} | 
+        <strong>Mood Dominan:</strong> ${item.mood_dominan || 'Kosong'} | 
+        <strong>Tekstur & Kualitas:</strong> ${item.tekstur_kualitas || 'Kosong'} | 
+        <strong>Komposisi Bidikan:</strong> ${item.komposisi_bidikan || 'Kosong'} | 
+        <strong>Sudut Kamera:</strong> ${item.sudut_kamera || 'Kosong'} | 
+        <strong>Pergerakan Kamera:</strong> ${item.pergerakan_kamera || 'Kosong'} | 
+        <strong>Lensa & Fokus:</strong> ${item.lensa_fokus || 'Kosong'} | 
+        <strong>Genre Lingkungan:</strong> ${item.genre_lingkungan || 'Kosong'} | 
+        <strong>Lokasi Spesifik:</strong> ${item.lokasi_spesifik || 'Kosong'} | 
+        <strong>Skala & Arsitektur:</strong> ${item.skala_arsitektur || 'Kosong'}
         <button onclick="editData(${index})" style="margin-left: 10px; background: #22c55e; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Edit</button>
         <button onclick="deleteData(${index})" style="margin-left: 5px; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Delete</button>
       </div>
     `;
   });
 }
-
-function getFieldValue(field){
+    function getFieldValue(field){
   const select = document.getElementById(field + '_select');
   const custom = document.getElementById(field + '_custom');
   return select.value === 'other' ? custom.value.trim() : select.value;
@@ -438,10 +552,28 @@ function isCharIdUnique(char_id, excludeIndex = -1){
 
 function addData(){
   const char_id = document.getElementById('char_id').value.trim();
-  const attr_fisik = getFieldValue('attr_fisik');
-  const cloth_id = getFieldValue('cloth_id');
-  const voice_id = getFieldValue('voice_id');
-  const style_id = getFieldValue('style_id');
+  const attr_fisik = document.getElementById('attr_fisik').value.trim();
+  const cloth_id = document.getElementById('cloth_id').value.trim();
+  const voice_id = document.getElementById('voice_id').value.trim();
+  const style_id = document.getElementById('style_id').value.trim();
+  const gaya_seni_inti = getFieldValue('gaya_seni_inti');
+  const aliran_artistik = getFieldValue('aliran_artistik');
+  const palet_warna = getFieldValue('palet_warna');
+  const pencahayaan = getFieldValue('pencahayaan');
+  const arketipe_karakter = getFieldValue('arketipe_karakter');
+  const spesies_bentuk = getFieldValue('spesies_bentuk');
+  const atribut_unik = getFieldValue('atribut_unik');
+  const genre_musik = getFieldValue('genre_musik');
+  const desain_suara = getFieldValue('desain_suara');
+  const mood_dominan = getFieldValue('mood_dominan');
+  const tekstur_kualitas = getFieldValue('tekstur_kualitas');
+  const komposisi_bidikan = getFieldValue('komposisi_bidikan');
+  const sudut_kamera = getFieldValue('sudut_kamera');
+  const pergerakan_kamera = getFieldValue('pergerakan_kamera');
+  const lensa_fokus = getFieldValue('lensa_fokus');
+  const genre_lingkungan = getFieldValue('genre_lingkungan');
+  const lokasi_spesifik = getFieldValue('lokasi_spesifik');
+  const skala_arsitektur = getFieldValue('skala_arsitektur');
   if(!char_id){
     alert('ID Karakter harus diisi!');
     return;
@@ -451,7 +583,7 @@ function addData(){
     return;
   }
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', GAS_URL + '?action=addData&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id), true);
+  xhr.open('GET', GAS_URL + '?action=addData&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id) + '&gaya_seni_inti=' + encodeURIComponent(gaya_seni_inti) + '&aliran_artistik=' + encodeURIComponent(aliran_artistik) + '&palet_warna=' + encodeURIComponent(palet_warna) + '&pencahayaan=' + encodeURIComponent(pencahayaan) + '&arketipe_karakter=' + encodeURIComponent(arketipe_karakter) + '&spesies_bentuk=' + encodeURIComponent(spesies_bentuk) + '&atribut_unik=' + encodeURIComponent(atribut_unik) + '&genre_musik=' + encodeURIComponent(genre_musik) + '&desain_suara=' + encodeURIComponent(desain_suara) + '&mood_dominan=' + encodeURIComponent(mood_dominan) + '&tekstur_kualitas=' + encodeURIComponent(tekstur_kualitas) + '&komposisi_bidikan=' + encodeURIComponent(komposisi_bidikan) + '&sudut_kamera=' + encodeURIComponent(sudut_kamera) + '&pergerakan_kamera=' + encodeURIComponent(pergerakan_kamera) + '&lensa_fokus=' + encodeURIComponent(lensa_fokus) + '&genre_lingkungan=' + encodeURIComponent(genre_lingkungan) + '&lokasi_spesifik=' + encodeURIComponent(lokasi_spesifik) + '&skala_arsitektur=' + encodeURIComponent(skala_arsitektur), true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
@@ -464,17 +596,34 @@ function addData(){
   };
   xhr.send();
 }
-
-function updateData(){
+    function updateData(){
   if(editIndex === -1){
     alert('Pilih data untuk edit dulu!');
     return;
   }
   const char_id = document.getElementById('char_id').value.trim();
-  const attr_fisik = getFieldValue('attr_fisik');
-  const cloth_id = getFieldValue('cloth_id');
-  const voice_id = getFieldValue('voice_id');
-  const style_id = getFieldValue('style_id');
+  const attr_fisik = document.getElementById('attr_fisik').value.trim();
+  const cloth_id = document.getElementById('cloth_id').value.trim();
+  const voice_id = document.getElementById('voice_id').value.trim();
+  const style_id = document.getElementById('style_id').value.trim();
+  const gaya_seni_inti = getFieldValue('gaya_seni_inti');
+  const aliran_artistik = getFieldValue('aliran_artistik');
+  const palet_warna = getFieldValue('palet_warna');
+  const pencahayaan = getFieldValue('pencahayaan');
+  const arketipe_karakter = getFieldValue('arketipe_karakter');
+  const spesies_bentuk = getFieldValue('spesies_bentuk');
+  const atribut_unik = getFieldValue('atribut_unik');
+  const genre_musik = getFieldValue('genre_musik');
+  const desain_suara = getFieldValue('desain_suara');
+  const mood_dominan = getFieldValue('mood_dominan');
+  const tekstur_kualitas = getFieldValue('tekstur_kualitas');
+  const komposisi_bidikan = getFieldValue('komposisi_bidikan');
+  const sudut_kamera = getFieldValue('sudut_kamera');
+  const pergerakan_kamera = getFieldValue('pergerakan_kamera');
+  const lensa_fokus = getFieldValue('lensa_fokus');
+  const genre_lingkungan = getFieldValue('genre_lingkungan');
+  const lokasi_spesifik = getFieldValue('lokasi_spesifik');
+  const skala_arsitektur = getFieldValue('skala_arsitektur');
   if(!char_id){
     alert('ID Karakter harus diisi!');
     return;
@@ -484,7 +633,7 @@ function updateData(){
     return;
   }
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', GAS_URL + '?action=updateData&index=' + editIndex + '&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id), true);
+  xhr.open('GET', GAS_URL + '?action=updateData&index=' + editIndex + '&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id) + '&gaya_seni_inti=' + encodeURIComponent(gaya_seni_inti) + '&aliran_artistik=' + encodeURIComponent(aliran_artistik) + '&palet_warna=' + encodeURIComponent(palet_warna) + '&pencahayaan=' + encodeURIComponent(pencahayaan) + '&arketipe_karakter=' + encodeURIComponent(arketipe_karakter) + '&spesies_bentuk=' + encodeURIComponent(spesies_bentuk) + '&atribut_unik=' + encodeURIComponent(atribut_unik) + '&genre_musik=' + encodeURIComponent(genre_musik) + '&desain_suara=' + encodeURIComponent(desain_suara) + '&mood_dominan=' + encodeURIComponent(mood_dominan) + '&tekstur_kualitas=' + encodeURIComponent(tekstur_kualitas) + '&komposisi_bidikan=' + encodeURIComponent(komposisi_bidikan) + '&sudut_kamera=' + encodeURIComponent(sudut_kamera) + '&pergerakan_kamera=' + encodeURIComponent(pergerakan_kamera) + '&lensa_fokus=' + encodeURIComponent(lensa_fokus) + '&genre_lingkungan=' + encodeURIComponent(genre_lingkungan) + '&lokasi_spesifik=' + encodeURIComponent(lokasi_spesifik) + '&skala_arsitektur=' + encodeURIComponent(skala_arsitektur), true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
@@ -517,14 +666,31 @@ function deleteData(index){
     xhr.send();
   }
 }
-
-function editData(index){
+    function editData(index){
   const item = data[index];
   document.getElementById('char_id').value = item.char_id || '';
-  setDropdown('attr_fisik', item.attr_fisik);
-  setDropdown('cloth_id', item.cloth_id);
-  setDropdown('voice_id', item.voice_id);
-  setDropdown('style_id', item.style_id);
+  document.getElementById('attr_fisik').value = item.attr_fisik || '';
+  document.getElementById('cloth_id').value = item.cloth_id || '';
+  document.getElementById('voice_id').value = item.voice_id || '';
+  document.getElementById('style_id').value = item.style_id || '';
+  setDropdown('gaya_seni_inti', item.gaya_seni_inti);
+  setDropdown('aliran_artistik', item.aliran_artistik);
+  setDropdown('palet_warna', item.palet_warna);
+  setDropdown('pencahayaan', item.pencahayaan);
+  setDropdown('arketipe_karakter', item.arketipe_karakter);
+  setDropdown('spesies_bentuk', item.spesies_bentuk);
+  setDropdown('atribut_unik', item.atribut_unik);
+  setDropdown('genre_musik', item.genre_musik);
+  setDropdown('desain_suara', item.desain_suara);
+  setDropdown('mood_dominan', item.mood_dominan);
+  setDropdown('tekstur_kualitas', item.tekstur_kualitas);
+  setDropdown('komposisi_bidikan', item.komposisi_bidikan);
+  setDropdown('sudut_kamera', item.sudut_kamera);
+  setDropdown('pergerakan_kamera', item.pergerakan_kamera);
+  setDropdown('lensa_fokus', item.lensa_fokus);
+  setDropdown('genre_lingkungan', item.genre_lingkungan);
+  setDropdown('lokasi_spesifik', item.lokasi_spesifik);
+  setDropdown('skala_arsitektur', item.skala_arsitektur);
   editIndex = index;
   document.getElementById('mode').value = 'edit';
   switchMode();
@@ -532,11 +698,12 @@ function editData(index){
 }
 
 function clearForm(){
-  ['char_id','attr_fisik_custom','cloth_id_custom','voice_id_custom','style_id_custom'].forEach(id=>document.getElementById(id).value='');
-  ['attr_fisik_select','cloth_id_select','voice_id_select','style_id_select'].forEach(id=>{
+  ['char_id','attr_fisik','cloth_id','voice_id','style_id'].forEach(id=>document.getElementById(id).value='');
+  ['gaya_seni_inti_select','aliran_artistik_select','palet_warna_select','pencahayaan_select','arketipe_karakter_select','spesies_bentuk_select','atribut_unik_select','genre_musik_select','desain_suara_select','mood_dominan_select','tekstur_kualitas_select','komposisi_bidikan_select','sudut_kamera_select','pergerakan_kamera_select','lensa_fokus_select','genre_lingkungan_select','lokasi_spesifik_select','skala_arsitektur_select'].forEach(id=>{
     document.getElementById(id).value = '';
   });
-  ['attr_fisik_custom','cloth_id_custom','voice_id_custom','style_id_custom'].forEach(id=>{
+  ['gaya_seni_inti_custom','aliran_artistik_custom','palet_warna_custom','pencahayaan_custom','arketipe_karakter_custom','spesies_bentuk_custom','atribut_unik_custom','genre_musik_custom','desain_suara_custom','mood_dominan_custom','tekstur_kualitas_custom','komposisi_bidikan_custom','sudut_kamera_custom','pergerakan_kamera_custom','lensa_fokus_custom','genre_lingkungan_custom','lokasi_spesifik_custom','skala_arsitektur_custom'].forEach(id=>{
+    document.getElementById(id).value = '';
     document.getElementById(id).classList.add('hidden');
   });
   document.getElementById('existing_select').value = '';
