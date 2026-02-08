@@ -1,4 +1,4 @@
-<!-- crud.html - Kode Lengkap dengan URL GAS Baru -->
+<!-- crud.html - Kode Lengkap dengan Field Sederhana dan Validasi Unik -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -42,24 +42,25 @@
       <div class="hr"></div>
       <div class="grid">
         <div>
-          <label>🆔 ID Karakter</label>
+          <label>🆔 ID Karakter (unik)</label>
           <input id="char_id" placeholder="contoh: CHAR-ID: ASTRA-01" />
+          <div class="hint">ID harus unik, ga boleh double.</div>
         </div>
         <div>
           <label>👤 Atribut Fisik</label>
           <input id="attr_fisik" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
         </div>
         <div>
-          <label>👕 ID Pakaian</label>
-          <input id="cloth_id" placeholder="contoh: OUTFIT-ID: ASTRA-CASUAL-01" />
+          <label>👕 Pakaian</label>
+          <input id="cloth_id" placeholder="contoh: Casual outfit" />
         </div>
         <div>
-          <label>🎤 ID Suara</label>
-          <input id="voice_id" placeholder="contoh: VOICE-ID: ALTO-MYSTERY-01" />
+          <label>🎤 Suara</label>
+          <input id="voice_id" placeholder="contoh: Alto voice" />
         </div>
         <div>
-          <label>🌍 ID Gaya Visual</label>
-          <input id="style_id" placeholder="contoh: STYLE-ID: NEO-JAKARTA-RAINY-01" />
+          <label>🌍 Gaya Visual</label>
+          <input id="style_id" placeholder="contoh: Modern style" />
         </div>
         <div>
           <button class="btn" id="add_btn" onclick="addData()">➕ Add Data Baru</button>
@@ -168,14 +169,18 @@ function renderList(){
       <div style="border-bottom: 1px solid #e5e7eb; padding: 8px 0;">
         <strong>ID Karakter:</strong> ${item.char_id || 'Kosong'} | 
         <strong>Atribut Fisik:</strong> ${item.attr_fisik || 'Kosong'} | 
-        <strong>ID Pakaian:</strong> ${item.cloth_id || 'Kosong'} | 
-        <strong>ID Suara:</strong> ${item.voice_id || 'Kosong'} | 
-        <strong>ID Gaya:</strong> ${item.style_id || 'Kosong'}
+        <strong>Pakaian:</strong> ${item.cloth_id || 'Kosong'} | 
+        <strong>Suara:</strong> ${item.voice_id || 'Kosong'} | 
+        <strong>Gaya Visual:</strong> ${item.style_id || 'Kosong'}
         <button onclick="editData(${index})" style="margin-left: 10px; background: #22c55e; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Edit</button>
         <button onclick="deleteData(${index})" style="margin-left: 5px; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Delete</button>
       </div>
     `;
   });
+}
+
+function isCharIdUnique(char_id, excludeIndex = -1){
+  return !data.some((item, index) => item.char_id === char_id && index !== excludeIndex);
 }
 
 function addData(){
@@ -184,8 +189,12 @@ function addData(){
   const cloth_id = document.getElementById('cloth_id').value.trim();
   const voice_id = document.getElementById('voice_id').value.trim();
   const style_id = document.getElementById('style_id').value.trim();
-  if(!char_id && !attr_fisik && !cloth_id && !voice_id && !style_id){
-    alert('Isi setidaknya satu field!');
+  if(!char_id){
+    alert('ID Karakter harus diisi!');
+    return;
+  }
+  if(!isCharIdUnique(char_id)){
+    alert('ID Karakter sudah ada! Pilih ID unik.');
     return;
   }
   const xhr = new XMLHttpRequest();
@@ -213,6 +222,14 @@ function updateData(){
   const cloth_id = document.getElementById('cloth_id').value.trim();
   const voice_id = document.getElementById('voice_id').value.trim();
   const style_id = document.getElementById('style_id').value.trim();
+  if(!char_id){
+    alert('ID Karakter harus diisi!');
+    return;
+  }
+  if(!isCharIdUnique(char_id, editIndex)){
+    alert('ID Karakter sudah ada! Pilih ID unik.');
+    return;
+  }
   const xhr = new XMLHttpRequest();
   xhr.open('GET', GAS_URL + '?action=updateData&index=' + editIndex + '&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id=' + encodeURIComponent(cloth_id) + '&voice_id=' + encodeURIComponent(voice_id) + '&style_id=' + encodeURIComponent(style_id), true);
   xhr.onreadystatechange = function() {
@@ -268,6 +285,11 @@ function clearForm(){
   document.getElementById('mode').value = 'add';
   switchMode();
 }
+
+// Auto load data saat halaman buka
+window.onload = function() {
+  loadData();
+};
 </script>
 </body>
 </html>
