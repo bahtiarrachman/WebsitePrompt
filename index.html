@@ -1,11 +1,11 @@
-<!-- Ini adalah file index.html -->
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UGC Portrait Prompt Generator</title>
-  <link rel="stylesheet" href="style.css"> <!-- Link ke file CSS terpisah -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
@@ -14,6 +14,7 @@
       <h1>🚀 Prompt Generator</h1>
       <p class="sub">Isi pelan-pelan. Ikuti contoh. Klik Generate → Copy. ✨</p>
 
+      <!-- Generator Prompt (update: tambah dropdown untuk pilih dari data tersimpan) -->
       <div class="grid">
         <!-- PRESET -->
         <div>
@@ -27,6 +28,18 @@
           <input type="text" id="preset_other" class="hidden" placeholder="Deskripsikan karakter (dalam bahasa Inggris)" />
           <div class="hint">
             Pilih tipe karakter. Kalau ragu, pilih <b>Muslimah</b>. Untuk "Lainnya", isi deskripsi manual.
+          </div>
+        </div>
+
+        <!-- ID KARAKTER (baru, dari data tersimpan) -->
+        <div>
+          <label>🆔 ID Karakter (dari Data)</label>
+          <select id="char_select" onchange="loadCharDetails()">
+            <option value="">Pilih dari Data...</option>
+            <!-- Akan diisi otomatis dari loadData -->
+          </select>
+          <div class="hint">
+            Pilih ID karakter dari list tersimpan untuk konsistensi.
           </div>
         </div>
 
@@ -94,9 +107,55 @@
       <textarea id="result" placeholder="Hasil akan muncul di sini..."></textarea>
       <p class="muted">No cinematic • no filter • natural UGC look 🌟</p>
     </div>
+
+    <!-- Bagian Manage Data (CRUD dengan Sheets, update field) -->
+    <div class="card" style="margin-top: 20px;">
+      <h1>🗂️ Manage Data (CRUD dengan Google Sheets)</h1>
+      <p class="sub">Data disimpan online di Google Sheets. Klik Load Data untuk lihat/update.</p>
+
+      <!-- Form Add/Edit -->
+      <div class="grid">
+        <div>
+          <label>🆔 ID Karakter</label>
+          <input id="char_id" placeholder="contoh: CHAR-ID: ASTRA-01" />
+        </div>
+        <div>
+          <label>👤 Atribut Fisik</label>
+          <input id="attr_fisik" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
+        </div>
+        <div>
+          <label>👕 ID Pakaian</label>
+          <input id="cloth_id" placeholder="contoh: OUTFIT-ID: ASTRA-CASUAL-01" />
+        </div>
+        <div>
+          <label>🎤 ID Suara</label>
+          <input id="voice_id" placeholder="contoh: VOICE-ID: ALTO-MYSTERY-01" />
+        </div>
+        <div>
+          <label>🌍 ID Gaya Visual</label>
+          <input id="style_id" placeholder="contoh: STYLE-ID: NEO-JAKARTA-RAINY-01" />
+        </div>
+        <div>
+          <button class="btn" onclick="addData()">➕ Add Data</button>
+          <button class="btn alt" onclick="updateData()">✏️ Update Data</button>
+          <button class="btn ghost" onclick="loadData()">📥 Load Data</button>
+        </div>
+      </div>
+
+      <!-- List Data -->
+      <div class="hr"></div>
+      <label>📋 List Data dari Sheets</label>
+      <div id="data_list" class="example">
+        <!-- Data akan muncul di sini -->
+      </div>
+    </div>
   </div>
 
 <script>
+// Ganti ini dengan URL GAS kamu
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxLmTZgBsLM8lyqMuFOhX3A97mC9-oGqN5dVg91mFLwxAhTlSmSgZd1sEWgiNeemfeiWg/exec';
+
+// Fungsi Generator Prompt (update: tambah char details)
 function applyPreset(){
   const p = document.getElementById('preset').value;
   const d = document.getElementById('dialog');
@@ -122,6 +181,19 @@ function applyFocus(){
     fo.classList.remove('hidden');
   } else {
     fo.classList.add('hidden');
+  }
+}
+
+function loadCharDetails(){
+  const selected = document.getElementById('char_select').value;
+  if(selected){
+    const item = data.find(d => d.char_id === selected);
+    if(item){
+      // Isi detail ke preset_other atau langsung ke prompt
+      document.getElementById('preset_other').value = item.attr_fisik + ' ' + item.cloth_id + ' ' + item.voice_id + ' ' + item.style_id;
+      document.getElementById('preset').value = 'other';
+      applyPreset();
+    }
   }
 }
 
@@ -159,7 +231,7 @@ function generate(){
     txt += 'She wears a modest gamis with hijab fully covering her hair. ';
     txt += 'She does not speak; no mouth movement. Calm, natural expressions only. ';
   } else if(preset === 'other'){
-    txt += preset_other + '. ';
+    txt += preset_other + '. '; // Gabung detail dari data tersimpan
     txt += 'The person speaks naturally with honest facial expressions. ';
   } else {
     txt += 'The person speaks naturally with honest facial expressions. ';
@@ -183,12 +255,71 @@ function copy(){
 }
 
 function resetForm(){
-  ['age','location','dialog','result','preset_other','focus_other'].forEach(id=>document.getElementById(id).value='');
+  ['age','location','dialog','result','preset_other','focus_other','char_id','attr_fisik','cloth_id','voice_id','style_id'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('preset').value='default';
   document.getElementById('focus').value='wajah';
+  document.getElementById('char_select').innerHTML = '<option value="">Pilih dari Data...</option>';
   applyPreset();
   applyFocus();
 }
-</script>
-</body>
-</html>
+
+// Fungsi CRUD dengan Sheets
+let data = [];
+let editIndex = -1;
+
+async function loadData(){
+  try {
+    const response = await fetch(GAS_URL + '?action=getData');
+    data = await response.json();
+    renderList();
+    updateCharSelect(); // Update dropdown karakter
+    alert('Data berhasil dimuat dari Sheets! 📥');
+  } catch (error) {
+    alert('Error loading data: ' + error.message);
+  }
+}
+
+function updateCharSelect(){
+  const select = document.getElementById('char_select');
+  select.innerHTML = '<option value="">Pilih dari Data...</option>';
+  data.forEach(item => {
+    if(item.char_id){
+      select.innerHTML += `<option value="${item.char_id}">${item.char_id}</option>`;
+    }
+  });
+}
+
+function renderList(){
+  const list = document.getElementById('data_list');
+  list.innerHTML = '';
+  if(data.length === 0){
+    list.innerHTML = '<p>Tidak ada data.</p>';
+    return;
+  }
+  data.forEach((item, index) => {
+    list.innerHTML += `
+      <div style="border-bottom: 1px solid #e5e7eb; padding: 8px 0;">
+        <strong>ID Karakter:</strong> ${item.char_id || 'Kosong'} | 
+        <strong>Atribut Fisik:</strong> ${item.attr_fisik || 'Kosong'} | 
+        <strong>ID Pakaian:</strong> ${item.cloth_id || 'Kosong'} | 
+        <strong>ID Suara:</strong> ${item.voice_id || 'Kosong'} | 
+        <strong>ID Gaya:</strong> ${item.style_id || 'Kosong'}
+        <button onclick="editData(${index})" style="margin-left: 10px; background: #22c55e; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Edit</button>
+        <button onclick="deleteData(${index})" style="margin-left: 5px; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px;">Delete</button>
+      </div>
+    `;
+  });
+}
+
+async function addData(){
+  const char_id = document.getElementById('char_id').value.trim();
+  const attr_fisik = document.getElementById('attr_fisik').value.trim();
+  const cloth_id = document.getElementById('cloth_id').value.trim();
+  const voice_id = document.getElementById('voice_id').value.trim();
+  const style_id = document.getElementById('style_id').value.trim();
+  if(!char_id && !attr_fisik && !cloth_id && !voice_id && !style_id){
+    alert('Isi setidaknya satu field!');
+    return;
+  }
+  try {
+    const response = await fetch(GAS_URL + '?action=addData&char_id=' + encodeURIComponent(char_id) + '&attr_fisik=' + encodeURIComponent(attr_fisik) + '&cloth_id
