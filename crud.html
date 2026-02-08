@@ -1,4 +1,4 @@
-<!-- crud.html - Kode Lengkap dengan Field Sederhana dan Validasi Unik -->
+<!-- crud.html - Kode Lengkap dengan Dropdown User-Friendly (Bagian 1/3) -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -48,19 +48,242 @@
         </div>
         <div>
           <label>👤 Atribut Fisik</label>
-          <input id="attr_fisik" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
+          <select id="attr_fisik_select" onchange="toggleCustom('attr_fisik')">
+            <option value="">Pilih Atribut Fisik...</option>
+            <optgroup label="Arketipe Karakter">
+              <option value="The Hero">The Hero</option>
+              <option value="The Mentor">The Mentor</option>
+              <option value="The Trickster">The Trickster</option>
+              <option value="The Anti-Hero">The Anti-Hero</option>
+              <option value="The Femme Fatale">The Femme Fatale</option>
+              <option value="The Innocent">The Innocent</option>
+              <option value="The Explorer">The Explorer</option>
+              <option value="The Rebel">The Rebel</option>
+              <option value="The Ruler">The Ruler</option>
+            </optgroup>
+            <optgroup label="Spesies/Bentuk">
+              <option value="Manusia">Manusia</option>
+              <option value="Elf">Elf</option>
+              <option value="Dwarf">Dwarf</option>
+              <option value="Orc">Orc</option>
+              <option value="Cyborg">Cyborg</option>
+              <option value="Android">Android</option>
+              <option value="Alien (Xenomorph)">Alien (Xenomorph)</option>
+              <option value="Alien (Grey)">Alien (Grey)</option>
+              <option value="Entitas Kosmik">Entitas Kosmik</option>
+              <option value="Hewan Antropomorfik">Hewan Antropomorfik</option>
+              <option value="Makhluk Mitologi (Naga)">Makhluk Mitologi (Naga)</option>
+              <option value="Makhluk Mitologi (Griffin)">Makhluk Mitologi (Griffin)</option>
+              <option value="Makhluk Mitologi (Kitsune)">Makhluk Mitologi (Kitsune)</option>
+            </optgroup>
+            <optgroup label="Atribut Unik">
+              <option value="Mata Bionik">Mata Bionik</option>
+              <option value="Lengan Mekanis">Lengan Mekanis</option>
+              <option value="Tato yang Menyala">Tato yang Menyala</option>
+              <option value="Bekas Luka">Bekas Luka</option>
+              <option value="Rambut Terbuat dari Api">Rambut Terbuat dari Api</option>
+              <option value="Kulit Kristal">Kulit Kristal</option>
+              <option value="Sayap (Mekanis)">Sayap (Mekanis)</option>
+              <option value="Sayap (Organik)">Sayap (Organik)</option>
+              <option value="Tanduk">Tanduk</option>
+            </optgroup>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="attr_fisik_custom" class="hidden" placeholder="Isi atribut fisik custom" />
         </div>
-        <div>
+                <div>
           <label>👕 Pakaian</label>
-          <input id="cloth_id" placeholder="contoh: Casual outfit" />
+          <select id="cloth_id_select" onchange="toggleCustom('cloth_id')">
+            <option value="">Pilih Pakaian...</option>
+            <optgroup label="Gaya Busana">
+              <option value="Kontemporer">Kontemporer</option>
+              <option value="Sejarah (Victorian)">Sejarah (Victorian)</option>
+              <option value="Sejarah (Roaring 20s)">Sejarah (Roaring 20s)</option>
+              <option value="Fantasi (Armor)">Fantasi (Armor)</option>
+              <option value="Fantasi (Jubah)">Fantasi (Jubah)</option>
+              <option value="Sci-Fi (Pakaian Antariksa)">Sci-Fi (Pakaian Antariksa)</option>
+              <option value="Sci-Fi (Baju Cybernetic)">Sci-Fi (Baju Cybernetic)</option>
+              <option value="Post-Apocalyptic (Tambal Sulam)">Post-Apocalyptic (Tambal Sulam)</option>
+              <option value="Formal">Formal</option>
+              <option value="Kasual">Kasual</option>
+              <option value="Haute Couture">Haute Couture</option>
+            </optgroup>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="cloth_id_custom" class="hidden" placeholder="Isi pakaian custom" />
         </div>
         <div>
           <label>🎤 Suara</label>
-          <input id="voice_id" placeholder="contoh: Alto voice" />
+          <select id="voice_id_select" onchange="toggleCustom('voice_id')">
+            <option value="">Pilih Suara...</option>
+            <optgroup label="Genre Musik">
+              <option value="Orkestra Epik">Orkestra Epik</option>
+              <option value="Lo-Fi Hip Hop">Lo-Fi Hip Hop</option>
+              <option value="Synthwave/Retrowave">Synthwave/Retrowave</option>
+              <option value="Ambient">Ambient</option>
+              <option value="Musik Klasik (Barok)">Musik Klasik (Barok)</option>
+              <option value="Musik Klasik (Romantis)">Musik Klasik (Romantis)</option>
+              <option value="Heavy Metal">Heavy Metal</option>
+              <option value="Folk">Folk</option>
+              <option value="Jazz Noir">Jazz Noir</option>
+              <option value="Chiptune">Chiptune</option>
+            </optgroup>
+            <optgroup label="Desain Suara">
+              <option value="Diegetic">Diegetic</option>
+              <option value="Non-Diegetic">Non-Diegetic</option>
+              <option value="Foley">Foley</option>
+              <option value="ASMR Triggers">ASMR Triggers</option>
+              <option value="Hening yang Menegangkan">Hening yang Menegangkan</option>
+            </optgroup>
+            <optgroup label="Mood Dominan">
+              <option value="Menegangkan">Menegangkan</option>
+              <option value="Melankolis">Melankolis</option>
+              <option value="Nostalgia">Nostalgia</option>
+              <option value="Penuh Harapan">Penuh Harapan</option>
+              <option value="Heroik">Heroik</option>
+              <option value="Misterius">Misterius</option>
+              <option value="Aneh (Weird)">Aneh (Weird)</option>
+              <option value="Menenangkan (Calm)">Menenangkan (Calm)</option>
+              <option value="Energik">Energik</option>
+            </optgroup>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="voice_id_custom" class="hidden" placeholder="Isi suara custom" />
         </div>
         <div>
           <label>🌍 Gaya Visual</label>
-          <input id="style_id" placeholder="contoh: Modern style" />
+          <select id="style_id_select" onchange="toggleCustom('style_id')">
+            <option value="">Pilih Gaya Visual...</option>
+            <optgroup label="Gaya Seni Inti">
+              <option value="Fotorealistis">Fotorealistis</option>
+              <option value="Sinematik 8K">Sinematik 8K</option>
+              <option value="Gaya Anime (Ghibli)">Gaya Anime (Ghibli)</option>
+              <option value="Gaya Anime (Shinkai)">Gaya Anime (Shinkai)</option>
+              <option value="Gaya Anime (90s)">Gaya Anime (90s)</option>
+              <option value="Lukisan (Cat Minyak)">Lukisan (Cat Minyak)</option>
+              <option value="Lukisan (Cat Air)">Lukisan (Cat Air)</option>
+              <option value="Seni Piksel (8-bit)">Seni Piksel (8-bit)</option>
+              <option value="Seni Piksel (16-bit)">Seni Piksel (16-bit)</option>
+              <option value="Cel-Shading">Cel-Shading</option>
+              <option value="Sketsa Pensil">Sketsa Pensil</option>
+              <option value="Stop Motion Clay">Stop Motion Clay</option>
+              <option value="Model 3D Low-Poly">Model 3D Low-Poly</option>
+            </optgroup>
+            <optgroup label="Aliran Artistik">
+              <option value="Surealisme">Surealisme</option>
+              <option value="Impresionisme">Impresionisme</option>
+              <option value="Art Deco">Art Deco</option>
+              <option value="Art Nouveau">Art Nouveau</option>
+              <option value="Bauhaus">Bauhaus</option>
+              <option value="Pop Art">Pop Art</option>
+              <option value="Gotik">Gotik</option>
+              <option value="Steampunk">Steampunk</option>
+              <option value="Cyberpunk">Cyberpunk</option>
+              <option value="Solarpunk">Solarpunk</option>
+              <option value="Vaporwave">Vaporwave</option>
+              <option value="Grunge">Grunge</option>
+            </optgroup>
+            <optgroup label="Palet Warna">
+              <option value="Monokromatik">Monokromatik</option>
+              <option value="Analog">Analog</option>
+              <option value="Komplementer">Komplementer</option>
+              <option value="Triadic">Triadic</option>
+              <option value="Sepia">Sepia</option>
+              <option value="Technicolor">Technicolor</option>
+              <option value="Pastel">Pastel</option>
+              <option value="Neon">Neon</option>
+              <option value="Skema Warna Wes Anderson">Skema Warna Wes Anderson</option>
+            </optgroup>
+            <optgroup label="Pencahayaan">
+              <option value="High-Key">High-Key</option>
+              <option value="Low-Key">Low-Key</option>
+              <option value="Golden Hour">Golden Hour</option>
+              <option value="Blue Hour">Blue Hour</option>
+              <option value="Backlight">Backlight</option>
+              <option value="Pencahayaan Volumetrik">Pencahayaan Volumetrik</option>
+            </optgroup>
+            <optgroup label="Tekstur & Kualitas">
+              <option value="Jernih (Clean 4K/8K)">Jernih (Clean 4K/8K)</option>
+              <option value="Film Grain">Film Grain</option>
+              <option value="Efek VHS">Efek VHS</option>
+              <option value="Lensa Anamorphic">Lensa Anamorphic</option>
+              <option value="Fokus Halus">Fokus Halus</option>
+              <option value="Vignette">Vignette</option>
+            </optgroup>
+            <optgroup label="Komposisi Bidikan">
+              <option value="Rule of Thirds">Rule of Thirds</option>
+              <option value="Leading Lines">Leading Lines</option>
+              <option value="Simetri">Simetri</option>
+              <option value="Framing">Framing</option>
+              <option value="Golden Ratio">Golden Ratio</option>
+              <option value="Close-up Ekstrem">Close-up Ekstrem</option>
+              <option value="Wide Shot">Wide Shot</option>
+              <option value="Medium Shot">Medium Shot</option>
+              <option value="Full Shot">Full Shot</option>
+              <option value="Cowboy Shot">Cowboy Shot</option>
+            </optgroup>
+            <optgroup label="Sudut Kamera">
+              <option value="Eye-Level">Eye-Level</option>
+              <option value="High-Angle">High-Angle</option>
+              <option value="Low-Angle">Low-Angle</option>
+              <option value="Bird's-Eye-View">Bird's-Eye-View</option>
+              <option value="Worm's-Eye-View">Worm's-Eye-View</option>
+              <option value="Dutch Angle">Dutch Angle</option>
+              <option value="Over-the-Shoulder Shot">Over-the-Shoulder Shot</option>
+              <option value="Point-of-View (POV)">Point-of-View (POV)</option>
+            </optgroup>
+            <optgroup label="Pergerakan Kamera">
+              <option value="Statis">Statis</option>
+              <option value="Pan">Pan</option>
+              <option value="Tilt">Tilt</option>
+              <option value="Dolly">Dolly</option>
+              <option value="Tracking/Trucking">Tracking/Trucking</option>
+              <option value="Crane/Jib">Crane/Jib</option>
+              <option value="Handheld">Handheld</option>
+              <option value="Steadicam">Steadicam</option>
+              <option value="Dolly Zoom">Dolly Zoom</option>
+            </optgroup>
+            <optgroup label="Lensa & Fokus">
+              <option value="Lensa Wide">Lensa Wide</option>
+              <option value="Lensa Telephoto">Lensa Telephoto</option>
+              <option value="Lensa Fisheye">Lensa Fisheye</option>
+              <option value="Rack Focus">Rack Focus</option>
+              <option value="Deep Focus">Deep Focus</option>
+              <option value="Shallow Focus">Shallow Focus</option>
+            </optgroup>
+            <optgroup label="Genre Lingkungan">
+              <option value="High Fantasy">High Fantasy</option>
+              <option value="Urban Fantasy">Urban Fantasy</option>
+              <option value="Space Opera">Space Opera</option>
+              <option value="Dystopian">Dystopian</option>
+              <option value="Utopian">Utopian</option>
+              <option value="Historical">Historical</option>
+              <option value="Slice of Life">Slice of Life</option>
+              <option value="Magical Realism">Magical Realism</option>
+              <option value="Biopunk">Biopunk</option>
+            </optgroup>
+            <optgroup label="Lokasi Spesifik">
+              <option value="Kota Bawah Laut">Kota Bawah Laut</option>
+              <option value="Stasiun Luar Angkasa Terbengkalai">Stasiun Luar Angkasa Terbengkalai</option>
+              <option value="Pasar Malam di Planet Asing">Pasar Malam di Planet Asing</option>
+              <option value="Perpustakaan Tak Terhingga">Perpustakaan Tak Terhingga</option>
+              <option value="Hutan Kristal">Hutan Kristal</option>
+              <option value="Kerajaan di Atas Awan">Kerajaan di Atas Awan</option>
+              <option value="Ruang Tahta Gotik">Ruang Tahta Gotik</option>
+              <option value="Apartemen Minimalis">Apartemen Minimalis</option>
+            </optgroup>
+            <optgroup label="Skala & Arsitektur">
+              <option value="Megastruktur">Megastruktur</option>
+              <option value="Arsitektur Brutalis">Arsitektur Brutalis</option>
+              <option value="Arsitektur Organik">Arsitektur Organik</option>
+              <option value="Kota Terapung">Kota Terapung</option>
+              <option value="Desa Abad Pertengahan">Desa Abad Pertengahan</option>
+              <option value="Interior Kapal Selam">Interior Kapal Selam</option>
+              <option value="Arsitektur Barok">Arsitektur Barok</option>
+            </optgroup>
+            <option value="other">Lainnya</option>
+          </select>
+          <input type="text" id="style_id_custom" class="hidden" placeholder="Isi gaya visual custom" />
         </div>
         <div>
           <button class="btn" id="add_btn" onclick="addData()">➕ Add Data Baru</button>
@@ -69,8 +292,7 @@
           <button class="btn ghost" onclick="clearForm()">🗑️ Clear Form</button>
         </div>
       </div>
-
-      <!-- List Data -->
+            <!-- List Data -->
       <div class="hr"></div>
       <label>📋 List Data dari Google Sheets</label>
       <div id="data_list" class="example">
@@ -122,11 +344,36 @@ function loadToForm(){
   if(selectedIndex !== ''){
     const item = data[selectedIndex];
     document.getElementById('char_id').value = item.char_id || '';
-    document.getElementById('attr_fisik').value = item.attr_fisik || '';
-    document.getElementById('cloth_id').value = item.cloth_id || '';
-    document.getElementById('voice_id').value = item.voice_id || '';
-    document.getElementById('style_id').value = item.style_id || '';
+    setDropdown('attr_fisik', item.attr_fisik);
+    setDropdown('cloth_id', item.cloth_id);
+    setDropdown('voice_id', item.voice_id);
+    setDropdown('style_id', item.style_id);
     editIndex = selectedIndex;
+  }
+}
+
+function setDropdown(field, value){
+  const select = document.getElementById(field + '_select');
+  const custom = document.getElementById(field + '_custom');
+  const options = Array.from(select.options).map(opt => opt.value);
+  if(options.includes(value)){
+    select.value = value;
+    custom.classList.add('hidden');
+  } else {
+    select.value = 'other';
+    custom.value = value || '';
+    custom.classList.remove('hidden');
+  }
+}
+
+function toggleCustom(field){
+  const select = document.getElementById(field + '_select');
+  const custom = document.getElementById(field + '_custom');
+  if(select.value === 'other'){
+    custom.classList.remove('hidden');
+  } else {
+    custom.classList.add('hidden');
+    custom.value = '';
   }
 }
 
@@ -179,16 +426,22 @@ function renderList(){
   });
 }
 
+function getFieldValue(field){
+  const select = document.getElementById(field + '_select');
+  const custom = document.getElementById(field + '_custom');
+  return select.value === 'other' ? custom.value.trim() : select.value;
+}
+
 function isCharIdUnique(char_id, excludeIndex = -1){
   return !data.some((item, index) => item.char_id === char_id && index !== excludeIndex);
 }
 
 function addData(){
   const char_id = document.getElementById('char_id').value.trim();
-  const attr_fisik = document.getElementById('attr_fisik').value.trim();
-  const cloth_id = document.getElementById('cloth_id').value.trim();
-  const voice_id = document.getElementById('voice_id').value.trim();
-  const style_id = document.getElementById('style_id').value.trim();
+  const attr_fisik = getFieldValue('attr_fisik');
+  const cloth_id = getFieldValue('cloth_id');
+  const voice_id = getFieldValue('voice_id');
+  const style_id = getFieldValue('style_id');
   if(!char_id){
     alert('ID Karakter harus diisi!');
     return;
@@ -218,10 +471,10 @@ function updateData(){
     return;
   }
   const char_id = document.getElementById('char_id').value.trim();
-  const attr_fisik = document.getElementById('attr_fisik').value.trim();
-  const cloth_id = document.getElementById('cloth_id').value.trim();
-  const voice_id = document.getElementById('voice_id').value.trim();
-  const style_id = document.getElementById('style_id').value.trim();
+  const attr_fisik = getFieldValue('attr_fisik');
+  const cloth_id = getFieldValue('cloth_id');
+  const voice_id = getFieldValue('voice_id');
+  const style_id = getFieldValue('style_id');
   if(!char_id){
     alert('ID Karakter harus diisi!');
     return;
@@ -268,10 +521,10 @@ function deleteData(index){
 function editData(index){
   const item = data[index];
   document.getElementById('char_id').value = item.char_id || '';
-  document.getElementById('attr_fisik').value = item.attr_fisik || '';
-  document.getElementById('cloth_id').value = item.cloth_id || '';
-  document.getElementById('voice_id').value = item.voice_id || '';
-  document.getElementById('style_id').value = item.style_id || '';
+  setDropdown('attr_fisik', item.attr_fisik);
+  setDropdown('cloth_id', item.cloth_id);
+  setDropdown('voice_id', item.voice_id);
+  setDropdown('style_id', item.style_id);
   editIndex = index;
   document.getElementById('mode').value = 'edit';
   switchMode();
@@ -279,7 +532,13 @@ function editData(index){
 }
 
 function clearForm(){
-  ['char_id','attr_fisik','cloth_id','voice_id','style_id'].forEach(id=>document.getElementById(id).value='');
+  ['char_id','attr_fisik_custom','cloth_id_custom','voice_id_custom','style_id_custom'].forEach(id=>document.getElementById(id).value='');
+  ['attr_fisik_select','cloth_id_select','voice_id_select','style_id_select'].forEach(id=>{
+    document.getElementById(id).value = '';
+  });
+  ['attr_fisik_custom','cloth_id_custom','voice_id_custom','style_id_custom'].forEach(id=>{
+    document.getElementById(id).classList.add('hidden');
+  });
   document.getElementById('existing_select').value = '';
   editIndex = -1;
   document.getElementById('mode').value = 'add';
