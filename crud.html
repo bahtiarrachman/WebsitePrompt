@@ -1,4 +1,4 @@
-<!-- crud.html - Update: Visual Slot Karakter dengan Card Carousel -->
+<!-- crud.html - Update: Tambah Glide untuk Carousel -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Manage Data - UGC Prompt Generator</title>
   <link rel="stylesheet" href="style.css"> <!-- Pakai CSS yang sama -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.6.0/dist/css/glide.core.min.css" />
 </head>
 <body>
   <div class="wrap">
@@ -15,14 +15,20 @@
       <h1>🚀 Manage Data (CRUD) - Slot Karakter</h1>
       <p class="sub">Geser kiri-kanan untuk pilih karakter. Data disimpan di Google Sheets. Klik Load Data untuk mulai.</p>
 
-      <!-- Carousel Card Karakter -->
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper" id="character_cards">
-          <!-- Card akan diisi otomatis dari loadData -->
+      <!-- Carousel Card Karakter dengan Glide -->
+      <div class="glide" id="glide">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides" id="character_cards">
+            <!-- Card akan diisi otomatis dari loadData -->
+          </ul>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        <div class="glide__arrows" data-glide-el="controls">
+          <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
+          <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
+        </div>
+        <div class="glide__bullets" data-glide-el="controls[nav]">
+          <!-- Bullets akan diisi otomatis -->
+        </div>
       </div>
 
       <!-- Menu: Pilih Mode -->
@@ -135,7 +141,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.6.0/dist/glide.min.js"></script>
   <script src="crud.js"></script>
 </body>
 </html>
