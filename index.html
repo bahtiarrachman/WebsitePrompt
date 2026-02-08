@@ -1,4 +1,4 @@
-<!-- index.html - Kode Lengkap dengan Update Label dan Copy -->
+<!-- index.html - Kode Lengkap dengan Loading, Hide Data, dan Show More -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -20,10 +20,10 @@
         Kirim data KTP ini ke TTV untuk konsistensi karakter di semua video. Pastikan karakter selalu menggunakan atribut fisik, pakaian, suara, dan gaya visual yang sama di setiap prompt.
       </div>
 
-      <!-- List Data KTP (dalam English) -->
+      <!-- List Data KTP (dalam English, default hidden) -->
       <div class="hr"></div>
       <label>📋 Data KTP dari Google Sheets (dalam Bahasa Inggris)</label>
-      <div id="ktp_list" class="example">
+      <div id="ktp_list" class="example" style="display: none;">
         <!-- Data akan muncul di sini -->
       </div>
 
@@ -31,6 +31,7 @@
 
       <div class="actions">
         <button class="btn" onclick="copyKTP()">📋 Copy Data KTP (English)</button>
+        <button class="btn ghost" id="show_more_btn" onclick="toggleKTPList()">👁️ Show More</button>
         <button class="btn ghost" onclick="window.location.href='crud.html'">🗂️ Manage Data</button>
         <button class="btn alt" onclick="window.location.href='prompt_ttv.html'">✨ Generate Prompt</button>
       </div>
@@ -43,8 +44,13 @@
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
 
 let ktpData = [];
+let isDataLoaded = false;
 
 function loadKTPData(){
+  if (isDataLoaded) return; // Hindari load ulang
+  const list = document.getElementById('ktp_list');
+  list.innerHTML = '<p>Loading data KTP...</p>';
+  list.style.display = 'block'; // Tampilkan saat loading
   const xhr = new XMLHttpRequest();
   xhr.open('GET', GAS_URL + '?action=getData', true);
   xhr.onreadystatechange = function() {
@@ -53,16 +59,17 @@ function loadKTPData(){
         try {
           const response = JSON.parse(xhr.responseText);
           if (response.error) {
-            alert('Error from GAS: ' + response.error);
+            list.innerHTML = '<p>Error loading data: ' + response.error + '</p>';
             return;
           }
           ktpData = response;
           renderKTPList();
+          isDataLoaded = true;
         } catch (e) {
-          alert('Error parsing data: ' + e.message);
+          list.innerHTML = '<p>Error parsing data: ' + e.message + '</p>';
         }
       } else {
-        alert('Error loading data: ' + xhr.status);
+        list.innerHTML = '<p>Error loading data: ' + xhr.status + '</p>';
       }
     }
   };
@@ -87,9 +94,26 @@ function renderKTPList(){
       </div>
     `;
   });
+  list.style.display = 'none'; // Hide setelah render
+}
+
+function toggleKTPList(){
+  const list = document.getElementById('ktp_list');
+  const btn = document.getElementById('show_more_btn');
+  if (list.style.display === 'none') {
+    list.style.display = 'block';
+    btn.textContent = '🙈 Hide';
+  } else {
+    list.style.display = 'none';
+    btn.textContent = '👁️ Show More';
+  }
 }
 
 function copyKTP(){
+  if (!isDataLoaded || ktpData.length === 0) {
+    alert('Data belum dimuat. Tunggu loading selesai atau refresh halaman.');
+    return;
+  }
   let text = 'Character KTP Data (for TTV consistency):\n';
   ktpData.forEach((item, index) => {
     text += `\nCharacter ID: ${item.char_id || 'Empty'}\n`;
@@ -105,7 +129,7 @@ function copyKTP(){
   });
 }
 
-// Auto load data saat halaman buka
+// Auto load data saat halaman buka (sekali saja)
 window.onload = function() {
   loadKTPData();
 };
