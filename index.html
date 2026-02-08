@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Prompt Video</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        select, button { margin: 10px; padding: 5px; }
+        #result { margin-top: 20px; padding: 10px; background-color: #f0f0f0; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Generator Prompt Text to Video</h1>
+    <p>Pilih opsi di bawah, lalu klik Generate untuk bikin prompt!</p>
+    
+    <!-- Dropdown menus untuk variabel -->
+    <label for="style">Gaya Video:</label>
+    <select id="style">
+        <option value="">Pilih...</option>
+        <option value="realistic">Realistic</option>
+        <option value="cartoon">Cartoon</option>
+        <option value="anime">Anime</option>
+    </select><br>
+    
+    <label for="subject">Subjek Utama:</label>
+    <select id="subject">
+        <option value="">Pilih...</option>
+        <option value="a cat">Kucing</option>
+        <option value="a dog">Anjing</option>
+        <option value="a robot">Robot</option>
+    </select><br>
+    
+    <label for="action">Aksi:</label>
+    <select id="action">
+        <option value="">Pilih...</option>
+        <option value="running">Berlari</option>
+        <option value="flying">Terbang</option>
+        <option value="dancing">Menari</option>
+    </select><br>
+    
+    <label for="setting">Setting:</label>
+    <select id="setting">
+        <option value="">Pilih...</option>
+        <option value="in a forest">Di hutan</option>
+        <option value="in space">Di luar angkasa</option>
+        <option value="in a city">Di kota</option>
+    </select><br>
+    
+    <!-- Tombol Generate -->
+    <button onclick="generatePrompt()">Generate Prompt</button>
+    
+    <!-- Tempat hasil prompt -->
+    <div id="result"></div>
+    
+    <script>
+        function generatePrompt() {
+            // Ambil nilai dari dropdown
+            let style = document.getElementById('style').value;
+            let subject = document.getElementById('subject').value;
+            let action = document.getElementById('action').value;
+            let setting = document.getElementById('setting').value;
+            
+            // Gabung jadi satu paragraf
+            let prompt = "";
+            if (style) prompt += "Gaya: " + style + ". ";
+            if (subject) prompt += "Subjek: " + subject + ". ";
+            if (action) prompt += "Aksi: " + action + ". ";
+            if (setting) prompt += "Setting: " + setting + ". ";
+            
+            // Tampilkan hasil
+            document.getElementById('result').innerText = prompt || "Pilih setidaknya satu opsi!";
+        }
+    </script>
+</body>
+</html>
