@@ -71,6 +71,7 @@ function loadData(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // Tambah CORS header
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       console.log('Status:', xhr.status, 'Response:', xhr.responseText); // Tambah logging
