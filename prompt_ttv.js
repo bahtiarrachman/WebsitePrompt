@@ -17,7 +17,7 @@ function loadCharacters(){
           }
           characters = response;
           updateCharSelect();
-          alert('Karakter berhasil dimuat dari crud! 📥');
+          // alert('Karakter berhasil dimuat dari crud! 📥'); // Hapus ini
         } catch (e) {
           alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
         }
