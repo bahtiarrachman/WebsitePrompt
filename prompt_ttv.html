@@ -28,11 +28,11 @@
         <button class="btn" onclick="loadCharacters()">📥 Load Karakter dari crud</button>
       </div>
             <!-- Section Preset -->
+           <!-- Section Preset -->
       <div class="hr"></div>
       <div>
         <label>💾 Preset Act/Adegan</label>
         <input type="text" id="preset_name" placeholder="Nama preset (contoh: Act 1 - Intro)" />
-        <label><input type="checkbox" id="preset_favorite" /> ⭐ Favorit</label>
         <button class="btn" onclick="savePreset()">💾 Save Preset</button>
         <button class="btn" onclick="randomizeOptions()">🎲 Randomize Options</button>
         <button class="btn" onclick="loadRandomPreset()">🎯 Preset Acak</button>
@@ -42,7 +42,10 @@
         <select id="preset_select" onchange="loadPreset()">
           <option value="">Pilih Preset...</option>
         </select>
-        <label>⭐ Favorit</label>
+        <button class="btn" onclick="toggleFavorite()">⭐ Toggle Favorit</button>
+      </div>
+      <div>
+        <label>⭐ Favorit Preset</label>
         <select id="favorite_select" onchange="loadPreset()">
           <option value="">Pilih Favorit...</option>
         </select>
