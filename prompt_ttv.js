@@ -157,42 +157,14 @@ function loadPresets(){
 }
 
 function updatePresetSelect(){
-  const list = document.getElementById('preset_list');
-  if(!list) return; // Cek jika element ada
-  list.innerHTML = '';
-  // Favorit dulu
-  if(favorites.length > 0){
-    list.innerHTML += '<h4>⭐ Favorit Preset</h4>';
-    favorites.forEach((fav, index) => {
-      list.innerHTML += `
-        <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px 0; padding: 5px; border-bottom: 1px solid #e5e7eb;">
-          <span>${fav.name}</span>
-          <div>
-            <input type="checkbox" checked onchange="toggleFavorite(${index}, true)">
-            <button class="btn" onclick="loadPresetFromList(${index}, true)">Load</button>
-          </div>
-        </div>
-      `;
-    });
-  }
-  // Preset biasa
-  if(presets.length > 0){
-    list.innerHTML += '<h4>📂 Preset Biasa</h4>';
-    presets.forEach((preset, index) => {
-      list.innerHTML += `
-        <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px 0; padding: 5px; border-bottom: 1px solid #e5e7eb;">
-          <span>${preset.name}</span>
-          <div>
-            <input type="checkbox" onchange="toggleFavorite(${index}, false)">
-            <button class="btn" onclick="loadPresetFromList(${index}, false)">Load</button>
-          </div>
-        </div>
-      `;
-    });
-  }
-  if(favorites.length === 0 && presets.length === 0){
-    list.innerHTML = '<p>Tidak ada preset.</p>';
-  }
+  const select = document.getElementById('preset_select');
+  select.innerHTML = '<option value="">Pilih Preset...</option>';
+  presets.forEach((preset, index) => {
+    select.innerHTML += `<option value="${index}">${preset.name}</option>`;
+  });
+  favorites.forEach((fav, index) => {
+    select.innerHTML += `<option value="fav_${index}">⭐ ${fav.name}</option>`;
+  });
 }
 
   
