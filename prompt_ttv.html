@@ -1,4 +1,3 @@
-<!-- prompt_ttv.html - Bagian 17/30: Header (Update ke Gemini Video) -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -130,8 +129,7 @@
           </select>
           <input type="text" id="palet_warna_custom" class="hidden" placeholder="Isi palet warna custom" />
         </div>
-      </div>
-      <div>
+                <div>
           <label>💡 Pencahayaan (optional)</label>
           <select id="pencahayaan_select" onchange="toggleCustom('pencahayaan')">
             <option value="">Pilih Pencahayaan...</option>
@@ -200,7 +198,8 @@
           </select>
           <input type="text" id="atribut_unik_custom" class="hidden" placeholder="Isi atribut unik custom" />
         </div>
-                <div>
+
+              <div>
           <label>🎵 Genre Musik (optional)</label>
           <select id="genre_musik_select" onchange="toggleCustom('genre_musik')">
             <option value="">Pilih Genre Musik...</option>
@@ -231,7 +230,7 @@
           </select>
           <input type="text" id="desain_suara_custom" class="hidden" placeholder="Isi desain suara custom" />
         </div>
-                <div>
+        <div>
           <label>😊 Mood Dominan (optional)</label>
           <select id="mood_dominan_select" onchange="toggleCustom('mood_dominan')">
             <option value="">Pilih Mood Dominan...</option>
@@ -248,7 +247,7 @@
           </select>
           <input type="text" id="mood_dominan_custom" class="hidden" placeholder="Isi mood dominan custom" />
         </div>
-        <div>
+                <div>
           <label>🖼️ Tekstur & Kualitas (optional)</label>
           <select id="tekstur_kualitas_select" onchange="toggleCustom('tekstur_kualitas')">
             <option value="">Pilih Tekstur & Kualitas...</option>
@@ -262,7 +261,7 @@
           </select>
           <input type="text" id="tekstur_kualitas_custom" class="hidden" placeholder="Isi tekstur & kualitas custom" />
         </div>
-                <div>
+        <div>
           <label>📐 Komposisi Bidikan (optional)</label>
           <select id="komposisi_bidikan_select" onchange="toggleCustom('komposisi_bidikan')">
             <option value="">Pilih Komposisi Bidikan...</option>
@@ -296,7 +295,7 @@
           </select>
           <input type="text" id="sudut_kamera_custom" class="hidden" placeholder="Isi sudut kamera custom" />
         </div>
-                <div>
+        <div>
           <label>🎥 Pergerakan Kamera (optional)</label>
           <select id="pergerakan_kamera_select" onchange="toggleCustom('pergerakan_kamera')">
             <option value="">Pilih Pergerakan Kamera...</option>
@@ -327,7 +326,7 @@
           </select>
           <input type="text" id="lensa_fokus_custom" class="hidden" placeholder="Isi lensa & fokus custom" />
         </div>
-                <div>
+        <div>
           <label>🌍 Genre Lingkungan (optional)</label>
           <select id="genre_lingkungan_select" onchange="toggleCustom('genre_lingkungan')">
             <option value="">Pilih Genre Lingkungan...</option>
@@ -360,7 +359,7 @@
           </select>
           <input type="text" id="lokasi_spesifik_custom" class="hidden" placeholder="Isi lokasi spesifik custom" />
         </div>
-                <div>
+        <div>
           <label>🏗️ Skala & Arsitektur (optional)</label>
           <select id="skala_arsitektur_select" onchange="toggleCustom('skala_arsitektur')">
             <option value="">Pilih Skala & Arsitektur...</option>
@@ -376,14 +375,14 @@
           <input type="text" id="skala_arsitektur_custom" class="hidden" placeholder="Isi skala & arsitektur custom" />
         </div>
       </div>
-
-      <!-- Tombol Generate di Bawah -->
+            <!-- Tombol Generate di Bawah -->
       <div class="hr"></div>
       <div>
         <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt Gemini Video</button>
         <button class="btn" onclick="clearAll()">🗑️ Clear All</button>
       </div>
-            <!-- Output Prompt -->
+
+      <!-- Output Prompt -->
       <div class="hr"></div>
       <div>
         <label>📝 Prompt Gemini Video Generated</label>
