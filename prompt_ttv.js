@@ -4,35 +4,7 @@ let characters = [];
 let presets = [];
 let favorites = [];
 
-function toggleFavorite(){
-  const select = document.getElementById('preset_select');
-  if(select.value === ''){
-    alert('Pilih preset dulu!');
-    return;
-  }
-  const index = select.value;
-  const preset = presets[index];
-  preset.favorite = !preset.favorite;
-  // Update ke GAS
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', GAS_URL, true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        loadPresets(); // Reload
-        alert('Favorit diupdate! ⭐');
-      } else {
-        alert('Error updating favorite: ' + xhr.status + ' - ' + xhr.responseText);
-      }
-    }
-  };
-  xhr.send('action=updateFavorite&index=' + index + '&favorite=' + preset.favorite);
-}
-
-
-
-function loadPresets(){
+function loadCharacters(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -41,18 +13,24 @@ function loadPresets(){
       if (xhr.status === 200) {
         try {
           const response = JSON.parse(xhr.responseText);
-          presets = response.filter(p => !p.favorite);
-          favorites = response.filter(p => p.favorite);
-          updatePresetSelect();
+          characters = response.map(row => ({
+            char_id: row[0] || 'Empty',
+            attr_fisik: row[1] || 'Empty',
+            cloth_id: row[2] || 'Empty',
+            voice_id: row[3] || 'Empty',
+            style_id: row[4] || 'Empty'
+          }));
+          updateCharSelect();
+          alert('Karakter berhasil dimuat dari crud! Total: ' + characters.length);
         } catch (e) {
-          alert('Error parsing presets: ' + e.message);
+          alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
         }
       } else {
-        alert('Error loading presets: ' + xhr.status + ' - ' + xhr.responseText);
+        alert('Error loading data: ' + xhr.status + ' - ' + xhr.responseText);
       }
     }
   };
-  xhr.send('action=getPresets');
+  xhr.send('action=getData');
 }
 
 function updateCharSelect(){
@@ -103,29 +81,27 @@ function savePreset(){
     genre_lingkungan: getFieldValue('genre_lingkungan'),
     lokasi_spesifik: getFieldValue('lokasi_spesifik'),
     skala_arsitektur: getFieldValue('skala_arsitektur'),
-    favorite: document.getElementById('preset_favorite').checked
+    favorite: false
   };
-  // Cek jika nama sudah ada
   const existingIndex = presets.findIndex(p => p.name === name);
   if(existingIndex !== -1){
     if(confirm(`Preset dengan nama "${name}" sudah ada. Anda ingin update presetnya?`)){
       presets[existingIndex] = preset;
       alert('Preset diupdate! 💾');
     } else {
-      return; // Batal save
+      return;
     }
   } else {
     presets.push(preset);
     alert('Preset disimpan! 💾');
   }
-  // Simpan ke GAS
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        loadPresets(); // Reload dari GAS
+        loadPresets();
       } else {
         alert('Error saving preset: ' + xhr.status + ' - ' + xhr.responseText);
       }
@@ -133,6 +109,7 @@ function savePreset(){
   };
   xhr.send('action=updatePreset&data=' + encodeURIComponent(JSON.stringify(preset)));
 }
+
 function loadPresets(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
@@ -167,19 +144,17 @@ function updatePresetSelect(){
   });
 }
 
-  
 function loadPreset(){
   const select = document.getElementById('preset_select');
-  const favSelect = document.getElementById('favorite_select');
+  if(select.value === '') return;
   let preset;
-  if(select.value !== ''){
-    preset = presets[select.value];
-  } else if(favSelect.value !== ''){
-    preset = favorites[favSelect.value];
+  if(select.value.startsWith('fav_')){
+    const index = parseInt(select.value.replace('fav_', ''));
+    preset = favorites[index];
   } else {
-    return;
+    const index = parseInt(select.value);
+    preset = presets[index];
   }
-  // Load ke form
   document.getElementById('dialog_select').value = preset.data.dialog_select;
   toggleDialog();
   document.getElementById('dialog_custom').value = preset.data.dialog_custom;
@@ -217,11 +192,10 @@ function randomizeOptions(){
   selects.forEach(id => {
     const select = document.getElementById(id);
     const options = select.options;
-    const randomIndex = Math.floor(Math.random() * (options.length - 1)) + 1; // Skip first empty
+    const randomIndex = Math.floor(Math.random() * (options.length - 1)) + 1;
     select.selectedIndex = randomIndex;
     toggleCustom(id.replace('_select', ''));
   });
-  // Random dialog
   const dialogs = ['diam', 'custom', 'voice_over'];
   document.getElementById('dialog_select').value = dialogs[Math.floor(Math.random() * dialogs.length)];
   toggleDialog();
@@ -236,7 +210,6 @@ function loadRandomPreset(){
   }
   const randomIndex = Math.floor(Math.random() * allPresets.length);
   const preset = allPresets[randomIndex];
-  // Load seperti loadPreset
   document.getElementById('dialog_select').value = preset.data.dialog_select;
   toggleDialog();
   document.getElementById('dialog_custom').value = preset.data.dialog_custom;
@@ -277,8 +250,6 @@ function generatePrompt(){
   } else if(dialogSelect === 'voice_over'){
     dialog = 'Voice Over: ' + document.getElementById('dialog_voice_over').value.trim();
   }
-
-  // Collect optional fields
   const fields = {
     rasio_video: getFieldValue('rasio_video'),
     gaya_seni_inti: getFieldValue('gaya_seni_inti'),
@@ -300,17 +271,11 @@ function generatePrompt(){
     lokasi_spesifik: getFieldValue('lokasi_spesifik'),
     skala_arsitektur: getFieldValue('skala_arsitektur')
   };
-
-  // Build prompt in English, directly for video generation
   let prompt = `Create a cinematic video of a character named ${char.char_id}, with physical attributes ${char.attr_fisik}, wearing ${char.cloth_id}, speaking in a ${char.voice_id} voice, in a ${char.style_id} visual style.`;
-
   if(dialog){
     prompt += ` The character says: "${dialog}".`;
   }
-
   prompt += ' The video should be detailed and immersive.';
-
-  // Add optional details if filled
   const details = [];
   for(const [key, value] of Object.entries(fields)){
     if(value){
@@ -321,7 +286,6 @@ function generatePrompt(){
   if(details.length > 0){
     prompt += ' Additional details: ' + details.join(', ') + '.';
   }
-
   document.getElementById('prompt_output').value = prompt;
   alert('Prompt Gemini Video berhasil di-generate! 🎬');
 }
@@ -336,8 +300,6 @@ function copyPrompt(){
 function clearAll(){
   document.getElementById('preset_name').value = '';
   document.getElementById('preset_select').value = '';
-  document.getElementById('favorite_select').value = '';
-  document.getElementById('preset_favorite').checked = false;
   clearForm();
 }
 
