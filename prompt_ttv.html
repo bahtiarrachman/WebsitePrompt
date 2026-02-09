@@ -28,7 +28,7 @@
         <button class="btn" onclick="loadCharacters()">📥 Load Karakter dari crud</button>
       </div>
             <!-- Section Preset -->
-           <!-- Section Preset -->
+            <!-- Section Preset -->
       <div class="hr"></div>
       <div>
         <label>💾 Preset Act/Adegan</label>
@@ -38,17 +38,10 @@
         <button class="btn" onclick="loadRandomPreset()">🎯 Preset Acak</button>
       </div>
       <div>
-        <label>📂 Load Preset</label>
-        <select id="preset_select" onchange="loadPreset()">
-          <option value="">Pilih Preset...</option>
-        </select>
-        <button class="btn" onclick="toggleFavorite()">⭐ Toggle Favorit</button>
-      </div>
-      <div>
-        <label>⭐ Favorit Preset</label>
-        <select id="favorite_select" onchange="loadPreset()">
-          <option value="">Pilih Favorit...</option>
-        </select>
+        <label>📂 Preset List</label>
+        <div id="preset_list" style="max-height: 300px; overflow-y: auto; border: 1px solid #e5e7eb; padding: 10px;">
+          <!-- List preset akan muncul di sini -->
+        </div>
       </div>
             <!-- Form Detail Gemini Video -->
       <div class="hr"></div>
