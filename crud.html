@@ -1,11 +1,11 @@
-<!-- crud.html - Update: Form Normal, Tambah Tombol Buat Karakter Baru dan Simpan Karakter -->
+<!-- crud.html - Bagian 6-10/30: Lengkap -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Manage Data - UGC Prompt Generator</title>
-  <link rel="stylesheet" href="style.css"> <!-- Pakai CSS yang sama -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
@@ -19,14 +19,8 @@
         <label>🆔 Pilih Karakter</label>
         <select id="existing_select" onchange="loadToForm()">
           <option value="">Pilih Karakter...</option>
-          <!-- Akan diisi otomatis dari loadData -->
         </select>
-        <div class="hint">
-          Pilih karakter untuk baca profil dan edit.
-        </div>
       </div>
-
-      <!-- Tombol Buat Karakter Baru -->
       <div>
         <button class="btn" onclick="newCharacter()">➕ Buat Karakter Baru</button>
         <button class="btn ghost" onclick="loadData()">📥 Load Data</button>
@@ -38,7 +32,6 @@
         <div>
           <label>🆔 ID Karakter (unik)</label>
           <input id="char_id" placeholder="contoh: CHAR-ID: ASTRA-01" />
-          <div class="hint">ID harus unik, ga boleh double.</div>
         </div>
         <div>
           <label>👤 Atribut Fisik</label>
@@ -51,58 +44,45 @@
             <option value="other">Lainnya</option>
           </select>
           <input type="text" id="attr_fisik_custom" class="hidden" placeholder="contoh: Wajah oval, mata hijau, rambut perak" />
-          <div id="attr_fisik_preview" class="preview" style="display:none; margin-top:5px; font-size:14px; color:#666;"></div>
+          <div id="attr_fisik_preview" class="preview" style="display:none;"></div>
         </div>
         <div>
           <label>👕 Pakaian</label>
           <select id="cloth_id_select" onchange="toggleCustom('cloth_id'); showPreview('cloth_id')">
             <option value="">Pilih Pakaian...</option>
             <option value="Kasual - Kaos & Jeans" data-preview="👕 Kaos & Jeans: Santai, nyaman, modern">Kasual - Kaos & Jeans</option>
-            <option value="Kasual - Hoodie & Jogger" data-preview="🧥 Hoodie & Jogger: Santai, olahraga, trendi">Kasual - Hoodie & Jogger</option>
             <option value="Formal - Setelan Jas" data-preview="👔 Setelan Jas: Elegan, bisnis, klasik">Formal - Setelan Jas</option>
-            <option value="Formal - Gaun Malam" data-preview="👗 Gaun Malam: Mewah, pesta, feminin">Formal - Gaun Malam</option>
             <option value="Fantasi - Jubah Penyihir" data-preview="🧙 Jubah Penyihir: Mistis, ajaib, abad pertengahan">Fantasi - Jubah Penyihir</option>
-            <option value="Fantasi - Baju Zirah Ksatria" data-preview="⚔️ Baju Zirah Ksatria: Kuat, heroik, abad pertengahan">Fantasi - Baju Zirah Ksatria</option>
             <option value="Sci-Fi - Seragam Angkasa" data-preview="🚀 Seragam Angkasa: Futuristik, teknis, luar angkasa">Sci-Fi - Seragam Angkasa</option>
-            <option value="Sci-Fi - Jaket Cybernetic" data-preview="🤖 Jaket Cybernetic: Teknologi, neon, cyberpunk">Sci-Fi - Jaket Cybernetic</option>
             <option value="other">Lainnya</option>
           </select>
           <input type="text" id="cloth_id_custom" class="hidden" placeholder="contoh: Casual outfit" />
-          <div id="cloth_id_preview" class="preview" style="display:none; margin-top:5px; font-size:14px; color:#666;"></div>
+          <div id="cloth_id_preview" class="preview" style="display:none;"></div>
         </div>
         <div>
           <label>🎤 Suara</label>
           <select id="voice_id_select" onchange="toggleCustom('voice_id'); showPreview('voice_id')">
             <option value="">Pilih Suara...</option>
             <option value="Alto (Rendah Wanita)" data-preview="🎤 Alto: Rendah, hangat, wanita">Alto (Rendah Wanita)</option>
-            <option value="Soprano (Tinggi Wanita)" data-preview="🎶 Soprano: Tinggi, jernih, wanita">Soprano (Tinggi Wanita)</option>
             <option value="Bass (Rendah Pria)" data-preview="🎵 Bass: Dalam, kuat, pria">Bass (Rendah Pria)</option>
-            <option value="Bariton (Sedang Pria)" data-preview="🎼 Bariton: Sedang, resonan, pria">Bariton (Sedang Pria)</option>
-            <option value="Tenor (Tinggi Pria)" data-preview="🎵 Tenor: Tinggi, melodi, pria">Tenor (Tinggi Pria)</option>
             <option value="Jernih" data-preview="💧 Jernih: Bersih, transparan, muda">Jernih</option>
             <option value="Serak" data-preview="🔥 Serak: Kasar, dewasa, karakteristik">Serak</option>
-            <option value="Lembut" data-preview="🌸 Lembut: Halus, tenang, feminin">Lembut</option>
             <option value="other">Lainnya</option>
           </select>
           <input type="text" id="voice_id_custom" class="hidden" placeholder="contoh: Alto voice" />
-          <div id="voice_id_preview" class="preview" style="display:none; margin-top:5px; font-size:14px; color:#666;"></div>
+          <div id="voice_id_preview" class="preview" style="display:none;"></div>
         </div>
         <div>
           <label>🌍 Gaya Visual</label>
           <select id="style_id_select" onchange="toggleCustom('style_id'); showPreview('style_id')">
             <option value="">Pilih Gaya Visual...</option>
             <option value="Realistis - Gaya Sinematik" data-preview="🎥 Sinematik: Detail tinggi, dramatis, film">Realistis - Gaya Sinematik</option>
-            <option value="Realistis - Gaya Dokumenter" data-preview="📹 Dokumenter: Nyata, autentik, edukasi">Realistis - Gaya Dokumenter</option>
             <option value="Animasi - Gaya Anime" data-preview="🎨 Anime: Stylish, ekspresif, Jepang">Animasi - Gaya Anime</option>
-            <option value="Animasi - Gaya Kartun" data-preview="🖍️ Kartun: Sederhana, lucu, anak-anak">Animasi - Gaya Kartun</option>
-            <option value="Animasi - Gaya 3D" data-preview="🎮 3D: Realistis, interaktif, game">Animasi - Gaya 3D</option>
-            <option value="Stilisasi - Lukisan Hidup" data-preview="🖼️ Lukisan Hidup: Artistik, klasik, seni">Stilisasi - Lukisan Hidup</option>
             <option value="Stilisasi - Cyberpunk" data-preview="🌆 Cyberpunk: Futuristik, neon, kota">Stilisasi - Cyberpunk</option>
-            <option value="Stilisasi - Hitam Putih" data-preview="⚫ Hitam Putih: Klasik, dramatis, vintage">Stilisasi - Hitam Putih</option>
             <option value="other">Lainnya</option>
           </select>
           <input type="text" id="style_id_custom" class="hidden" placeholder="contoh: Modern style" />
-          <div id="style_id_preview" class="preview" style="display:none; margin-top:5px; font-size:14px; color:#666;"></div>
+          <div id="style_id_preview" class="preview" style="display:none;"></div>
         </div>
         <div>
           <button class="btn" onclick="saveCharacter()">💾 Simpan Karakter</button>
