@@ -1,8 +1,8 @@
-// crud.js - Bagian 11/30: Konstanta dan Variabel
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxdIpHkaifXYDS3Xs28xwLyp-fIoFYV-FJYaMeO_sP1x46NOviDziGFJ5CCFRUJMQks9Q/exec';
 
 let data = [];
 let editIndex = -1;
+
 function updateExistingSelect(){
   const select = document.getElementById('existing_select');
   select.innerHTML = '<option value="">Pilih Karakter...</option>';
@@ -28,6 +28,7 @@ function loadToForm(){
     clearForm();
   }
 }
+
 function setDropdown(field, value){
   const select = document.getElementById(field + '_select');
   const custom = document.getElementById(field + '_custom');
@@ -65,6 +66,7 @@ function showPreview(field){
     preview.style.display = 'none';
   }
 }
+
 function loadData(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
@@ -182,6 +184,7 @@ function deleteData(index){
     xhr.send('action=deleteData&index=' + index);
   }
 }
+
 function editData(index){
   const item = data[index];
   document.getElementById('char_id').value = item.char_id || '';
@@ -240,6 +243,10 @@ function deleteCharacter(){
     return;
   }
   deleteData(editIndex);
+}
+
+function switchMode(){
+  // Jika ada mode edit/view, tambah logika di sini
 }
 
 // Auto load data saat halaman buka
