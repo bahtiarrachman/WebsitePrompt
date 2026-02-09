@@ -51,29 +51,40 @@ function loadKTPData(){
   list.innerHTML = '<p>Loading data KTP...</p>';
   list.style.display = 'block'; // Tampilkan saat loading
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', GAS_URL, true); // Ubah ke POST
+  xhr.open('POST', GAS_URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         try {
+          console.log('Response:', xhr.responseText); // Tambah logging
           const response = JSON.parse(xhr.responseText);
           if (response.error) {
             list.innerHTML = '<p>Error loading data: ' + response.error + '</p>';
             return;
           }
-          ktpData = response;
+          // Parse sebagai array of arrays
+          ktpData = response.map(row => ({
+            char_id: row[0] || 'Empty',
+            attr_fisik: row[1] || 'Empty',
+            cloth_id: row[2] || 'Empty',
+            voice_id: row[3] || 'Empty',
+            style_id: row[4] || 'Empty'
+          }));
+          console.log('Parsed data:', ktpData); // Tambah logging
           renderKTPList();
           isDataLoaded = true;
         } catch (e) {
           list.innerHTML = '<p>Error parsing data: ' + e.message + '</p>';
+          console.error('Parse error:', e); // Tambah logging
         }
       } else {
         list.innerHTML = '<p>Error loading data: ' + xhr.status + '</p>';
+        console.error('HTTP error:', xhr.status, xhr.responseText); // Tambah logging
       }
     }
   };
-  xhr.send('action=getData'); // Kirim action via POST
+  xhr.send('action=getData');
 }
 
 function renderKTPList(){
@@ -86,11 +97,11 @@ function renderKTPList(){
   ktpData.forEach((item, index) => {
     list.innerHTML += `
       <div style="border-bottom: 1px solid #e5e7eb; padding: 8px 0;">
-        <strong>Character ID:</strong> ${item.char_id || 'Empty'}<br/>
-        <strong>Physical Attributes:</strong> ${item.attr_fisik || 'Empty'}<br/>
-        <strong>Clothing:</strong> ${item.cloth_id || 'Empty'}<br/>
-        <strong>Voice:</strong> ${item.voice_id || 'Empty'}<br/>
-        <strong>Visual Style:</strong> ${item.style_id || 'Empty'}
+        <strong>Character ID:</strong> ${item.char_id}<br/>
+        <strong>Physical Attributes:</strong> ${item.attr_fisik}<br/>
+        <strong>Clothing:</strong> ${item.cloth_id}<br/>
+        <strong>Voice:</strong> ${item.voice_id}<br/>
+        <strong>Visual Style:</strong> ${item.style_id}
       </div>
     `;
   });
@@ -116,11 +127,11 @@ function copyKTP(){
   }
   let text = 'Character KTP Data (for TTV consistency):\n';
   ktpData.forEach((item, index) => {
-    text += `\nCharacter ID: ${item.char_id || 'Empty'}\n`;
-    text += `Physical Attributes: ${item.attr_fisik || 'Empty'}\n`;
-    text += `Clothing: ${item.cloth_id || 'Empty'}\n`;
-    text += `Voice: ${item.voice_id || 'Empty'}\n`;
-    text += `Visual Style: ${item.style_id || 'Empty'}\n`;
+    text += `\nCharacter ID: ${item.char_id}\n`;
+    text += `Physical Attributes: ${item.attr_fisik}\n`;
+    text += `Clothing: ${item.cloth_id}\n`;
+    text += `Voice: ${item.voice_id}\n`;
+    text += `Visual Style: ${item.style_id}\n`;
   });
   navigator.clipboard.writeText(text).then(() => {
     alert('Data KTP berhasil dicopy dalam bahasa Inggris! 📋');
