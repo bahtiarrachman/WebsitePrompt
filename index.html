@@ -1,138 +1,68 @@
-<!-- index.html - Kode Lengkap dengan Data Tertutup Default, Tombol Show More Muncul -->
+<!-- index.html - Bagian 1-4/30: Lengkap -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UGC Prompt Generator - Data KTP</title>
+  <title>UGC Prompt Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <span class="pill">🆔 Data KTP Karakter</span>
-      <h1>🚀 Data KTP Karakter</h1>
-      <p class="sub">Ini data KTP karakter yang akan digunakan untuk konsistensi video. Input data dulu di Manage Data sebelum generate prompt. Klik Copy untuk copy data KTP dalam bahasa Inggris (siap kirim ke TTV).</p>
+      <span class="pill">🚀 UGC Prompt Generator</span>
+      <h1>🚀 UGC Prompt Generator</h1>
+      <p class="sub">Generate prompt untuk AI UGC (User-Generated Content). Pilih opsi, generate prompt, copy ke clipboard.</p>
 
-      <!-- Arahan untuk TTV -->
-      <div class="example">
-        <strong>💡 Arahan untuk TTV</strong>
-        Kirim data KTP ini ke TTV untuk konsistensi karakter di semua video. Pastikan karakter selalu menggunakan atribut fisik, pakaian, suara, dan gaya visual yang sama di setiap prompt.
+      <!-- Form Input -->
+      <div>
+        <div>
+          <label>🎯 Tujuan Prompt</label>
+          <select id="tujuan_select">
+            <option value="">Pilih Tujuan...</option>
+            <option value="Image">Image - Gambar statis</option>
+            <option value="Video">Video - Video animasi</option>
+            <option value="Audio">Audio - Musik/Suara</option>
+            <option value="Text">Text - Cerita/Prompt</option>
+          </select>
+        </div>
+        <div>
+          <label>📝 Deskripsi Utama</label>
+          <textarea id="deskripsi" placeholder="Deskripsikan apa yang mau di-generate, contoh: 'Karakter anime di hutan'"></textarea>
+        </div>
+        <div>
+          <label>🎨 Gaya</label>
+          <select id="gaya_select">
+            <option value="">Pilih Gaya...</option>
+            <option value="Realistis">Realistis</option>
+            <option value="Anime">Anime</option>
+            <option value="Cartoon">Cartoon</option>
+            <option value="Abstract">Abstract</option>
+          </select>
+        </div>
+        <div>
+          <label>🌟 Detail Tambahan (optional)</label>
+          <textarea id="detail" placeholder="Tambah detail seperti warna, mood, dll."></textarea>
+        </div>
       </div>
 
-      <!-- List Data KTP (dalam English, default hidden) -->
+      <!-- Tombol Generate dan Output -->
+      <div>
+        <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt</button>
+        <button class="btn" onclick="copyPrompt()">📋 Copy Prompt</button>
+      </div>
       <div class="hr"></div>
-      <label>📋 Data KTP dari Google Sheets (dalam Bahasa Inggris)</label>
-      <div id="ktp_list" class="example" style="display: none;">
-        <!-- Data akan muncul di sini -->
+      <div>
+        <label>📝 Prompt Generated</label>
+        <textarea id="prompt_output" readonly placeholder="Prompt akan muncul di sini..."></textarea>
       </div>
 
+      <!-- Link Navigasi -->
       <div class="hr"></div>
-
-      <div class="actions">
-        <button class="btn" onclick="copyKTP()">📋 Copy Data KTP (English)</button>
-        <button class="btn ghost" id="show_more_btn" onclick="toggleKTPList()">👁️ Show More</button>
-        <button class="btn ghost" onclick="window.location.href='crud.html'">🗂️ Manage Data</button>
-        <button class="btn alt" onclick="window.location.href='prompt_ttv.html'">✨ Generate Prompt</button>
-      </div>
-
-      <p class="muted">Flow: Input data di Manage Data → Copy KTP → Generate Prompt → Kirim ke TTV 🌟</p>
+      <p class="muted">Manage karakter? <a href="crud.html">Ke CRUD</a> | Generate Gemini Video? <a href="prompt_ttv.html">Ke Prompt Gemini Video</a></p>
     </div>
   </div>
 
-<script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
-
-let ktpData = [];
-let isDataLoaded = false;
-
-function loadKTPData(){
-  if (isDataLoaded) return; // Hindari load ulang
-  const list = document.getElementById('ktp_list');
-  list.innerHTML = '<p>Loading data KTP...</p>';
-  list.style.display = 'block'; // Tampilkan saat loading
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', GAS_URL + '?action=getData', true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        try {
-          const response = JSON.parse(xhr.responseText);
-          if (response.error) {
-            list.innerHTML = '<p>Error loading data: ' + response.error + '</p>';
-            return;
-          }
-          ktpData = response;
-          renderKTPList();
-          isDataLoaded = true;
-        } catch (e) {
-          list.innerHTML = '<p>Error parsing data: ' + e.message + '</p>';
-        }
-      } else {
-        list.innerHTML = '<p>Error loading data: ' + xhr.status + '</p>';
-      }
-    }
-  };
-  xhr.send();
-}
-
-function renderKTPList(){
-  const list = document.getElementById('ktp_list');
-  list.innerHTML = '';
-  if(ktpData.length === 0){
-    list.innerHTML = '<p>Tidak ada data KTP. Klik Manage Data untuk input dulu.</p>';
-    return;
-  }
-  ktpData.forEach((item, index) => {
-    list.innerHTML += `
-      <div style="border-bottom: 1px solid #e5e7eb; padding: 8px 0;">
-        <strong>Character ID:</strong> ${item.char_id || 'Empty'}<br/>
-        <strong>Physical Attributes:</strong> ${item.attr_fisik || 'Empty'}<br/>
-        <strong>Clothing:</strong> ${item.cloth_id || 'Empty'}<br/>
-        <strong>Voice:</strong> ${item.voice_id || 'Empty'}<br/>
-        <strong>Visual Style:</strong> ${item.style_id || 'Empty'}
-      </div>
-    `;
-  });
-  list.style.display = 'none'; // Hide setelah render
-}
-
-function toggleKTPList(){
-  const list = document.getElementById('ktp_list');
-  const btn = document.getElementById('show_more_btn');
-  if (list.style.display === 'none') {
-    list.style.display = 'block';
-    btn.textContent = '🙈 Hide';
-  } else {
-    list.style.display = 'none';
-    btn.textContent = '👁️ Show More';
-  }
-}
-
-function copyKTP(){
-  if (!isDataLoaded || ktpData.length === 0) {
-    alert('Data belum dimuat. Tunggu loading selesai atau refresh halaman.');
-    return;
-  }
-  let text = 'Character KTP Data (for TTV consistency):\n';
-  ktpData.forEach((item, index) => {
-    text += `\nCharacter ID: ${item.char_id || 'Empty'}\n`;
-    text += `Physical Attributes: ${item.attr_fisik || 'Empty'}\n`;
-    text += `Clothing: ${item.cloth_id || 'Empty'}\n`;
-    text += `Voice: ${item.voice_id || 'Empty'}\n`;
-    text += `Visual Style: ${item.style_id || 'Empty'}\n`;
-  });
-  navigator.clipboard.writeText(text).then(() => {
-    alert('Data KTP berhasil dicopy dalam bahasa Inggris! 📋');
-  }).catch(err => {
-    alert('Gagal copy: ' + err);
-  });
-}
-
-// Auto load data saat halaman buka (sekali saja)
-window.onload = function() {
-  loadKTPData();
-};
-</script>
+  <script src="index.js"></script>
 </body>
 </html>
