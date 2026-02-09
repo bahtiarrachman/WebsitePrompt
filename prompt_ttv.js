@@ -107,7 +107,6 @@ function savePreset(){
   };
   xhr.send('action=updatePreset&data=' + encodeURIComponent(JSON.stringify(preset)));
 }
-
 function loadPresets(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
