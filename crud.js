@@ -167,7 +167,7 @@ function loadData(){
           }
           data = response;
           updateExistingSelect();
-          alert('Data berhasil dimuat dari Sheets! 📥');
+          // alert('Data berhasil dimuat dari Sheets! 📥'); // Hapus ini
         } catch (e) {
           alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
         }
