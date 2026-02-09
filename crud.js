@@ -1,5 +1,5 @@
 // crud.js - Bagian 11/30: Konstanta dan Variabel
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmDzp1ifdkngq3e24lz_w1r5ZlnKH2yQtck_TFS8P_e7gQJI4fi4U1b6t15PTKFS6GiA/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxdIpHkaifXYDS3Xs28xwLyp-fIoFYV-FJYaMeO_sP1x46NOviDziGFJ5CCFRUJMQks9Q/exec';
 
 let data = [];
 let editIndex = -1;
