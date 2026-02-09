@@ -73,11 +73,21 @@ function loadData(){
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
+      console.log('Status:', xhr.status, 'Response:', xhr.responseText); // Tambah logging
       if (xhr.status === 200) {
         try {
           const response = JSON.parse(xhr.responseText);
-          data = response;
+          console.log('Parsed response:', response); // Tambah logging
+          data = response.map(row => ({
+            char_id: row[0] || 'Empty',
+            attr_fisik: row[1] || 'Empty',
+            cloth_id: row[2] || 'Empty',
+            voice_id: row[3] || 'Empty',
+            style_id: row[4] || 'Empty'
+          }));
+          console.log('Data after map:', data); // Tambah logging
           updateExistingSelect();
+          alert('Data berhasil dimuat! Total: ' + data.length); // Tambah alert
         } catch (e) {
           alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
         }
