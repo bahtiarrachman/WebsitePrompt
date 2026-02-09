@@ -12,7 +12,8 @@
       <span class="pill">🎬 Generate Prompt Gemini Video</span>
       <h1>🚀 Generate Prompt Gemini Video</h1>
       <p class="sub">Pilih karakter dari crud, isi detail Gemini Video (optional), generate prompt untuk AI.</p>
-            <!-- Pilih Karakter dari crud -->
+
+      <!-- Pilih Karakter dari crud -->
       <div>
         <label>🆔 Pilih Karakter dari crud</label>
         <select id="char_select" onchange="loadCharacter()">
@@ -27,8 +28,8 @@
       <div>
         <button class="btn" onclick="loadCharacters()">📥 Load Karakter dari crud</button>
       </div>
-            <!-- Section Preset -->
-                 <!-- Section Preset -->
+
+      <!-- Section Preset -->
       <div class="hr"></div>
       <div>
         <label>💾 Preset Act/Adegan</label>
@@ -40,7 +41,8 @@
         <button class="btn" onclick="randomizeOptions()">🎲 Randomize Options</button>
         <button class="btn" onclick="loadRandomPreset()">🎯 Preset Acak</button>
       </div>
-            <!-- Form Detail Gemini Video -->
+
+      <!-- Form Detail Gemini Video -->
       <div class="hr"></div>
       <div>
         <div>
@@ -64,7 +66,7 @@
           </select>
           <input type="text" id="rasio_video_custom" class="hidden" placeholder="Isi rasio video custom" />
         </div>
-                <div>
+        <div>
           <label>🎨 Gaya Seni Inti (optional)</label>
           <select id="gaya_seni_inti_select" onchange="toggleCustom('gaya_seni_inti')">
             <option value="">Pilih Gaya Seni Inti...</option>
@@ -122,7 +124,7 @@
           </select>
           <input type="text" id="palet_warna_custom" class="hidden" placeholder="Isi palet warna custom" />
         </div>
-                <div>
+        <div>
           <label>💡 Pencahayaan (optional)</label>
           <select id="pencahayaan_select" onchange="toggleCustom('pencahayaan')">
             <option value="">Pilih Pencahayaan...</option>
@@ -153,7 +155,7 @@
           </select>
           <input type="text" id="arketipe_karakter_custom" class="hidden" placeholder="Isi arketipe karakter custom" />
         </div>
-                <div>
+        <div>
           <label>🦸 Spesies/Bentuk (optional)</label>
           <select id="spesies_bentuk_select" onchange="toggleCustom('spesies_bentuk')">
             <option value="">Pilih Spesies/Bentuk...</option>
@@ -191,8 +193,7 @@
           </select>
           <input type="text" id="atribut_unik_custom" class="hidden" placeholder="Isi atribut unik custom" />
         </div>
-
-              <div>
+        <div>
           <label>🎵 Genre Musik (optional)</label>
           <select id="genre_musik_select" onchange="toggleCustom('genre_musik')">
             <option value="">Pilih Genre Musik...</option>
@@ -223,7 +224,8 @@
           </select>
           <input type="text" id="desain_suara_custom" class="hidden" placeholder="Isi desain suara custom" />
         </div>
-        <div>
+        
+              <div>
           <label>😊 Mood Dominan (optional)</label>
           <select id="mood_dominan_select" onchange="toggleCustom('mood_dominan')">
             <option value="">Pilih Mood Dominan...</option>
@@ -240,7 +242,7 @@
           </select>
           <input type="text" id="mood_dominan_custom" class="hidden" placeholder="Isi mood dominan custom" />
         </div>
-                <div>
+        <div>
           <label>🖼️ Tekstur & Kualitas (optional)</label>
           <select id="tekstur_kualitas_select" onchange="toggleCustom('tekstur_kualitas')">
             <option value="">Pilih Tekstur & Kualitas...</option>
@@ -368,7 +370,8 @@
           <input type="text" id="skala_arsitektur_custom" class="hidden" placeholder="Isi skala & arsitektur custom" />
         </div>
       </div>
-            <!-- Tombol Generate di Bawah -->
+
+      <!-- Tombol Generate di Bawah -->
       <div class="hr"></div>
       <div>
         <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt Gemini Video</button>
