@@ -1,4 +1,4 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxdIpHkaifXYDS3Xs28xwLyp-fIoFYV-FJYaMeO_sP1x46NOviDziGFJ5CCFRUJMQks9Q/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxsti7UJd2bLB6-vsIaja2uHaOxQY-i8PVUCsOQMAodHXqWowPda1TMG2t_FU1mM6gm_w/exec';
 
 let characters = [];
 let presets = [];
