@@ -1,8 +1,4 @@
-const GAS_URL = 'fetch('https://script.google.com/macros/s/AKfycbxsti7UJd2bLB6-vsIaja2uHaOxQY-i8PVUCsOQMAodHXqWowPda1TMG2t_FU1mM6gm_w/exec', {
-  method: 'POST',
-  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  body: 'action=getPresets'
-}).then(r => r.text()).then(console.log);';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxsti7UJd2bLB6-vsIaja2uHaOxQY-i8PVUCsOQMAodHXqWowPda1TMG2t_FU1mM6gm_w/exec';
 
 let data = [];
 let editIndex = -1;
@@ -75,24 +71,13 @@ function loadData(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); // Tambah CORS header
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
-      console.log('Status:', xhr.status, 'Response:', xhr.responseText); // Tambah logging
       if (xhr.status === 200) {
         try {
           const response = JSON.parse(xhr.responseText);
-          console.log('Parsed response:', response); // Tambah logging
-          data = response.map(row => ({
-            char_id: row[0] || 'Empty',
-            attr_fisik: row[1] || 'Empty',
-            cloth_id: row[2] || 'Empty',
-            voice_id: row[3] || 'Empty',
-            style_id: row[4] || 'Empty'
-          }));
-          console.log('Data after map:', data); // Tambah logging
+          data = response;
           updateExistingSelect();
-          alert('Data berhasil dimuat! Total: ' + data.length); // Tambah alert
         } catch (e) {
           alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
         }
