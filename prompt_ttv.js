@@ -143,7 +143,7 @@ Character Profile:
   prompt += '\n\nCreate a detailed, cinematic video prompt based on this.';
 
   document.getElementById('prompt_output').value = prompt;
-  alert('Prompt TTV berhasil di-generate! 🎬');
+  alert('Prompt Text To Video berhasil di-generate! 🎬');
 }
 
 function copyPrompt(){
