@@ -32,7 +32,7 @@ function toggleFavorite(){
 
 
 
-function loadCharacters(){
+function loadPresets(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -41,24 +41,18 @@ function loadCharacters(){
       if (xhr.status === 200) {
         try {
           const response = JSON.parse(xhr.responseText);
-          characters = response.map(row => ({
-            char_id: row[0] || 'Empty',
-            attr_fisik: row[1] || 'Empty',
-            cloth_id: row[2] || 'Empty',
-            voice_id: row[3] || 'Empty',
-            style_id: row[4] || 'Empty'
-          }));
-          updateCharSelect();
-          alert('Karakter berhasil dimuat dari crud! Total: ' + characters.length);
+          presets = response.filter(p => !p.favorite);
+          favorites = response.filter(p => p.favorite);
+          updatePresetSelect();
         } catch (e) {
-          alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
+          alert('Error parsing presets: ' + e.message);
         }
       } else {
-        alert('Error loading data: ' + xhr.status + ' - ' + xhr.responseText);
+        alert('Error loading presets: ' + xhr.status + ' - ' + xhr.responseText);
       }
     }
   };
-  xhr.send('action=getData');
+  xhr.send('action=getPresets');
 }
 
 function updateCharSelect(){
@@ -164,6 +158,7 @@ function loadPresets(){
 
 function updatePresetSelect(){
   const list = document.getElementById('preset_list');
+  if(!list) return; // Cek jika element ada
   list.innerHTML = '';
   // Favorit dulu
   if(favorites.length > 0){
