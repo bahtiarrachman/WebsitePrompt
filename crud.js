@@ -76,7 +76,13 @@ function loadData(){
       if (xhr.status === 200) {
         try {
           const response = JSON.parse(xhr.responseText);
-          data = response;
+          data = response.map(row => ({
+            char_id: row[0] || '',
+            attr_fisik: row[1] || '',
+            cloth_id: row[2] || '',
+            voice_id: row[3] || '',
+            style_id: row[4] || ''
+          }));
           updateExistingSelect();
         } catch (e) {
           alert('Error parsing data: ' + e.message + ' - Response: ' + xhr.responseText);
