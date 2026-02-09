@@ -1,37 +1,57 @@
-<!-- prompt_ttv.html - Bagian 1/20: Header -->
+<!-- prompt_ttv.html - Bagian 17/30: Header (Update ke Gemini Video) -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Generate Prompt Google Gemini - UGC Prompt Generator</title>
-  <link rel="stylesheet" href="style.css"> <!-- Pakai CSS yang sama -->
+  <title>Generate Prompt Gemini Video - UGC Prompt Generator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <span class="pill">🎬 Generate Prompt Text To Video</span>
-      <h1>🚀 Generate Prompt Google Gemini</h1>
-      <p class="sub">Pilih karakter, isi detail Video UGC, generate prompt untuk AI.</p>
+      <span class="pill">🎬 Generate Prompt Gemini Video</span>
+      <h1>🚀 Generate Prompt Gemini Video</h1>
+      <p class="sub">Pilih karakter dari crud, isi detail Gemini Video (optional), generate prompt untuk AI.</p>
             <!-- Pilih Karakter dari crud -->
       <div>
-        <label>🆔 Pilih Karakter yang tersedia</label>
+        <label>🆔 Pilih Karakter dari crud</label>
         <select id="char_select" onchange="loadCharacter()">
           <option value="">Pilih Karakter...</option>
-          <!-- Akan diisi dari crud data -->
         </select>
         <div class="hint">
-          Pilih karakter yang sudah dibuat sebelumnya.
+          Pilih karakter yang sudah dibuat di crud.html.
         </div>
       </div>
-            <!-- Tombol Load Data -->
+
+      <!-- Tombol Load Data -->
       <div>
-        <button class="btn" onclick="loadCharacters()">📥 Load Karakter</button>
+        <button class="btn" onclick="loadCharacters()">📥 Load Karakter dari crud</button>
       </div>
-            <!-- Form Detail TTV -->
+            <!-- Section Preset -->
       <div class="hr"></div>
       <div>
-          <div>
+        <label>💾 Preset Act/Adegan</label>
+        <input type="text" id="preset_name" placeholder="Nama preset (contoh: Act 1 - Intro)" />
+        <label><input type="checkbox" id="preset_favorite" /> ⭐ Favorit</label>
+        <button class="btn" onclick="savePreset()">💾 Save Preset</button>
+        <button class="btn" onclick="randomizeOptions()">🎲 Randomize Options</button>
+        <button class="btn" onclick="loadRandomPreset()">🎯 Preset Acak</button>
+      </div>
+      <div>
+        <label>📂 Load Preset</label>
+        <select id="preset_select" onchange="loadPreset()">
+          <option value="">Pilih Preset...</option>
+        </select>
+        <label>⭐ Favorit</label>
+        <select id="favorite_select" onchange="loadPreset()">
+          <option value="">Pilih Favorit...</option>
+        </select>
+      </div>
+            <!-- Form Detail Gemini Video -->
+      <div class="hr"></div>
+      <div>
+        <div>
           <label>💬 Dialog Karakter (optional)</label>
           <select id="dialog_select" onchange="toggleDialog()">
             <option value="diam">No 1 Diam</option>
@@ -45,14 +65,14 @@
           <label>📺 Rasio Video (optional)</label>
           <select id="rasio_video_select" onchange="toggleCustom('rasio_video')">
             <option value="">Pilih Rasio Video...</option>
-            <option value="Landscape (16:9)">Landscape (16:9)</option>
-            <option value="Portrait (9:16)">Portrait (9:16)</option>
-            <option value="Square (1:1)">Square (1:1)</option>
+            <option value="Landscape (16:9)">Landscape (16:9) - lebar untuk layar horizontal</option>
+            <option value="Portrait (9:16)">Portrait (9:16) - tinggi untuk ponsel</option>
+            <option value="Square (1:1)">Square (1:1) - kotak untuk Instagram</option>
             <option value="other">Lainnya</option>
           </select>
           <input type="text" id="rasio_video_custom" class="hidden" placeholder="Isi rasio video custom" />
         </div>
-               <div>
+                <div>
           <label>🎨 Gaya Seni Inti (optional)</label>
           <select id="gaya_seni_inti_select" onchange="toggleCustom('gaya_seni_inti')">
             <option value="">Pilih Gaya Seni Inti...</option>
@@ -110,7 +130,8 @@
           </select>
           <input type="text" id="palet_warna_custom" class="hidden" placeholder="Isi palet warna custom" />
         </div>
-                <div>
+      </div>
+      <div>
           <label>💡 Pencahayaan (optional)</label>
           <select id="pencahayaan_select" onchange="toggleCustom('pencahayaan')">
             <option value="">Pilih Pencahayaan...</option>
@@ -179,7 +200,7 @@
           </select>
           <input type="text" id="atribut_unik_custom" class="hidden" placeholder="Isi atribut unik custom" />
         </div>
-                 <div>
+                <div>
           <label>🎵 Genre Musik (optional)</label>
           <select id="genre_musik_select" onchange="toggleCustom('genre_musik')">
             <option value="">Pilih Genre Musik...</option>
@@ -210,7 +231,7 @@
           </select>
           <input type="text" id="desain_suara_custom" class="hidden" placeholder="Isi desain suara custom" />
         </div>
-                  <div>
+                <div>
           <label>😊 Mood Dominan (optional)</label>
           <select id="mood_dominan_select" onchange="toggleCustom('mood_dominan')">
             <option value="">Pilih Mood Dominan...</option>
@@ -241,7 +262,7 @@
           </select>
           <input type="text" id="tekstur_kualitas_custom" class="hidden" placeholder="Isi tekstur & kualitas custom" />
         </div>
-               <div>
+                <div>
           <label>📐 Komposisi Bidikan (optional)</label>
           <select id="komposisi_bidikan_select" onchange="toggleCustom('komposisi_bidikan')">
             <option value="">Pilih Komposisi Bidikan...</option>
@@ -275,7 +296,7 @@
           </select>
           <input type="text" id="sudut_kamera_custom" class="hidden" placeholder="Isi sudut kamera custom" />
         </div>
-               <div>
+                <div>
           <label>🎥 Pergerakan Kamera (optional)</label>
           <select id="pergerakan_kamera_select" onchange="toggleCustom('pergerakan_kamera')">
             <option value="">Pilih Pergerakan Kamera...</option>
@@ -306,7 +327,7 @@
           </select>
           <input type="text" id="lensa_fokus_custom" class="hidden" placeholder="Isi lensa & fokus custom" />
         </div>
-               <div>
+                <div>
           <label>🌍 Genre Lingkungan (optional)</label>
           <select id="genre_lingkungan_select" onchange="toggleCustom('genre_lingkungan')">
             <option value="">Pilih Genre Lingkungan...</option>
@@ -339,7 +360,7 @@
           </select>
           <input type="text" id="lokasi_spesifik_custom" class="hidden" placeholder="Isi lokasi spesifik custom" />
         </div>
-                 <div>
+                <div>
           <label>🏗️ Skala & Arsitektur (optional)</label>
           <select id="skala_arsitektur_select" onchange="toggleCustom('skala_arsitektur')">
             <option value="">Pilih Skala & Arsitektur...</option>
@@ -354,22 +375,23 @@
           </select>
           <input type="text" id="skala_arsitektur_custom" class="hidden" placeholder="Isi skala & arsitektur custom" />
         </div>
-     </div>
+      </div>
 
       <!-- Tombol Generate di Bawah -->
       <div class="hr"></div>
       <div>
-        <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt Text To Video</button>
+        <button class="btn" onclick="generatePrompt()">🎬 Generate Prompt Gemini Video</button>
+        <button class="btn" onclick="clearAll()">🗑️ Clear All</button>
       </div>
             <!-- Output Prompt -->
       <div class="hr"></div>
       <div>
-        <label>📝 Prompt Text To Video Generated</label>
+        <label>📝 Prompt Gemini Video Generated</label>
         <textarea id="prompt_output" readonly placeholder="Prompt akan muncul di sini..."></textarea>
         <button class="btn" onclick="copyPrompt()">📋 Copy Prompt</button>
       </div>
-      
-            <!-- Link Kembali ke Halaman Utama -->
+
+      <!-- Link Kembali ke Halaman Utama -->
       <div class="hr"></div>
       <p class="muted">Selesai generate prompt? <a href="index.html">Kembali ke Generator Prompt</a></p>
     </div>
