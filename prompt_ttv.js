@@ -4,6 +4,34 @@ let characters = [];
 let presets = [];
 let favorites = [];
 
+function toggleFavorite(){
+  const select = document.getElementById('preset_select');
+  if(select.value === ''){
+    alert('Pilih preset dulu!');
+    return;
+  }
+  const index = select.value;
+  const preset = presets[index];
+  preset.favorite = !preset.favorite;
+  // Update ke GAS
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', GAS_URL, true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        loadPresets(); // Reload
+        alert('Favorit diupdate! ⭐');
+      } else {
+        alert('Error updating favorite: ' + xhr.status + ' - ' + xhr.responseText);
+      }
+    }
+  };
+  xhr.send('action=updateFavorite&index=' + index + '&favorite=' + preset.favorite);
+}
+
+
+
 function loadCharacters(){
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
