@@ -83,20 +83,29 @@ function savePreset(){
     skala_arsitektur: getFieldValue('skala_arsitektur'),
     favorite: document.getElementById('preset_favorite').checked
   };
+  // Cek jika nama sudah ada, update
+  const existingIndex = presets.findIndex(p => p.name === name);
+  if(existingIndex !== -1){
+    presets[existingIndex] = preset;
+    alert('Preset diupdate! 💾');
+  } else {
+    presets.push(preset);
+    alert('Preset disimpan! 💾');
+  }
+  // Simpan ke GAS
   const xhr = new XMLHttpRequest();
   xhr.open('POST', GAS_URL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        alert('Preset disimpan ke Sheets! 💾');
-        loadPresets();
+        loadPresets(); // Reload dari GAS
       } else {
         alert('Error saving preset: ' + xhr.status + ' - ' + xhr.responseText);
       }
     }
   };
-  xhr.send('action=savePreset&data=' + encodeURIComponent(JSON.stringify(preset)));
+  xhr.send('action=updatePreset&data=' + encodeURIComponent(JSON.stringify(preset)));
 }
 
 function loadPresets(){
