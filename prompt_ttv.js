@@ -118,34 +118,30 @@ function generatePrompt(){
     skala_arsitektur: getFieldValue('skala_arsitektur')
   };
 
- // Build prompt in English, only include filled fields
-  let prompt = `Generate a TTV (Text-to-Video) prompt for AI video generation.
-
-Character Profile:
-- ID: ${char.char_id}
-- Physical Attributes: ${char.attr_fisik}
-- Clothing: ${char.cloth_id}
-- Voice: ${char.voice_id}
-- Visual Style: ${char.style_id}`;
+// Build prompt in English, directly for video generation
+  let prompt = `Create a cinematic video of a character named ${char.char_id}, with physical attributes ${char.attr_fisik}, wearing ${char.cloth_id}, speaking in a ${char.voice_id} voice, in a ${char.style_id} visual style.`;
 
   if(dialog){
-    prompt += `\n- Dialog: "${dialog}"`;
+    prompt += ` The character says: "${dialog}".`;
   }
 
-  prompt += '\n\nTTV Details:';
+  prompt += ' The video should be detailed and immersive.';
+
+  // Add optional details if filled
+  const details = [];
   for(const [key, value] of Object.entries(fields)){
     if(value){
       const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-      prompt += `\n- ${label}: ${value}`;
+      details.push(`${label}: ${value}`);
     }
   }
-
-  prompt += '\n\nCreate a detailed, cinematic video prompt based on this.';
+  if(details.length > 0){
+    prompt += ' Additional details: ' + details.join(', ') + '.';
+  }
 
   document.getElementById('prompt_output').value = prompt;
-  alert('Prompt Text To Video berhasil di-generate! 🎬');
+  alert('Prompt berhasil di-generate! 🎬');
 }
-
 function copyPrompt(){
   const prompt = document.getElementById('prompt_output');
   prompt.select();
