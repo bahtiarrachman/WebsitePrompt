@@ -21,23 +21,25 @@
           <!-- Akan diisi dari crud data -->
         </select>
         <div class="hint">
-          Pilih karakter yang sudah dibuat di crud.html.
+          Pilih karakter yang sudah dibuat sebelumnya.
         </div>
       </div>
             <!-- Tombol Load Data -->
       <div>
-        <button class="btn" onclick="loadCharacters()">📥 Load Karakter dari crud</button>
+        <button class="btn" onclick="loadCharacters()">📥 Load Karakter</button>
       </div>
             <!-- Form Detail TTV -->
       <div class="hr"></div>
       <div>
-        <div>
+         <div>
           <label>💬 Dialog Karakter (optional)</label>
           <select id="dialog_select" onchange="toggleDialog()">
             <option value="diam">No 1 Diam</option>
             <option value="custom">No 2 Lainnya</option>
+            <option value="voice_over">No 3 Voice Over</option>
           </select>
           <input type="text" id="dialog_custom" class="hidden" placeholder="Ketik dialognya sendiri (ga diubah ke English)" />
+          <input type="text" id="dialog_voice_over" class="hidden" placeholder="Ketik voice overnya sendiri (ga diubah ke English)" />
         </div>
         <div>
           <label>📺 Rasio Video (optional)</label>
