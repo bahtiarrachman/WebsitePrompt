@@ -83,11 +83,15 @@ function savePreset(){
     skala_arsitektur: getFieldValue('skala_arsitektur'),
     favorite: document.getElementById('preset_favorite').checked
   };
-  // Cek jika nama sudah ada, update
+  // Cek jika nama sudah ada
   const existingIndex = presets.findIndex(p => p.name === name);
   if(existingIndex !== -1){
-    presets[existingIndex] = preset;
-    alert('Preset diupdate! 💾');
+    if(confirm(`Preset dengan nama "${name}" sudah ada. Anda ingin update presetnya?`)){
+      presets[existingIndex] = preset;
+      alert('Preset diupdate! 💾');
+    } else {
+      return; // Batal save
+    }
   } else {
     presets.push(preset);
     alert('Preset disimpan! 💾');
