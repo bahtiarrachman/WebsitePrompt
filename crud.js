@@ -1,4 +1,8 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxsti7UJd2bLB6-vsIaja2uHaOxQY-i8PVUCsOQMAodHXqWowPda1TMG2t_FU1mM6gm_w/exec';
+const GAS_URL = 'fetch('https://script.google.com/macros/s/AKfycbxsti7UJd2bLB6-vsIaja2uHaOxQY-i8PVUCsOQMAodHXqWowPda1TMG2t_FU1mM6gm_w/exec', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+  body: 'action=getPresets'
+}).then(r => r.text()).then(console.log);';
 
 let data = [];
 let editIndex = -1;
