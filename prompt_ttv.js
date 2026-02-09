@@ -61,11 +61,16 @@ function toggleCustom(field){
 function toggleDialog(){
   const select = document.getElementById('dialog_select');
   const custom = document.getElementById('dialog_custom');
+  const voiceOver = document.getElementById('dialog_voice_over');
   if(select.value === 'custom'){
     custom.classList.remove('hidden');
+    voiceOver.classList.add('hidden');
+  } else if(select.value === 'voice_over'){
+    voiceOver.classList.remove('hidden');
+    custom.classList.add('hidden');
   } else {
     custom.classList.add('hidden');
-    custom.value = '';
+    voiceOver.classList.add('hidden');
   }
 }
 
@@ -83,10 +88,16 @@ function generatePrompt(){
   }
   const char = characters[selectedIndex];
   const dialogSelect = document.getElementById('dialog_select').value;
-  const dialog = dialogSelect === 'custom' ? document.getElementById('dialog_custom').value.trim() : '';
+  let dialog = '';
+  if(dialogSelect === 'custom'){
+    dialog = document.getElementById('dialog_custom').value.trim();
+  } else if(dialogSelect === 'voice_over'){
+    dialog = 'Voice Over: ' + document.getElementById('dialog_voice_over').value.trim();
+  }
 
-  // Collect optional fields
+    // Collect optional fields
   const fields = {
+    rasio_video: getFieldValue('rasio_video'),
     gaya_seni_inti: getFieldValue('gaya_seni_inti'),
     aliran_artistik: getFieldValue('aliran_artistik'),
     palet_warna: getFieldValue('palet_warna'),
@@ -107,7 +118,7 @@ function generatePrompt(){
     skala_arsitektur: getFieldValue('skala_arsitektur')
   };
 
-  // Build prompt in English, only include filled fields
+ // Build prompt in English, only include filled fields
   let prompt = `Generate a TTV (Text-to-Video) prompt for AI video generation.
 
 Character Profile:
